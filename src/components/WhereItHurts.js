@@ -16,8 +16,8 @@ const WhereItHurts = () => (
             }
         }} />
 
-        <Route path="/login" render={Login} />
-        <Route path="/register" render={Register} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
     </>
 )
 
