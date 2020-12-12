@@ -15,13 +15,19 @@ const Login = (props) => {
       [name]: value,
     });
   };
+    
+    const handleLogin = (e) => {
+        e.preventDefault()
+        console.log(formValues)
+    }
 
   return (
     <AuthPage>
       <main className="login">
         <form className="login__form">
                   <TextInput name="email" value={formValues.email} onChange={handleInputChange} />
-                  <TextInput name="password" value={formValues.password} onChange={handleInputChange}/>
+                  <TextInput name="password" value={formValues.password} onChange={handleInputChange} />
+                  <button onClick={handleLogin} >Log in</button>
         </form>
         <Link to="/register">Sign Up WH DOO ITTT</Link>
       </main>

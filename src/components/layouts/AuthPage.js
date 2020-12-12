@@ -1,4 +1,5 @@
 import React from "react"
+import "./Layouts.css"
 
 const AuthPage = (props) => {
     return (
