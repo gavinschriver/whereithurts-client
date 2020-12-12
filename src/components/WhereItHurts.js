@@ -7,7 +7,7 @@ import Register  from "./auth/Register"
 const WhereItHurts = () => (
     <>
         <Route render={() => {
-            if (localStorage.getItem("hurts_token")) {
+            if (localStorage.getItem("patient_token")) {
                 return <>
                     <Route render={props => <AppViews {...props} />} />
                 </>
