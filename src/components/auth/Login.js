@@ -20,10 +20,10 @@ const Login = (props) => {
     <AuthPage>
       <main className="login">
         <form className="login__form">
-                  <TextInput name="email" value={"yo"} onChange={() => {}} />
-                  <TextInput name="password" value={"hey"} onChange={() => {}}/>
+                  <TextInput name="email" value={formValues.email} onChange={handleInputChange} />
+                  <TextInput name="password" value={formValues.password} onChange={handleInputChange}/>
         </form>
-        <Link to="/register">Sign Up WHY NOT</Link>
+        <Link to="/register">Sign Up WH DOO ITTT</Link>
       </main>
     </AuthPage>
   );
