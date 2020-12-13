@@ -5,7 +5,7 @@ const AppViews = () => {
   return (
     <>
       <main>
-        <div>WAAA</div>
+        <div>Wowowweewow</div>
       </main>
     </>
   );

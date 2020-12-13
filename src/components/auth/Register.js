@@ -7,9 +7,9 @@ const Register = (props) => {
  
   return (
     <AuthPage>
-      <div className="register">
-              <h3>Register</h3>
-      </div>
+      <main className="register authwrapper">
+
+      </main>
     </AuthPage>
   );
 };

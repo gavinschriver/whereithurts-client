@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AuthPage from "../layouts/AuthPage";
+import Button from "../ui/Button";
 import { TextInput } from "../ui/TextInput";
 import "./Auth.css";
 
 const Login = (props) => {
-  const [formValues, setFormValues] = useState({username:'', password:''});
+  const [formValues, setFormValues] = useState({ username: "", password: "" });
 
   const history = useHistory();
 
@@ -31,31 +32,39 @@ const Login = (props) => {
     });
     const json = await res.json();
     if ("valid" in json && json.valid && "token" in json) {
-        localStorage.setItem("patient_token", json.token);
-        history.push("/")
+      localStorage.setItem("patient_token", json.token);
+      history.push("/");
+    } else {
+      alert("no bueno");
     }
-    else {
-        alert('no bueno')
-      }
   };
 
   return (
     <AuthPage>
-      <main className="login">
-        <form className="login__form">
-          <TextInput
-            name="username"
-            value={formValues.username}
-            onChange={handleInputChange}
-          />
-          <TextInput
-            name="password"
-            value={formValues.password}
-            onChange={handleInputChange}
-          />
-          <button onClick={handleLogin}>Log in</button>
-        </form>
-        <Link to="/register">or Sign Up</Link>
+      <main className="login authwrapper">
+        <h1>Log In</h1>
+        <div className="authcontent">
+          <form className="auth__form">
+            <TextInput
+              name="username"
+              value={formValues.username}
+              onChange={handleInputChange}
+              placeholder="Username"
+            />
+            <TextInput
+              name="password"
+              value={formValues.password}
+              onChange={handleInputChange}
+              placeholder="Password"
+            />
+            <Button onClick={handleLogin}>Log In</Button>
+          </form>
+        </div>
+        <div className="authcontent">
+          <h3>
+            or <Link to="/register">Sign Up</Link>
+          </h3>
+        </div>
       </main>
     </AuthPage>
   );

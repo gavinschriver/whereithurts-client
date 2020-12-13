@@ -1,0 +1,31 @@
+/* Auth pages */
+
+/* Styles for items within the authwrapper content layout */
+
+.authcontent {
+  background-color: white;
+  width: 50vh;
+  box-shadow: 5px 5px 5px grey;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.authcontent .button {
+    color: white;
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.auth__form fieldset {
+  border: none;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 5px 0 5px 0;
+}
