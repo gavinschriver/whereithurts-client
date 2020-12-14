@@ -6,14 +6,17 @@ const resourceURL = `${BASE_URL}patients`
 export const PatientContext = createContext()
 
 export const PatientProvider = props => {
+    const [patient, setPatient] = useState({})
+
+
     const getPatientById = async (patientId) => {
         const response = await request(`${resourceURL}/${patientId}`)
         const patient = await response.json()
-        return patient
+        setPatient(patient)
     }
 
     return (
-        <PatientContext.Provider value={{ getPatientById }}>
+        <PatientContext.Provider value={{ getPatientById, patient }}>
             {props.children}
         </PatientContext.Provider>
     )

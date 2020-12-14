@@ -7,12 +7,13 @@
     align-items: center;
     justify-content: flex-start;
     height: 100vh;
-    background-color: white
+    background-color: white;
+    text-align: left;
   }
   
-  /* first div within page wrapper to control content area position */
+  /* first div within page wrapper to control content area width and position */
   .basicwrapper {
-    width: 50vh;
+    width: 70vh;
   }
   
   /* top-level div for all auth page items */
