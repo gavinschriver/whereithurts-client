@@ -1,24 +1,44 @@
-import React from "react"
-import { Route, Redirect } from "react-router-dom"
-import AppViews  from "./AppViews"
-import Login  from "./auth/Login"
-import Register  from "./auth/Register"
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import AppViews from "./AppViews";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import { PatientProvider } from "./patients/PatientProvider";
 
 const WhereItHurts = () => (
-    <>
-        <Route render={() => {
-            if (localStorage.getItem("hurts_token")) {
-                return <>
-                    <Route render={props => <AppViews {...props} />} />
-                </>
-            } else {
-                return <Redirect to="/login" />
-            }
-        }} />
+  <>
+    <PatientProvider>
+      <Route
+        render={() => {
+          if (localStorage.getItem("patient_token")) {
+            return <Route render={(props) => <AppViews />} />;
+          } else {
+            return <Redirect to="/login" />;
+          }
+        }}
+      />
 
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-    </>
-)
+      <Route
+        path="/login"
+        render={() => {
+          if (localStorage.getItem("patient_token")) {
+            return <Redirect to="/" />;
+          } else {
+            return <Login />;
+          }
+        }}
+      />
 
-export default WhereItHurts
+      <Route
+        path="/register"
+        render={() => {
+          if (localStorage.getItem("patient_token")) {
+            return <Redirect to="/" />;
+          } else return <Register />;
+        }}
+      />
+    </PatientProvider>
+  </>
+);
+
+export default WhereItHurts;

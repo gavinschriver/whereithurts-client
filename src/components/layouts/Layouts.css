@@ -1,0 +1,39 @@
+/* Layouts.css */
+
+/* top-level div for all content outside of navbar */
+.basicpage {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    background-color: white
+  }
+  
+  /* first div within page wrapper to control content area position */
+  .basicwrapper {
+    width: 50vh;
+  }
+  
+  /* top-level div for all auth page items */
+  .authpage {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #BEBEBE
+  }
+  
+  /* first div within page wrapper to control content area position */
+  .authwrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+  } 
+  
+  
+  .authwrapper h1 {
+   text-align: center;
+  }
+   
