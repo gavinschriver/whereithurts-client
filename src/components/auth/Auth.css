@@ -29,3 +29,23 @@
   justify-content: space-evenly;
   margin: 5px 0 5px 0;
 }
+
+.password_alert {
+    margin: 3px 0 3px 0;
+}
+
+.password_alert p {
+    border: 1px solid red;
+    padding: 0;
+    margin: 0;
+    padding: 0.25em;
+}
+
+.auth__form input {
+    width: 100%
+}
+
+.auth__form .button {
+    padding:.4rem 0 .4rem 0
+}
+

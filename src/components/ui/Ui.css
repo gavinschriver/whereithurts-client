@@ -3,6 +3,11 @@
     border: none;
 }
 
+.button:disabled {
+    background-color:#BEBEBE
+}
+
 .textinput {
     padding: 0;
+    margin: 0;
 }

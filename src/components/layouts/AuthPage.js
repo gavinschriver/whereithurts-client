@@ -3,9 +3,9 @@ import "./Layouts.css"
 
 const AuthPage = (props) => {
     return (
-        <main className="authpage">
+        <div className="authpage">
             {props.children}
-        </main>
+        </div>
     )
 }
 

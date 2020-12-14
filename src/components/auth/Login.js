@@ -41,29 +41,31 @@ const Login = (props) => {
 
   return (
     <AuthPage>
-      <main className="login authwrapper">
-        <h1>Log In</h1>
-        <div className="authcontent">
-          <form className="auth__form">
-            <TextInput
-              name="username"
-              value={formValues.username}
-              onChange={handleInputChange}
-              placeholder="Username"
-            />
-            <TextInput
-              name="password"
-              value={formValues.password}
-              onChange={handleInputChange}
-              placeholder="Password"
-            />
-            <Button onClick={handleLogin}>Log In</Button>
-          </form>
-        </div>
-        <div className="authcontent">
-          <h3>
-            or <Link to="/register">Sign Up</Link>
-          </h3>
+      <main className="login">
+        <div className="authwrapper">
+          <h1>Log In</h1>
+          <div className="authcontent">
+            <form className="auth__form">
+              <TextInput
+                name="username"
+                value={formValues.username}
+                onChange={handleInputChange}
+                placeholder="Username"
+              />
+              <TextInput
+                name="password"
+                value={formValues.password}
+                onChange={handleInputChange}
+                placeholder="Password"
+              />
+              <Button onClick={handleLogin}>Log In</Button>
+            </form>
+          </div>
+          <div className="authcontent">
+            <h3>
+              or <Link to="/register">Sign Up</Link>
+            </h3>
+          </div>
         </div>
       </main>
     </AuthPage>

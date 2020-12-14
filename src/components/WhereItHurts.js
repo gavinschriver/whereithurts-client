@@ -8,16 +8,28 @@ const WhereItHurts = () => (
     <>
         <Route render={() => {
             if (localStorage.getItem("patient_token")) {
-                return <>
-                    <Route render={props => <AppViews {...props} />} />
-                </>
+                return <Route render={props => <AppViews />} />
             } else {
                 return <Redirect to="/login" />
             }
         }} />
 
-        <Route path="/login" render={() => <Login/>} />
-        <Route path="/register" render={() => <Register/>} />
+        <Route path="/login" render={() => {
+            if (localStorage.getItem("patient_token")) {
+                return <Redirect to="/" />
+
+            } else {
+                return <Login />
+            }
+        }}/>
+        
+
+        <Route path="/register" render={() => {
+            if (localStorage.getItem("patient_token")) {
+                return <Redirect to="/" />
+            }
+            else return <Register />
+        }} />
     </>
 )
 
