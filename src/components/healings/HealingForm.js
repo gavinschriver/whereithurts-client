@@ -1,17 +1,24 @@
-import React from 'react'
-import BasicPage from '../layouts/BasicPage'
-import FormPageLayout from '../layouts/FormPageLayout'
+import React, { useState } from "react";
+import BasicPage from "../layouts/BasicPage";
+import FormPageLayout from "../layouts/FormPageLayout";
+import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 
 const HealingForm = (props) => {
-    return (
-        <BasicPage>
-            <FormPageLayout>
-                <div className="healingform">
-                    <h1>My Dude. We gonna heal you right up</h1>
-                </div>
-            </FormPageLayout>
-        </BasicPage>
-    )
-}
+  let editMode;
 
-export default HealingForm
+  const [showAddTreatments, setShowAddTreatments] = useState(false);
+
+  return (
+    <BasicPage>
+      <div className="basicwrapper">
+        <FormPageLayout resource="Healing" isEditMode={editMode}>
+                  <main className="healingform">
+                      <TreatmentToggleGroup showing={showAddTreatments} setShowing={setShowAddTreatments} />
+          </main>
+        </FormPageLayout>
+      </div>
+    </BasicPage>
+  );
+};
+
+export default HealingForm;

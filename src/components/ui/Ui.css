@@ -3,6 +3,8 @@
     border: none;
     border-radius: 0.2rem;
     box-shadow: 5px 5px 5px grey;
+    display: flex;
+    align-items: center;
 }
 
 .button:active {
@@ -16,4 +18,20 @@
 .textinput {
     padding: 0;
     margin: 0;
+}
+
+
+/* SHOWHIDE SECTION */
+
+.showhidesection__header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.showhidesection .button {
+    background-color: white;
+    color: black !important;
+    width: auto;
+    border-radius: 0 5px 5px 0;
+
 }
