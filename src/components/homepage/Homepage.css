@@ -4,3 +4,8 @@
     text-align: left;
     margin: 0.5rem 0 0.5rem 0
 }
+
+.homepage .button a {
+    color: white;
+    text-decoration: none;
+}

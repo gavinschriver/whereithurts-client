@@ -4,11 +4,6 @@ import HomePage from "./homepage/Homepage";
 import { PatientContext } from "./patients/PatientProvider";
 
 const AppViews = () => {
-  const { patient, getPatientById } = useContext(PatientContext);
-
-  useEffect(() => {
-    getPatientById(1);
-  }, []);
 
   return (
     <>
