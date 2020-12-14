@@ -3,9 +3,9 @@
     width: 100vw;
     height: 60px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 0.5rem calc((100vw - 1000px) / 2);
+    padding: 0.5rem ;
     z-index: 10;
 }
 
@@ -17,10 +17,10 @@
     background-color: white;
     color:  #18A0FB;
     box-shadow: none;
+    font-size: 1.6rem;
 }
 
 .nav .button a {
     color: #18A0FB;
-    font-size: 1.8rem;
     text-decoration: none;
 }

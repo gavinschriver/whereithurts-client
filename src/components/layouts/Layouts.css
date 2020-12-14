@@ -1,5 +1,14 @@
 /* Layouts.css */
 
+/* general layout components */
+
+.row {
+  display: flex;
+}
+
+
+/* BASIC PAGE */
+
 /* top-level div for all content outside of navbar */
 .basicpage {
     display:flex;
@@ -16,6 +25,9 @@
     width: 70vh;
   }
   
+
+  /* AUTH PAGE */
+
   /* top-level div for all auth page items */
   .authpage {
     display:flex;
@@ -33,8 +45,25 @@
    justify-content: space-between;
   } 
   
-  
   .authwrapper h1 {
    text-align: center;
   }
-   
+  
+ /* FORM PAGE  */
+
+ .formpage_layout h1 {
+   background-color: #18A0FB;
+   color: white;
+   border-radius: 2px;
+   padding: 0.25rem;
+ }
+
+ .formpage_layout .button {
+  font-size: 1.6rem;
+  color: white;
+ }
+
+ .formpage_layout .row {
+   justify-content: flex-end;
+ }
+
