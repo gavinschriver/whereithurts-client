@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Route } from "react-router-dom";
+import { PatientContext} from "./patients/PatientProvider"
 
 const AppViews = () => {
+  const { patient, getPatientById } = useContext(PatientContext)
+
+  useEffect(() => {
+    getPatientById(1)
+  }, [])
+
   return (
     <>
-      <main>
-        <div>Wowowweewow</div>
-      </main>
+        <Route exact path='/'>
+          <main>
+            SUP
+          </main>
+          </Route>
     </>
   );
 };
 
-export default AppViews
+export default AppViews;
