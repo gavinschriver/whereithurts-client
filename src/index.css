@@ -6,10 +6,35 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font: 400 13.333px Arial;
+  font-size: calc(5px + 2vmin);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* STYLE GUIDE */
+
+/* colors 
+ primary blue - #18A0FB
+
+ light grey - #BEBEBE
+ dark grey - #2828282
+
+
+*/
+
+h1 {
+  color: #18A0FB; 
+  font-weight: normal;
+}
+
+a {
+  color: #18A0FB; 
+}
+
+
+
+
 

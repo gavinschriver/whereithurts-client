@@ -1,6 +1,12 @@
 .button {
     background-color: #18A0FB;
     border: none;
+    border-radius: 0.2rem;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.button:active {
+    box-shadow: 0;
 }
 
 .button:disabled {

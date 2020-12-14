@@ -1,0 +1,26 @@
+.nav {
+    background-color: #18A0FB;
+    width: 100vw;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem ;
+    z-index: 10;
+}
+
+.nav a {
+    color: white;
+}
+
+.nav .button {
+    background-color: white;
+    color:  #18A0FB;
+    box-shadow: none;
+    font-size: 1.6rem;
+}
+
+.nav .button a {
+    color: #18A0FB;
+    text-decoration: none;
+}
