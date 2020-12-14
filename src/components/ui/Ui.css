@@ -1,3 +1,6 @@
+
+/* BUTTON */
+
 .button {
     background-color: #18A0FB;
     border: none;
@@ -15,23 +18,34 @@
     background-color:#BEBEBE
 }
 
+
 .textinput {
     padding: 0;
     margin: 0;
 }
-
 
 /* SHOWHIDE SECTION */
 
 .showhidesection__header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
-.showhidesection .button {
+.basicpage .showhidesection .button {
     background-color: white;
-    color: black !important;
-    width: auto;
+    color: black;
+    width: 30%;
+    height: 30%;
     border-radius: 0 5px 5px 0;
-
+    padding: 10px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
+
+.showhidesection img {
+    max-width: 20px;
+}
+
+

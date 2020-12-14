@@ -12,8 +12,11 @@ const HealingForm = (props) => {
     <BasicPage>
       <div className="basicwrapper">
         <FormPageLayout resource="Healing" isEditMode={editMode}>
-                  <main className="healingform">
-                      <TreatmentToggleGroup showing={showAddTreatments} setShowing={setShowAddTreatments} />
+          <main className="healingform">
+            <TreatmentToggleGroup
+              showing={showAddTreatments}
+              setShowing={setShowAddTreatments}
+            />
           </main>
         </FormPageLayout>
       </div>

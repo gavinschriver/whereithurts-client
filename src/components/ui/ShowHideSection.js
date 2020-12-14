@@ -1,21 +1,23 @@
 import React from "react";
 import Button from "./Button";
-import "./Ui.css"
+import "./Ui.css";
+import AddIcon from "./../../assets/images/black_plus_icon.png";
+import RemoveIcon from "./../../assets/images/black_minus_icon.png";
 
 const ShowHideSection = (props) => {
   const { showHideText, showing, setShowing } = props;
 
-  const src = showing ? "" : "./../../assets/images/black_plus.png";
+  const src = showing ? RemoveIcon : AddIcon;
 
   return (
     <div className="showhidesection">
       <div className="showhidesection__header">
         <h3 className="showhidesection__header__text">{showHideText}</h3>
         <Button
-          className="showhidesection__header__button"
+          className="addclose--button"
           onClick={() => setShowing(!showing)}
         >
-          {showing ? "Close" : "Add more"}
+          <span>{showing ? "Close" : "Add more"}</span>
           <img src={src} alt="show hide section button"/>
         </Button>
       </div>
