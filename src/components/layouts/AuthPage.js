@@ -1,10 +1,11 @@
 import React from "react"
+import "./Layouts.css"
 
-const AuthPage = (props) => {
+export const AuthPage = (props) => {
     return (
-        <main className="authpage">
+        <div className="authpage">
             {props.children}
-        </main>
+        </div>
     )
 }
 
