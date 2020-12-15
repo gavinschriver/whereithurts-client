@@ -35,8 +35,8 @@
 .basicpage .showhidesection .button {
     background-color: white;
     color: black;
-    width: 30%;
-    height: 30%;
+    width: auto;
+    height: auto;;
     border-radius: 0 5px 5px 0;
     padding: 10px;
     font-size: 1rem;
@@ -49,3 +49,19 @@
 }
 
 
+/* BADGE FIELDS */
+
+.badgefield {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* BADGES */
+.badge {
+    display: flex;
+    margin: 0.5rem 1rem 0 0.5rem;
+}
+
+.badge .button {
+    
+}

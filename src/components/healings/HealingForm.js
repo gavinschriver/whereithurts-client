@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import BasicPage from "../layouts/BasicPage";
 import FormPageLayout from "../layouts/FormPageLayout";
+import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 
 const HealingForm = (props) => {
-  let editMode;
 
+  //treatments
+  const { treatments, getTreatmentsByPatientId } = useContext(TreatmentContext);
+  const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [showAddTreatments, setShowAddTreatments] = useState(false);
+  const handleSelectTreatment = (item) => {
+    if (selectedTreatments) {
+      setSelectedTreatments([...selectedTreatments, item]);
+    } else setSelectedTreatments([item])
+  };
+
+
+  
+  let editMode;
+  
+  // initial hook to get toggleable items by patient_id === added_by_id
+  useEffect(async () => {
+    await getTreatmentsByPatientId(localStorage.getItem("patient_id"));
+  }, []);
 
   return (
     <BasicPage>
@@ -16,6 +33,9 @@ const HealingForm = (props) => {
             <TreatmentToggleGroup
               showing={showAddTreatments}
               setShowing={setShowAddTreatments}
+              collection={treatments}
+              onAdd={handleSelectTreatment}
+              selected={selectedTreatments}
             />
           </main>
         </FormPageLayout>

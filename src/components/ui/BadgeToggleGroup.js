@@ -1,4 +1,5 @@
 import React from "react";
+import BadgeField from "./BadgeField";
 import ShowHideSection from "./ShowHideSection";
 
 const BadgeToggleGroup = ({ resource, showing, setShowing, ...props }) => {
@@ -10,9 +11,10 @@ const BadgeToggleGroup = ({ resource, showing, setShowing, ...props }) => {
         setShowing={setShowing}
         {...props}
       >
-        <span>WILL BE AN ADDABLE BADGEFIELD</span>
+        <BadgeField direction="add" {...props} />
       </ShowHideSection>
-      <span>WILL BE A REMOVEABLE BADGEFIELD</span>
+
+      <BadgeField direction="remove" {...props}/>
     </div>
   );
 };

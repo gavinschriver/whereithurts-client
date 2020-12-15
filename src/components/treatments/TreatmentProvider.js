@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useState, useEffect} from "react";
 import { request, BASE_URL } from "../../utils/request";
 
 const resourceURL = `${BASE_URL}treatments`
@@ -10,7 +10,7 @@ export const TreatmentProvider = props => {
 
   const getTreatmentsByPatientId = async (patientId) => {
     const response = await request(`${resourceURL}?patient_id=${patientId}`);
-    const treatments = response.json();
+    const treatments = await response.json();
     setTreatments(treatments);
   };
 
