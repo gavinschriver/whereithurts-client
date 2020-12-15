@@ -3,7 +3,8 @@ import BasicPage from "../layouts/BasicPage";
 import FormPageLayout from "../layouts/FormPageLayout";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
-
+import { deselectItemById} from "../../utils/helpers"
+ 
 const HealingForm = (props) => {
 
   //treatments
@@ -15,9 +16,11 @@ const HealingForm = (props) => {
       setSelectedTreatments([...selectedTreatments, item]);
     } else setSelectedTreatments([item])
   };
+  const deselectTreatmentById = deselectItemById(
+    selectedTreatments,
+    setSelectedTreatments
+  );
 
-
-  
   let editMode;
   
   // initial hook to get toggleable items by patient_id === added_by_id
@@ -31,11 +34,12 @@ const HealingForm = (props) => {
         <FormPageLayout resource="Healing" isEditMode={editMode}>
           <main className="healingform">
             <TreatmentToggleGroup
-              showing={showAddTreatments}
-              setShowing={setShowAddTreatments}
               collection={treatments}
-              onAdd={handleSelectTreatment}
+              showing={showAddTreatments}
               selected={selectedTreatments}
+              setShowing={setShowAddTreatments}
+              onAdd={handleSelectTreatment}
+              onRemove={deselectTreatmentById}
             />
           </main>
         </FormPageLayout>

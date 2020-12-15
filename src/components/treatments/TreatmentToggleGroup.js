@@ -8,7 +8,8 @@ const TreatmentToggleGroup = (props) => {
   return (
     <div className="treatment_toggle_group">
       <BadgeToggleGroup
-        resource="Treatments"
+        resource="treatment"
+        showhidetext="Treatments"
         badgeText="name"
         {...props}
       />

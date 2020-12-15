@@ -2,11 +2,10 @@ import React from "react";
 import BadgeField from "./BadgeField";
 import ShowHideSection from "./ShowHideSection";
 
-const BadgeToggleGroup = ({ resource, showing, setShowing, ...props }) => {
+const BadgeToggleGroup = ({ showing, setShowing, ...props }) => {
   return (
     <div className="badge_toggle_group">
       <ShowHideSection
-        showHideText={resource}
         showing={showing}
         setShowing={setShowing}
         {...props}
