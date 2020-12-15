@@ -59,7 +59,7 @@
    text-align: center;
  }
 
- .formpage_layout .button {
+ .formpage_layout .row .button {
   font-size: 1.6rem;
   color: white;
  }
