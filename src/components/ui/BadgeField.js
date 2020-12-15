@@ -18,7 +18,13 @@ const BadgeField = ({
         .filter((i) => !selected.some((s) => s.id === i.id))
         .map((i) => {
           return (
-            <Badge key={i.id} onAdd={() => onAdd(i)} item={i} id={i.id} {...props}>
+            <Badge
+              key={i.id}
+              onAdd={() => onAdd(i)}
+              item={i}
+              id={i.id}
+              {...props}
+            >
               {i[badgeText]}
             </Badge>
           );
@@ -34,11 +40,12 @@ const BadgeField = ({
         );
       });
       break;
+
     default:
       //badges are static
       badges = selected.map((i) => {
         return (
-          <Badge key={i.id} item={i} {...props} >
+          <Badge key={i.id} item={i} {...props}>
             {i[badgeText]}
           </Badge>
         );

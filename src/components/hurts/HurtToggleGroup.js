@@ -1,13 +1,13 @@
 import React from "react";
 import BadgeToggleGroup from "../ui/BadgeToggleGroup";
 
-const TreatmentToggleGroup = (props) => {
+const HurtToggleGroup = (props) => {
 
   return (
-    <div className="treatment_toggle_group">
+    <div className="hurt_toggle_group">
       <BadgeToggleGroup
-        resource="treatment"
-        showhidetext="Treatments"
+        resource="hurt"
+        showhidetext="Hurts"
         badgeText="name"
         {...props}
       />
@@ -15,4 +15,4 @@ const TreatmentToggleGroup = (props) => {
   );
 };
 
-export default TreatmentToggleGroup;
+export default HurtToggleGroup;
