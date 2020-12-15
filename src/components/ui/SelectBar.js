@@ -6,19 +6,29 @@ const SelectBar = (props) => {
     optionkey,
     optionvalue,
     optiontext,
-    defaultoptiontext
+    defaultoptiontext,
+    label,
   } = props;
   return (
-    <select className="selectbar" {...props}>
-      <option value={0}>{defaultoptiontext}</option>
-      {collection.map((i) => {
-        return (
-          <option key={i[optionkey]} value={i[optionvalue]}>
-            {i[optiontext]}
-          </option>
-        );
-      })}
-    </select>
+    <fieldset className="selectbar">
+      <label htmlFor={props.name}>{label}</label>
+      <select className="selectbar__dropdown" {...props}>
+        <option className="selectbar__dropdown__option" value={0}>
+          {defaultoptiontext}
+        </option>
+        {collection.map((i) => {
+          return (
+            <option
+              className="selectbar__dropdown__option"
+              key={i[optionkey]}
+              value={i[optionvalue]}
+            >
+              {i[optiontext]}
+            </option>
+          );
+        })}
+      </select>
+    </fieldset>
   );
 };
 

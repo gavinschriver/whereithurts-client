@@ -1,0 +1,9 @@
+.timer .row {
+    justify-content: space-between;
+    align-items: center;
+    margin: .25rem 0 .25rem 0
+}
+
+.timer__controls {
+    display:flex;
+}

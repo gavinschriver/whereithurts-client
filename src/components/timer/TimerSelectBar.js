@@ -19,6 +19,7 @@ const TimerSelectBar = (props) => {
       optiontext="min"
       optionvalue="secs"
       defaultoptiontext="Please select a time in minutes"
+      label="Set Timer: "
     ></SelectBar>
   );
 };

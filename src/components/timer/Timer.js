@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Button from "../ui/Button";
+import "./Timer.css";
 
 const Timer = ({ timer, setTimer }) => {
   const { isActive, timeTotal, timerVal, remaining } = timer;
@@ -21,11 +22,10 @@ const Timer = ({ timer, setTimer }) => {
   };
 
   useEffect(() => {
-      let interval = null;
-      
+    let interval = null;
+
     if (isActive) {
       if (remaining > 0) {
-
         interval = setInterval(() => {
           setTimer((timer) => ({
             ...timer,
@@ -40,9 +40,8 @@ const Timer = ({ timer, setTimer }) => {
     return () => clearInterval(interval);
   }, [timer]);
 
-
   useEffect(() => {
-    if (remaining === 0 && timeTotal > 0) {
+    if (remaining === 0 && timeTotal > 0 && timerVal > 0) {
       setTimer((timer) => ({
         ...timer,
         remaining: timerVal,
@@ -53,31 +52,27 @@ const Timer = ({ timer, setTimer }) => {
     }
   }, [isActive]);
 
-  const handleTimerChange = (e) => {
-    setTimer((timer) => ({
-      ...timer,
-      remaining: e.target.value,
-      timerVal: e.target.value,
-    }));
-  };
-
   return (
     <div className="timer">
-      <div className="time">Currently remaining: {remaining}s</div>
-      <div>Total time counted: {timeTotal}s</div>
       <div className="row">
-        <Button
-          disabled={timerVal == 0 ? true : false}
-          className={`button button-primary button-primary-${
-            isActive ? "active" : "inactive"
-          }`}
-          onClick={toggle}
-        >
-          {isActive ? "Pause" : "Start"}
-        </Button>
-        <button className="button" onClick={reset}>
-          Reset
-        </button>
+        <div>
+          <div className="timer__time">Currently remaining: {remaining}s</div>
+        </div>
+        <div className="timer__controls">
+          <Button
+            disabled={timerVal == 0 ? true : false}
+            style={{ color: `black` }}
+            className={`button button-primary button-primary-${
+              isActive ? "active" : "inactive"
+            }`}
+            onClick={toggle}
+          >
+            {isActive ? "Pause" : "Start"}
+          </Button>
+          <Button style={{ color: `black` }} onClick={reset}>
+            Reset
+          </Button>
+        </div>
       </div>
     </div>
   );

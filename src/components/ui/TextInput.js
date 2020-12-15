@@ -13,3 +13,5 @@ export const TextInput = (props) => {
       </fieldset>
   );
 };
+
+export default TextInput
