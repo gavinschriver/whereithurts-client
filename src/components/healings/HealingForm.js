@@ -6,6 +6,9 @@ import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 import { deselectItemById } from "../../utils/helpers";
 import { HurtContext } from "../hurts/HurtProvider";
 import HurtToggleGroup from "../hurts/HurtToggleGroup";
+import Timer from "../timer/Timer";
+import TimerSelectBar from "../timer/TimerSelectBar";
+import ShowHideSection from "../ui/ShowHideSection";
 
 const HealingForm = (props) => {
   //treatments
@@ -31,10 +34,24 @@ const HealingForm = (props) => {
       setSelectedHurts([...selectedHurts, item]);
     } else setSelectedHurts([item]);
   };
-  const deselectHurtById = deselectItemById(
-    selectedHurts,
-    setSelectedHurts
-  )
+  const deselectHurtById = deselectItemById(selectedHurts, setSelectedHurts);
+
+  //timer
+  const [showTimer, setShowTimer] = useState(false)
+  const [timer, setTimer] = useState({
+    timerVal: 0,
+    remaining: 0,
+    isActive: false,
+    timeTotal: 0,
+  });
+
+  const handleTimerChange = (e) => {
+    setTimer((timer) => ({
+      ...timer,
+      remaining: e.target.value,
+      timerVal: e.target.value,
+    }));
+  };
 
   let editMode;
 
@@ -65,6 +82,10 @@ const HealingForm = (props) => {
               onAdd={handleSelectHurt}
               onRemove={deselectHurtById}
             />
+            <ShowHideSection showing={showTimer} setShowing={setShowTimer} showhidetext="Time" >
+              <Timer timer={timer} setTimer={setTimer} />
+              <TimerSelectBar onChange={handleTimerChange}  />
+            </ShowHideSection>
           </main>
         </FormPageLayout>
       </div>
