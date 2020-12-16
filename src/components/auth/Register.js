@@ -75,6 +75,7 @@ const Register = (props) => {
     const json = await res.json();
     if ("valid" in json && json.valid && "token" in json) {
       localStorage.setItem("patient_token", json.token);
+      localStorage.setItem("patient_id", json.patient_id)
       history.push("/");
     } else {
       alert("no bueno");
