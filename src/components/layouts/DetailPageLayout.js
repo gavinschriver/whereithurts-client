@@ -7,7 +7,7 @@ const DetailPageLayout = (props) => {
   return (
     <div className="detailpage_layout">
       {props.children}
-      <div className="row">
+      <div className="row align-right">
         <Button onClick={onEdit} {...props}>
           Edit
         </Button>

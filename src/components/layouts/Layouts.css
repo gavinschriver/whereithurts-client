@@ -6,6 +6,10 @@
   display: flex;
 }
 
+.align-right {
+  justify-content: flex-end;
+}
+
 .col {
   text-align: left;
 }
@@ -63,10 +67,7 @@
    text-align: center;
  }
 
- .formpage_layout .row .button {
-  font-size: 1.6rem;
-  color: white;
- }
+
 
  .formpage_layout .row {
    justify-content: flex-end;
@@ -98,9 +99,9 @@
 }
 
 
-
 .listitem__subcollection {
   display: flex;
+  color: black;
 }
 
 .listitem__subcollection__item {
@@ -119,4 +120,10 @@
 .listpage__header .button {
   background-color: white;
   display: flex;
+}
+
+/* DETAIL PAGE  */
+
+.detailpage_layout > * {
+  margin: 0 0 2rem 0;
 }
