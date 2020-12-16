@@ -20,8 +20,12 @@ export const HealingProvider = (props) => {
         return healing
     }
 
+    const updateHealing = async (healingId, updatedHealing) => {
+        return await request(`${resourceURL}/${healingId}`, "PUT", updatedHealing)
+    }
+
     return (
-        <HealingContext.Provider value={{healings, getHealingById, createHealing}}>
+        <HealingContext.Provider value={{healings, getHealingById, createHealing, updateHealing}}>
             {props.children}
         </HealingContext.Provider>
     )

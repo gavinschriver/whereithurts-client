@@ -12,27 +12,50 @@ import ShowHideSection from "../ui/ShowHideSection";
 import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
 import { HealingContext } from "./HealingProvider";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 const HealingForm = (props) => {
+  //access History, Location and Param objects; establish if we're in editMode or not 
 
-  //invoke History object 
-  const history = useHistory()
+  const history = useHistory();
+  const location = useLocation();
+  const { healingId } = useParams();
+
+  const editMode = location.pathname.includes('edit');
 
   //healing
-  const { getHealingById, createHealing } = useContext(HealingContext)
-  const [healing, setHealing] = useState({treatments: [], hurts: [], notes:''})
+  const { getHealingById, createHealing, updateHealing } = useContext(HealingContext);
 
-  const handleSubmitNew = async () => {
+  //state value object to load initial values from item to edit
+  const [healing, setHealing] = useState({
+    treatments: [],
+    hurts: [],
+    notes: "",
+  });
+
+  const handleSubmitNew = async (e) => {
+    e.preventDefault()
     const newHealing = {
       duration: timer.timeTotal,
       treatment_ids: selectedTreatments.map((t) => t.id),
       hurt_ids: selectedHurts.map((h) => h.id),
-      notes: notes
+      notes: notes,
     };
-
     const createdHealing = await createHealing(newHealing);
-    history.push(`${createdHealing.id}`)
+    history.push(`${createdHealing.id}`);
+  };
+
+  const handleSubmitUpdate = async (e) => {
+    e.preventDefault()
+    const updatedHealing = {
+      id: healing.id,
+      duration: timer.timeTotal,
+      treatment_ids: selectedTreatments.map((t) => t.id),
+      hurt_ids: selectedHurts.map((h) => h.id),
+      notes: notes,
+    };
+    await updateHealing(healingId, updatedHealing);
+    history.push(`/${healingId}`)
   };
 
   //treatments
@@ -88,27 +111,29 @@ const HealingForm = (props) => {
   };
 
   // notes
-  const [notes, setNotes] = useState('')
+  const [notes, setNotes] = useState("");
   const handleNotesChange = (e) => {
-    const { value } = e.target
-    setNotes(value)
-  }
+    const { value } = e.target;
+    setNotes(value);
+  };
 
-  const editMode = false
+
 
   // initial hook to get toggleable items by patient_id === added_by_id
   useEffect(async () => {
     await getTreatmentsByPatientId(localStorage.getItem("patient_id"));
     await getHurtsByPatientId(localStorage.getItem("patient_id"));
-    if (editMode) {
-      const healing = await getHealingById(1);
-      setHealing(healing)
+    if (editMode && healingId) {
+      const healing = await getHealingById(healingId);
+      setHealing(healing);
     }
   }, []);
 
+  //if we're in edit mode, read the loaded "healing" values to set the state values associated w/ each UI
   useEffect(() => {
     if (healing.hurts) setSelectedHurts(healing.hurts);
     if (healing.treatments) setSelectedTreatments(healing.treatments);
+    if (healing.notes) setNotes(healing.notes)
     if (healing.duration)
       setTimer((timer) => ({ ...timer, timeTotal: healing.duration }));
   }, [healing]);
@@ -116,7 +141,11 @@ const HealingForm = (props) => {
   return (
     <BasicPage>
       <div className="basicwrapper">
-        <FormPageLayout resource="Healing" isEditMode={editMode} onClick={handleSubmitNew}>
+        <FormPageLayout
+          resource="Healing"
+          isEditMode={editMode}
+          onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
+        >
           <main className="healingform">
             <TreatmentToggleGroup
               collection={treatments}
@@ -149,7 +178,7 @@ const HealingForm = (props) => {
                 value={timer.timeTotal || ""}
               ></TextInput>
             </ShowHideSection>
-            <div className="row" style={{justifyContent: `flex-start`}}>
+            <div className="row" style={{ justifyContent: `flex-start` }}>
               <span>Currently logged time: {timer.timeTotal}</span>
             </div>
             <h3>Notes</h3>
