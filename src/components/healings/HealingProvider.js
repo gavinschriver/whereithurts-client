@@ -36,8 +36,12 @@ export const HealingProvider = (props) => {
         setHealingData(healingData)
     }
 
+    const deleteHealing = async (healingId) => {
+        await request(`${resourceURL}/${healingId}`, "DELETE") 
+    }
+
     return (
-        <HealingContext.Provider value={{healingData, getHealingData, getHealingById, createHealing, updateHealing, getHealingDataByPatientId}}>
+        <HealingContext.Provider value={{healingData, getHealingData, getHealingById, createHealing, updateHealing, getHealingDataByPatientId, deleteHealing}}>
             {props.children}
         </HealingContext.Provider>
     )

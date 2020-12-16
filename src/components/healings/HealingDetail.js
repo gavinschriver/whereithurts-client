@@ -12,8 +12,14 @@ const HealingDetail = (props) => {
   const { healingId } = useParams();
 
   //access 'healing by id' method and set return value in state
-  const { getHealingById } = useContext(HealingContext);
+  const { getHealingById, deleteHealing } = useContext(HealingContext);
   const [healing, setHealing] = useState({ treatments: [], hurts: [] });
+
+  //delete handler
+  const handleDeleteHealing = async (healingId) => {
+    await deleteHealing(healingId);
+    history.push(`/healings`);
+  };
 
   //pull in healing on page load when healingId is detected from params
   useEffect(async () => {
@@ -25,7 +31,8 @@ const HealingDetail = (props) => {
     <BasicPage>
       <div className="basicwrapper">
         <DetailPageLayout
-          onClick={() => history.push(`/healings/edit/${healing.id}`)}
+          onEdit={() => history.push(`/healings/edit/${healing.id}`)}
+          onDelete={() => handleDeleteHealing(healing.id)}
         >
           <main className="healingdetail">
             <div className="healing">
