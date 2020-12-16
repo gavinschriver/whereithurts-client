@@ -16,6 +16,15 @@ export const deselectItemById = (selected, setSelected) => {
       (selectedItem) => selectedItem.id !== itemId
     );
     setSelected(newArray);
-    console.log(e.target);
   };
 };
+
+/** quick way to access the Patient id of the currently logged-in user */
+export const current_patient_id = parseInt(localStorage.getItem("patient_id"))
+
+/** convert an int value of seconds into minutes
+ * @param secondsAsInt integer of seconds to convert into equivalent minutes, rounded down to nearest whole minute
+ */
+export const secondsToRoundedMinutes = (secondsAsInt) => {
+  return Math.floor(secondsAsInt /60)
+} 
