@@ -16,7 +16,6 @@ export const deselectItemById = (selected, setSelected) => {
       (selectedItem) => selectedItem.id !== itemId
     );
     setSelected(newArray);
-    console.log(e.target);
   };
 };
 
