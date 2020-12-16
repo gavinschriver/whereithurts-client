@@ -15,6 +15,7 @@
 
 .authcontent .button {
     color: white;
+    justify-content: center;
 }
 
 .auth__form {

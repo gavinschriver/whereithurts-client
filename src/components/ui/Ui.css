@@ -1,8 +1,20 @@
+fieldset {
+    display: flex;
+    justify-content: space-between;
+    border: none;
+}
+
+
+
+/* BUTTON */
+
 .button {
     background-color: #18A0FB;
     border: none;
     border-radius: 0.2rem;
     box-shadow: 5px 5px 5px grey;
+    display: flex;
+    align-items: center;
 }
 
 .button:active {
@@ -13,7 +25,66 @@
     background-color:#BEBEBE
 }
 
+
 .textinput {
     padding: 0;
     margin: 0;
+}
+
+.textarea {
+    padding: 0;
+    margin: 0;
+}
+
+/* SELECT BAR */
+
+.selectbar {
+    padding: 0;
+    margin: 0;
+}
+
+/* SHOWHIDE SECTION */
+
+.showhidesection {
+    margin-bottom: 1rem;
+}
+
+.showhidesection__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.basicpage .showhidesection .button {
+    background-color: white;
+    color: black;
+    width: auto;
+    height: auto;;
+    border-radius: 0 5px 5px 0;
+    padding: 10px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.showhidesection img {
+    max-width: 20px;
+}
+
+
+/* BADGE FIELDS */
+
+.badgefield {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* BADGES */
+.badge {
+    display: flex;
+    margin: 0.5rem 1rem 0 0.5rem;
+}
+
+.badge .button {
+    
 }
