@@ -16,17 +16,31 @@ fieldset {
 }
 
 .button:active {
-  box-shadow: 0;
+  box-shadow: 0 !important;
 }
 
 .button:disabled {
   background-color: #bebebe;
 }
 
+.detailpage_layout .row .button {
+  font-size: 1.6rem;
+  color: white;
+}
+
+.formpage_layout .row .button {
+  font-size: 1.6rem;
+  color: white;
+}
+
+/* TEXT INPUT */
+
 .textinput {
   padding: 0;
   margin: 0;
 }
+
+/* TEXT AREA */
 
 .textarea {
   padding: 0;
@@ -37,10 +51,11 @@ fieldset {
   background-color: white;
   display: flex;
   height: auto;
+  color: black;
 }
 
 .addnew--button > * {
-    padding: 10px;
+  padding: 10px;
 }
 
 .addnew--button img {
@@ -89,11 +104,29 @@ fieldset {
   flex-wrap: wrap;
 }
 
+
 /* BADGES */
 .badge {
   display: flex;
   margin: 0.5rem 1rem 0 0.5rem;
 }
 
+.detailpage_layout .badgefield .button{
+  box-shadow: none;
+  color: white;
+}
+
+
 .badge .button {
+}
+
+
+/* ALERT */
+
+.alert {
+  display: flex;
+}
+
+.deletebutton__alert {
+  display: flex;
 }

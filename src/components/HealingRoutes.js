@@ -1,5 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import HealingDetail from "./healings/HealingDetail";
 import HealingForm from "./healings/HealingForm";
 import HealingList from "./healings/HealingList";
 import HealingProviders from "./providers/HealingProviders";
@@ -13,6 +14,7 @@ const HealingRoutes = (props) => {
         path="/healings/edit/:healingId(\d+)"
         render={(p) => <HealingForm {...p} />}
       />
+      <Route path="/healings/:healingId(\d)" render={(p) => <HealingDetail/>} />
     </HealingProviders>
   );
 };
