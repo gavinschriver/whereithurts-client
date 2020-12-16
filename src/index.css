@@ -34,10 +34,17 @@ a {
   color: #18A0FB; 
 }
 
+a:active {
+  color: yellow;
+}
+
 img {
   font-size: x-small;
 }
 
+button:active {
+  box-shadow: none;
+}
 
 
 

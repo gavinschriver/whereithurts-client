@@ -16,7 +16,7 @@ fieldset {
 }
 
 .button:active {
-  box-shadow: 0;
+  box-shadow: 0 !important;
 }
 
 .button:disabled {
