@@ -68,3 +68,33 @@
    justify-content: flex-end;
  }
 
+/* LIST PAGE */
+
+.listitem {
+  background-color: #18A0FB;
+  margin: 1em 0 1em 0;
+  padding: .25rem;
+  border-radius: 2.5px;;
+}
+
+.listitem .row {
+  justify-content: space-between;
+}
+
+.listitem h3 {
+  color: white;
+  font-size: medium;
+}
+
+.listitem__subcollection {
+  display: flex;
+}
+
+.listitem__subcollection__item {
+  background-color: white;
+  font-size: small;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-radius: 10px;;
+  height: fit-content;
+}

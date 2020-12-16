@@ -6,7 +6,13 @@ const resourceURL = `${BASE_URL}healings`
 export const HealingContext  = createContext()
 
 export const HealingProvider = (props) => {
-    const [healings, setHealings] = useState([])
+    const [healingData, setHealingData] = useState({ healings: [] })
+    
+    const getHealingData = async () => {
+        const response = await request(`${resourceURL}`)
+        const healingData = await response.json()
+        setHealingData(healingData)
+    }
 
     const getHealingById = async (healingId) => {
         const response = await request(`${resourceURL}/${healingId}`);
@@ -25,7 +31,7 @@ export const HealingProvider = (props) => {
     }
 
     return (
-        <HealingContext.Provider value={{healings, getHealingById, createHealing, updateHealing}}>
+        <HealingContext.Provider value={{healingData, getHealingData, getHealingById, createHealing, updateHealing}}>
             {props.children}
         </HealingContext.Provider>
     )

@@ -33,6 +33,7 @@ const HealingForm = (props) => {
     notes: "",
   });
 
+  // refactor these badboys together at some point. soon. 
   const handleSubmitNew = async (e) => {
     e.preventDefault()
     const newHealing = {
@@ -42,7 +43,7 @@ const HealingForm = (props) => {
       notes: notes,
     };
     const createdHealing = await createHealing(newHealing);
-    history.push(`${createdHealing.id}`);
+    history.push(`/healings`);
   };
 
   const handleSubmitUpdate = async (e) => {
@@ -55,7 +56,7 @@ const HealingForm = (props) => {
       notes: notes,
     };
     await updateHealing(healingId, updatedHealing);
-    history.push(`/${healingId}`)
+    history.push(`/healings`)
   };
 
   //treatments

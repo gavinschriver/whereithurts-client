@@ -19,3 +19,6 @@ export const deselectItemById = (selected, setSelected) => {
     console.log(e.target);
   };
 };
+
+/** quick way to access the Patient id of the currently logged-in user */
+export const current_patient_id = localStorage.getItem("patient_id")
