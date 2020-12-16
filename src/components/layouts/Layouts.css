@@ -6,6 +6,10 @@
   display: flex;
 }
 
+.col {
+  text-align: left;
+}
+
 
 /* BASIC PAGE */
 
@@ -71,13 +75,20 @@
 /* LIST PAGE */
 
 .listitem {
-  background-color: #18A0FB;
   margin: 1em 0 1em 0;
   padding: .25rem;
   border-radius: 2.5px;;
+  /* box-shadow: 5px 5px 5px grey; */
+  ;
 }
 
 .listitem .row {
+  justify-content: space-between;
+}
+
+.listitem .button {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
 }
 
@@ -85,6 +96,8 @@
   color: white;
   font-size: medium;
 }
+
+
 
 .listitem__subcollection {
   display: flex;
@@ -97,4 +110,13 @@
   margin: 0.25rem;
   border-radius: 10px;;
   height: fit-content;
+}
+
+.listpage__header {
+  justify-content: space-between;
+}
+
+.listpage__header .button {
+  background-color: white;
+  display: flex;
 }

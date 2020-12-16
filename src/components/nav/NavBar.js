@@ -6,13 +6,15 @@ import "./Nav.css";
 export const NavBar = () => {
   return (
     <nav className="nav">
+      <Button>
+        <NavLink to="/">Home</NavLink>
+      </Button>
+      <div className="nav__menu">
         <Button>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/healings">Healings</NavLink>
         </Button>
-        <div className="nav__menu"></div>
-        <Button>
-          Logout
-        </Button>
+      </div>
+      <Button>Logout</Button>
     </nav>
   );
 };
