@@ -106,6 +106,7 @@ const TreatmentForm = (props) => {
     setSelectedLinks([...selectedLinks, newLink]);
   };
 
+  //every time selectedlinks changes, where its an addition or removal, increment linkIdcount by 1 so its always unique
   useEffect(() => {
     setLinkIdCount((linkIDcount) => linkIDcount + 1);
   },[selectedLinks])
@@ -121,7 +122,7 @@ const TreatmentForm = (props) => {
     }
   }, []);
 
-  //if we're in edit mode, read the loaded "treatmentToUpdate" values to set the state values associated w/ each UI
+  //if we're in edit mode, this use effect will read the loaded "treatmentToUpdate" values to set the state values associated w/ each UI
   useEffect(() => {
     if (treatmentToUpdate.hurts) setSelectedHurts(treatmentToUpdate.hurts);
     if (treatmentToUpdate.links) setSelectedLinks(treatmentToUpdate.links);
@@ -131,7 +132,8 @@ const TreatmentForm = (props) => {
       treatmenttype_id: treatmentToUpdate.treatmenttype.id,
       bodypart_id: treatmentToUpdate.bodypart.id,
     });
-    setLinkIdCount(treatmentToUpdate.links.map((tl) => tl.id).sort().reverse()[0])
+    // set linkIDcount to equal the value of the highest Numerical id in the array of links that come back so we dont get any duplicates
+    if (treatmentToUpdate.links) setLinkIdCount(treatmentToUpdate.links.map((tl) => tl.id).sort().reverse()[0])
   }, [treatmentToUpdate]);
 
   return (
