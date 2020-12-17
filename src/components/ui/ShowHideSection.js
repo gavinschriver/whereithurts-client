@@ -18,10 +18,12 @@ const ShowHideSection = (props) => {
           onClick={() => setShowing(!showing)}
         >
           <span>{showing ? "Close" : "Add more"}</span>
-          <img src={src} alt="show hide section button"/>
+          <img src={src} alt="show hide section button" />
         </Button>
       </div>
-      {showing && props.children}
+      <div className="showhidesection__content">
+        {showing && props.children}
+      </div>
     </div>
   );
 };

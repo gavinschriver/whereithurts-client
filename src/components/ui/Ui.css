@@ -130,3 +130,9 @@ fieldset {
 .deletebutton__alert {
   display: flex;
 }
+
+/* LINK FORM */
+
+.linkform {
+  margin: 0 0 1rem 0
+}

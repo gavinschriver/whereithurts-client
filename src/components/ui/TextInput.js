@@ -1,15 +1,16 @@
 import React from "react";
 import "./Ui.css";
 
-export const TextInput = (props) => {
+export const TextInput = ({label, ref, ...props}) => {
+
   return (
       <fieldset className="textinput">
-        {props.label && (
+        {label && (
           <label {...props} className="textinput__label">
-            {props.label}:{" "}
+            {label}:{" "}
           </label>
         )}
-        <input type="text" {...props} className="textinput__input" />
+      <input type="text" {...props} ref={ref} className="textinput__input" />
       </fieldset>
   );
 };
