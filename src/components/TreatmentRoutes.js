@@ -7,6 +7,7 @@ const TreatmentRoutes = (props) => {
   return (
     <TreatmentProviders>
       <Route path="/treatments/new" render={(p) => <TreatmentForm {...p} />} />
+      <Route path="/treatments/edit/:treatmentId(\d+)" render={(p) => <TreatmentForm {...p} />} />
     </TreatmentProviders>
   );
 };

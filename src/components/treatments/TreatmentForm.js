@@ -27,8 +27,15 @@ const TreatmentForm = (props) => {
   const editMode = location.pathname.includes("edit");
 
   //treatment
-  const { createTreatment } = useContext(TreatmentContext)
-  const [treatmentToUpdate, setTreatmentToUpdate] = useState({})
+  const { createTreatment, getTreatmentById } = useContext(TreatmentContext);
+  const [treatmentToUpdate, setTreatmentToUpdate] = useState({
+    notes: "",
+    name: "",
+    treatmenttype: { id: 0 },
+    bodypart: { id: 0 },
+    hurts: [],
+    links: [],
+  });
 
   const [basicFormValues, setBasicFormValues] = useState({
     bodypart_id: "",
@@ -44,21 +51,19 @@ const TreatmentForm = (props) => {
 
   //handle treatment add or update
 
-  const handleSubmitUpdate = (e) => {
-    
-  };
+  const handleSubmitUpdate = (e) => {};
 
   const handleSubmitNew = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const newTreatment = {
       name: basicFormValues.name,
       notes: basicFormValues.notes,
       treatmenttype_id: parseInt(basicFormValues.treatmenttype_id),
       bodypart_id: parseInt(basicFormValues.bodypart_id),
       hurt_ids: selectedHurts.map((h) => h.id),
-      treatment_links: selectedLinks
-    }
-    const createdTreatment = await createTreatment(newTreatment)
+      treatment_links: selectedLinks,
+    };
+    const createdTreatment = await createTreatment(newTreatment);
   };
 
   //hurts
@@ -91,9 +96,26 @@ const TreatmentForm = (props) => {
 
   const removeLinkById = deselectItemById(selectedLinks, setSelectedLinks);
 
+  // initial hook to get toggleable items by patient_id === added_by_id
   useEffect(async () => {
     await getHurtsByPatientId(current_patient_id);
+    if (editMode && treatmentId) {
+      const treatmentToUpdate = await getTreatmentById(treatmentId);
+      setTreatmentToUpdate(treatmentToUpdate);
+    }
   }, []);
+
+  //if we're in edit mode, read the loaded "treatmentToUpdate" values to set the state values associated w/ each UI
+  useEffect(() => {
+    if (treatmentToUpdate.hurts) setSelectedHurts(treatmentToUpdate.hurts);
+    if (treatmentToUpdate.links) setSelectedLinks(treatmentToUpdate.links);
+    setBasicFormValues({
+      name: treatmentToUpdate.name,
+      notes: treatmentToUpdate.notes,
+      treatmenttype_id: treatmentToUpdate.treatmenttype.id,
+      bodypart_id: treatmentToUpdate.bodypart.id,
+    });
+  }, [treatmentToUpdate]);
 
   return (
     <BasicPage>
