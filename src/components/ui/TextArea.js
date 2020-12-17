@@ -9,7 +9,7 @@ export const TextArea = (props) => {
             {props.label}:{" "}
           </label>
         )}
-        <input type="textarea" {...props} className="textarea__input" />
+        <textarea type="textarea" {...props} className="textarea__input" />
       </fieldset>
   );
 };

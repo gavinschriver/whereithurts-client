@@ -14,73 +14,73 @@
   text-align: left;
 }
 
-
 /* BASIC PAGE */
 
 /* top-level div for all content outside of navbar */
 .basicpage {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    background-color: white;
-    text-align: left;
-  }
-  
-  /* first div within page wrapper to control content area width and position */
-  .basicwrapper {
-    width: 70vh;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  background-color: white;
+  text-align: left;
+}
 
-  /* AUTH PAGE */
+/* first div within page wrapper to control content area width and position */
+.basicwrapper {
+  width: 70vh;
+}
 
-  /* top-level div for all auth page items */
-  .authpage {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #BEBEBE
-  }
-  
-  /* first div within page wrapper to control content area position */
-  .authwrapper {
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-  } 
-  
-  .authwrapper h1 {
-   text-align: center;
-  }
-  
- /* FORM PAGE  */
+/* AUTH PAGE */
 
- .formpage_layout h1 {
-   background-color: #18A0FB;
-   color: white;
-   border-radius: 2px;
-   padding: 0.25rem;
-   text-align: center;
- }
+/* top-level div for all auth page items */
+.authpage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #bebebe;
+}
 
+/* first div within page wrapper to control content area position */
+.authwrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
+.authwrapper h1 {
+  text-align: center;
+}
 
- .formpage_layout .row {
-   justify-content: flex-end;
- }
+/* FORM PAGE  */
+
+.formpage_layout h1 {
+  background-color: #18a0fb;
+  color: white;
+  border-radius: 2px;
+  padding: 0.25rem;
+  text-align: center;
+}
+
+.formpage_layout fieldset {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.formpage_layout .row {
+  justify-content: flex-end;
+}
 
 /* LIST PAGE */
 
 .listitem {
   margin: 1em 0 1em 0;
-  padding: .25rem;
-  border-radius: 2.5px;;
+  padding: 0.25rem;
+  border-radius: 2.5px;
   /* box-shadow: 5px 5px 5px grey; */
-  ;
 }
 
 .listitem .row {
@@ -98,7 +98,6 @@
   font-size: medium;
 }
 
-
 .listitem__subcollection {
   display: flex;
   color: black;
@@ -109,7 +108,7 @@
   font-size: small;
   padding: 0.25rem;
   margin: 0.25rem;
-  border-radius: 10px;;
+  border-radius: 10px;
   height: fit-content;
 }
 

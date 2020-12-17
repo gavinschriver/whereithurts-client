@@ -5,7 +5,7 @@ import AddIcon from "./../../assets/images/black_plus_icon.png";
 import RemoveIcon from "./../../assets/images/black_minus_icon.png";
 
 const ShowHideSection = (props) => {
-  const { showhidetext, showing, setShowing } = props;
+  const { showhidetext, showing, setShowing = () => {} } = props;
 
   const src = showing ? RemoveIcon : AddIcon;
 
@@ -18,10 +18,12 @@ const ShowHideSection = (props) => {
           onClick={() => setShowing(!showing)}
         >
           <span>{showing ? "Close" : "Add more"}</span>
-          <img src={src} alt="show hide section button"/>
+          <img src={src} alt="show hide section button" />
         </Button>
       </div>
-      {showing && props.children}
+      <div className="showhidesection__content">
+        {showing && props.children}
+      </div>
     </div>
   );
 };
