@@ -51,8 +51,6 @@ const TreatmentForm = (props) => {
 
   //handle treatment add or update
 
-  const handleSubmitUpdate = (e) => {};
-
   const handleSubmitNew = async (e) => {
     e.preventDefault();
     const newTreatment = {
@@ -64,6 +62,20 @@ const TreatmentForm = (props) => {
       treatment_links: selectedLinks,
     };
     const createdTreatment = await createTreatment(newTreatment);
+  };
+
+  const handleSubmitUpdate = (e) => {
+    e.preventDefault()
+    const updatedTreatment = {
+      id: treatmentToUpdate.id,
+      name: basicFormValues.name,
+      notes: basicFormValues.notes,
+      bodypart_id: parseInt(basicFormValues.bodypart_id),
+      treatmenttype_id: parseInt(basicFormValues.treatmenttype_id),
+      hurt_ids: selectedHurts.map((h) => h.id),
+      treatment_links: selectedLinks
+    }
+    console.log(updatedTreatment)
   };
 
   //hurts
@@ -102,6 +114,7 @@ const TreatmentForm = (props) => {
     if (editMode && treatmentId) {
       const treatmentToUpdate = await getTreatmentById(treatmentId);
       setTreatmentToUpdate(treatmentToUpdate);
+      setLinkIdCount(treatmentToUpdate.links.map((tl) => tl.id).sort().reverse()[0])
     }
   }, []);
 
@@ -162,14 +175,14 @@ const TreatmentForm = (props) => {
               setShowing={setShowAddLinks}
             >
               <div className="linkform">
-                <div className="row">
-                  <fieldset>
+                <div className="row linkform--row">
+                  <fieldset className="linkform__field">
                     <label htmlFor="linktext">Link Text</label>
                     <input ref={linkTextRef} name="linktext" />
                   </fieldset>
                 </div>
                 <div className="row">
-                  <fieldset>
+                  <fieldset className="linkform__field">
                     <label htmlFor="linkurl">Link URL</label>
                     <input ref={linkURLRef} name="linkurl" />
                   </fieldset>
