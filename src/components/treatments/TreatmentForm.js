@@ -15,12 +15,44 @@ import TextInput from "../ui/TextInput";
 
 const TreatmentForm = (props) => {
   //access History, Location and Param objects; establish if we're in editMode or not
+  //if we're in edit mode, we'll be accessing the values from the treatmentToUpdate, which is loaded into state from the response body,
+  // and setting them to the corresponding state variable values (basicFormValues, selectedHurts and selectedLinks)
 
   const history = useHistory;
   const location = useLocation();
   const { treatmentId } = useParams();
 
   const editMode = location.pathname.includes("edit");
+  const treatmentToUpdate = useState({})
+
+  const [basicFormValues, setBasicFormValues] = useState({
+    bodypart_id: "",
+    treatmenttype_id: "",
+    name: "",
+    notes: "",
+  });
+
+  const handleBasicFormValueInputChange = (e) => {
+    const { name, value } = e.target;
+    setBasicFormValues({ ...basicFormValues, [name]: value });
+  };
+
+  //handle treatment add or update
+
+  const handleSubmitUpdate = (e) => {};
+
+  const handleSubmitNew = (e) => {
+    const newTreatment = {
+      name: basicFormValues.name,
+      notes: basicFormValues.notes,
+      treatmenttype_id: parseInt(basicFormValues.treatmenttype_id),
+      bodypart_id: parseInt(basicFormValues.bodypart_id),
+      hurt_ids: selectedHurts.map((h) => h.id),
+      treatment_links: selectedLinks
+    }
+
+    console.log(newTreatment)
+  };
 
   //hurts
   const { hurts, getHurtsByPatientId } = useContext(HurtContext);
@@ -37,8 +69,8 @@ const TreatmentForm = (props) => {
   const linkTextRef = useRef("");
   const linkURLRef = useRef("");
   const [showAddLinks, setShowAddLinks] = useState(false);
-  const [linkIDcount, setLinkIdCount] = useState(0)
-  const [selectedLinks, setSelectedLinks] = useState([])
+  const [linkIDcount, setLinkIdCount] = useState(0);
+  const [selectedLinks, setSelectedLinks] = useState([]);
 
   const handleAddLink = (e) => {
     const newLink = {
@@ -46,11 +78,11 @@ const TreatmentForm = (props) => {
       linktext: linkTextRef.current.value,
       linkurl: linkURLRef.current.value,
     };
-    setSelectedLinks([...selectedLinks, newLink])
-    setLinkIdCount((linkIDcount) => (linkIDcount + 1))
+    setSelectedLinks([...selectedLinks, newLink]);
+    setLinkIdCount((linkIDcount) => linkIDcount + 1);
   };
 
-  const removeLinkById = deselectItemById(selectedLinks, setSelectedLinks)
+  const removeLinkById = deselectItemById(selectedLinks, setSelectedLinks);
 
   useEffect(async () => {
     await getHurtsByPatientId(current_patient_id);
@@ -59,12 +91,34 @@ const TreatmentForm = (props) => {
   return (
     <BasicPage>
       <div className="basicwrapper">
-        <FormPageLayout resource="Treatment" isEditMode={editMode}>
+        <FormPageLayout
+          resource="Treatment"
+          isEditMode={editMode}
+          onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
+        >
           <main className="treatmentform">
-            <TextInput name="name" label="Name" />
-            <TreatmentTypeSelectBar />
-            <BodypartSelectBar />
-            <TextArea name="notes" label="Notes" />
+            <TextInput
+              name="name"
+              label="Name"
+              onChange={handleBasicFormValueInputChange}
+              value={basicFormValues.name}
+            />
+            <TreatmentTypeSelectBar
+              name="treatmenttype_id"
+              onChange={handleBasicFormValueInputChange}
+              value={basicFormValues.treatmenttype_id}
+            />
+            <BodypartSelectBar
+              name="bodypart_id"
+              onChange={handleBasicFormValueInputChange}
+              value={basicFormValues.bodypart_id}
+            />
+            <TextArea
+              name="notes"
+              label="Notes"
+              value={basicFormValues.notes}
+              onChange={handleBasicFormValueInputChange}
+            />
             <HurtToggleGroup
               collection={hurts}
               showing={showAddHurts}
@@ -73,7 +127,11 @@ const TreatmentForm = (props) => {
               onAdd={handleSelectHurt}
               onRemove={deselectHurtById}
             />
-            <ShowHideSection showhidetext="Links" showing={showAddLinks} setShowing={setShowAddLinks}>
+            <ShowHideSection
+              showhidetext="Links"
+              showing={showAddLinks}
+              setShowing={setShowAddLinks}
+            >
               <div className="linkform">
                 <div className="row">
                   <fieldset>
@@ -92,7 +150,12 @@ const TreatmentForm = (props) => {
                 </div>
               </div>
             </ShowHideSection>
-            <BadgeField selected={selectedLinks} badgeText="linktext" direction="remove" onRemove={removeLinkById} />
+            <BadgeField
+              selected={selectedLinks}
+              badgeText="linktext"
+              direction="remove"
+              onRemove={removeLinkById}
+            />
           </main>
         </FormPageLayout>
       </div>
