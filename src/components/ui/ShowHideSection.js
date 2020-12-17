@@ -5,7 +5,7 @@ import AddIcon from "./../../assets/images/black_plus_icon.png";
 import RemoveIcon from "./../../assets/images/black_minus_icon.png";
 
 const ShowHideSection = (props) => {
-  const { showhidetext, showing, setShowing } = props;
+  const { showhidetext, showing, setShowing = () => {} } = props;
 
   const src = showing ? RemoveIcon : AddIcon;
 
