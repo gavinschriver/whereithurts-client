@@ -12,9 +12,11 @@ import Button from "../ui/Button";
 import ShowHideSection from "../ui/ShowHideSection";
 import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
+import { TreatmentContext } from "./TreatmentProvider";
 
 const TreatmentForm = (props) => {
   //access History, Location and Param objects; establish if we're in editMode or not
+
   //if we're in edit mode, we'll be accessing the values from the treatmentToUpdate, which is loaded into state from the response body,
   // and setting them to the corresponding state variable values (basicFormValues, selectedHurts and selectedLinks)
 
@@ -23,7 +25,10 @@ const TreatmentForm = (props) => {
   const { treatmentId } = useParams();
 
   const editMode = location.pathname.includes("edit");
-  const treatmentToUpdate = useState({})
+
+  //treatment
+  const { createTreatment } = useContext(TreatmentContext)
+  const [treatmentToUpdate, setTreatmentToUpdate] = useState({})
 
   const [basicFormValues, setBasicFormValues] = useState({
     bodypart_id: "",
@@ -39,9 +44,12 @@ const TreatmentForm = (props) => {
 
   //handle treatment add or update
 
-  const handleSubmitUpdate = (e) => {};
+  const handleSubmitUpdate = (e) => {
+    
+  };
 
-  const handleSubmitNew = (e) => {
+  const handleSubmitNew = async (e) => {
+    e.preventDefault()
     const newTreatment = {
       name: basicFormValues.name,
       notes: basicFormValues.notes,
@@ -50,8 +58,7 @@ const TreatmentForm = (props) => {
       hurt_ids: selectedHurts.map((h) => h.id),
       treatment_links: selectedLinks
     }
-
-    console.log(newTreatment)
+    const createdTreatment = await createTreatment(newTreatment)
   };
 
   //hurts
