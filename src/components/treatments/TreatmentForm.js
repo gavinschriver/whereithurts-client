@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { current_patient_id, deselectItemById } from "../../utils/helpers";
+import { deselectItemById } from "../../utils/helpers";
 import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import { HurtContext } from "../hurts/HurtProvider";
 import HurtToggleGroup from "../hurts/HurtToggleGroup";
@@ -115,7 +115,7 @@ const TreatmentForm = (props) => {
 
   // initial hook to get toggleable items by patient_id === added_by_id
   useEffect(async () => {
-    await getHurtsByPatientId(current_patient_id);
+    await getHurtsByPatientId(localStorage.getItem("patient_id"));
     if (editMode && treatmentId) {
       const treatmentToUpdate = await getTreatmentById(treatmentId);
       setTreatmentToUpdate(treatmentToUpdate);
