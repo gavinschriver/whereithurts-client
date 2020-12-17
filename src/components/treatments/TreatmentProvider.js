@@ -26,8 +26,12 @@ export const TreatmentProvider = props => {
     return treatment
   }
 
+  const updateTreatment = async (treatmentId, updatedTreatment) => {
+    return await request(`${resourceURL}/${treatmentId}`, "PUT", updatedTreatment)
+  }
+
   return (
-    <TreatmentContext.Provider value={{ treatments, createTreatment, getTreatmentsByPatientId, getTreatmentById }}>
+    <TreatmentContext.Provider value={{ treatments, createTreatment, getTreatmentsByPatientId, getTreatmentById, updateTreatment }}>
       {props.children}
     </TreatmentContext.Provider>
   );

@@ -27,7 +27,7 @@ const TreatmentForm = (props) => {
   const editMode = location.pathname.includes("edit");
 
   //treatment
-  const { createTreatment, getTreatmentById } = useContext(TreatmentContext);
+  const { createTreatment, getTreatmentById, updateTreatment } = useContext(TreatmentContext);
   const [treatmentToUpdate, setTreatmentToUpdate] = useState({
     notes: "",
     name: "",
@@ -64,7 +64,7 @@ const TreatmentForm = (props) => {
     const createdTreatment = await createTreatment(newTreatment);
   };
 
-  const handleSubmitUpdate = (e) => {
+  const handleSubmitUpdate = async (e) => {
     e.preventDefault()
     const updatedTreatment = {
       id: treatmentToUpdate.id,
@@ -75,7 +75,7 @@ const TreatmentForm = (props) => {
       hurt_ids: selectedHurts.map((h) => h.id),
       treatment_links: selectedLinks
     }
-    console.log(updatedTreatment)
+    await updateTreatment(treatmentId, updatedTreatment)
   };
 
   //hurts
@@ -97,14 +97,18 @@ const TreatmentForm = (props) => {
   const [selectedLinks, setSelectedLinks] = useState([]);
 
   const handleAddLink = (e) => {
+    console.log(linkIDcount)
     const newLink = {
       id: linkIDcount + 1,
       linktext: linkTextRef.current.value,
       linkurl: linkURLRef.current.value,
     };
     setSelectedLinks([...selectedLinks, newLink]);
-    setLinkIdCount((linkIDcount) => linkIDcount + 1);
   };
+
+  useEffect(() => {
+    setLinkIdCount((linkIDcount) => linkIDcount + 1);
+  },[selectedLinks])
 
   const removeLinkById = deselectItemById(selectedLinks, setSelectedLinks);
 
@@ -114,7 +118,6 @@ const TreatmentForm = (props) => {
     if (editMode && treatmentId) {
       const treatmentToUpdate = await getTreatmentById(treatmentId);
       setTreatmentToUpdate(treatmentToUpdate);
-      setLinkIdCount(treatmentToUpdate.links.map((tl) => tl.id).sort().reverse()[0])
     }
   }, []);
 
@@ -128,6 +131,7 @@ const TreatmentForm = (props) => {
       treatmenttype_id: treatmentToUpdate.treatmenttype.id,
       bodypart_id: treatmentToUpdate.bodypart.id,
     });
+    setLinkIdCount(treatmentToUpdate.links.map((tl) => tl.id).sort().reverse()[0])
   }, [treatmentToUpdate]);
 
   return (
