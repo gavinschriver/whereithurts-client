@@ -22,7 +22,9 @@ const HomePage = () => {
               <h2>Add a Hurt</h2>
             </Button>
             <Button>
-              <h2>Add a Treatment</h2>
+              <Link to="/treatments/new">
+                <h2>Add a Treatment</h2>
+              </Link>
             </Button>
             <Button>
               <Link to="/healings/new">

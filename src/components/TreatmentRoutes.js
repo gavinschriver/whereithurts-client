@@ -1,11 +1,14 @@
-import React from "react"
+import React from "react";
+import { Route } from "react-router-dom";
+import TreatmentProviders from "./providers/TreatmentProviders";
+import TreatmentForm from "./treatments/TreatmentForm";
 
 const TreatmentRoutes = (props) => {
-    return (
-        <TreatmentProviders>
+  return (
+    <TreatmentProviders>
+      <Route path="/treatments/new" render={(p) => <TreatmentForm {...p} />} />
+    </TreatmentProviders>
+  );
+};
 
-        </TreatmentProviders>
-    )
-}
-
-export default TreatmentRoutes
+export default TreatmentRoutes;
