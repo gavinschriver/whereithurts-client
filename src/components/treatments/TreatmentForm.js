@@ -96,8 +96,8 @@ const TreatmentForm = (props) => {
   const [linkIDcount, setLinkIdCount] = useState(0);
   const [selectedLinks, setSelectedLinks] = useState([]);
 
+  // when a link is added, make an object with an Id that's equal to the current linkIdcount plus 1
   const handleAddLink = (e) => {
-    console.log(linkIDcount)
     const newLink = {
       id: linkIDcount + 1,
       linktext: linkTextRef.current.value,
