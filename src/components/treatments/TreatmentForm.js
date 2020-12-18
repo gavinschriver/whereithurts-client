@@ -142,7 +142,7 @@ const TreatmentForm = (props) => {
       bodypart_id: treatmentToUpdate.bodypart.id,
     });
     // set linkIDcount to equal the value of the highest Numerical id in the array of links that come back so we dont get any duplicates
-    if (treatmentToUpdate.links)
+    if (treatmentToUpdate.links.length)
       setLinkIdCount(
         treatmentToUpdate.links
           .map((tl) => tl.id)
