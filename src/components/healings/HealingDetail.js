@@ -27,13 +27,22 @@ const HealingDetail = (props) => {
   };
 
   //pull in healing on page load when healingId is detected from params
-  useEffect(async () => {
-    const healing = await getHealingById(healingId);
-    if ("id" in healing) {
-      setHealing(healing);
-    }
-    setIsLoaded(true);
-  }, []);
+  // useEffect(async () => {
+  //   const healing = await getHealingById(healingId);
+  //   if ("id" in healing) {
+  //     setHealing(healing);
+  //   }
+  //   setIsLoaded(true);
+  // }, []);
+
+  useEffect(() => {
+    getHealingById(healingId).then((healing) => {
+      if ("id" in healing) {
+        setHealing(healing);
+      }
+      setIsLoaded(true);
+    });
+  });
 
   const [isLoaded, setIsLoaded] = useState(false);
 

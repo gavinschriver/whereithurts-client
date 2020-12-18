@@ -25,8 +25,8 @@ const TreatmentDetail = (props) => {
   };
 
   //check for ID in response (treatment was successfully found)
-  useEffect(async () => {
-    const treatment = await getTreatmentById(treatmentId);
+  useEffect(() => {
+    getTreatmentById(treatmentId);
     if ("id" in treatment) {
       setTreatment(treatment);
     }
