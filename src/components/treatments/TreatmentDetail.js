@@ -52,7 +52,7 @@ const TreatmentDetail = (props) => {
           >
             <main div className="treatmentdetail">
               <div className="treatment">
-                <h1>Treatment: {treatment.name}</h1>
+                <h2>Treatment: {treatment.name}</h2>
                 <h3>Bodypart: {treatment.bodypart.name}</h3>
                 <div className="treatment__notes">
                   <h3>Notes:</h3>
