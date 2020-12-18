@@ -26,23 +26,14 @@ const HealingDetail = (props) => {
     history.push(`/healings`);
   };
 
-  //pull in healing on page load when healingId is detected from params
-  // useEffect(async () => {
-  //   const healing = await getHealingById(healingId);
-  //   if ("id" in healing) {
-  //     setHealing(healing);
-  //   }
-  //   setIsLoaded(true);
-  // }, []);
-
-  useEffect(() => {
-    getHealingById(healingId).then((healing) => {
-      if ("id" in healing) {
-        setHealing(healing);
-      }
-      setIsLoaded(true);
-    });
-  });
+  // pull in healing on page load when healingId is detected from params
+  useEffect(async () => {
+    const healing = await getHealingById(healingId);
+    if ("id" in healing) {
+      setHealing(healing);
+    }
+    setIsLoaded(true);
+  }, []);
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -52,15 +43,10 @@ const HealingDetail = (props) => {
 
   return (
     <BasicPage>
-      {isLoaded && healing.id && (
         <div className="basicwrapper">
           <DetailPageLayout
             onEdit={() => history.push(`/healings/edit/${healing.id}`)}
             onDelete={() => handleDeleteHealing(healing.id)}
-            iscurrentpatients={
-              healing.patient.id ===
-              parseInt(localStorage.getItem("patient_id"))
-            }
           >
             <main className="healingdetail">
               <div className="healing">
@@ -83,7 +69,6 @@ const HealingDetail = (props) => {
             </main>
           </DetailPageLayout>
         </div>
-      )}
     </BasicPage>
   );
 };
