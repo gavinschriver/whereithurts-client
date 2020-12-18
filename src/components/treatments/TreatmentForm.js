@@ -174,7 +174,7 @@ const TreatmentForm = (props) => {
 
   return (
     <BasicPage>
-      {isLoaded && (
+      {isLoaded ? (
         <div className="basicwrapper">
           <FormPageLayout
             resource="Treatment"
@@ -244,7 +244,7 @@ const TreatmentForm = (props) => {
             </main>
           </FormPageLayout>
         </div>
-      )}
+      ) : <div>Still loading...</div>}
     </BasicPage>
   );
 };
