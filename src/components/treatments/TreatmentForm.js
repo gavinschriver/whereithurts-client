@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { deselectItemById } from "../../utils/helpers";
+import FourOhFourPage from "../auth/404Page";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
 import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import { HurtContext } from "../hurts/HurtProvider";
 import HurtToggleGroup from "../hurts/HurtToggleGroup";
@@ -122,8 +124,11 @@ const TreatmentForm = (props) => {
     await getHurtsByPatientId(localStorage.getItem("patient_id"));
     if (editMode && treatmentId) {
       const treatmentToUpdate = await getTreatmentById(treatmentId);
-      setTreatmentToUpdate(treatmentToUpdate);
+      if ("id" in treatmentToUpdate) {
+        setTreatmentToUpdate(treatmentToUpdate);
+      }
     }
+    setIsLoaded(true);
   }, []);
 
   //if we're in edit mode, this use effect will read the loaded "treatmentToUpdate" values to set the state values associated w/ each UI
@@ -146,77 +151,100 @@ const TreatmentForm = (props) => {
       );
   }, [treatmentToUpdate]);
 
+  //loading state/permissions/404s
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  //if the page has loaded AND we're in edit mode AND there's no treatment id, its a 404
+  if (isLoaded && editMode && !treatmentToUpdate.id) {
+    return <FourOhFourPage />;
+  }
+
+  //if the page has loaded AND we're in edit mode AND theres a healing ID BUT that healing ID isn't that of the current user, return unauthorized
+  if (
+    isLoaded &&
+    editMode &&
+    treatmentToUpdate.id &&
+    !(
+      treatmentToUpdate.added_by.id ===
+      parseInt(localStorage.getItem("patient_id"))
+    )
+  ) {
+    return <UnauthorizedPage />;
+  }
+
   return (
     <BasicPage>
-      <div className="basicwrapper">
-        <FormPageLayout
-          resource="Treatment"
-          isEditMode={editMode}
-          onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
-        >
-          <main className="treatmentform">
-            <TextInput
-              name="name"
-              label="Name"
-              onChange={handleBasicFormValueInputChange}
-              value={basicFormValues.name}
-            />
-            <TreatmentTypeSelectBar
-              name="treatmenttype_id"
-              onChange={handleBasicFormValueInputChange}
-              value={basicFormValues.treatmenttype_id}
-            />
-            <BodypartSelectBar
-              name="bodypart_id"
-              onChange={handleBasicFormValueInputChange}
-              value={basicFormValues.bodypart_id}
-            />
-            <TextArea
-              name="notes"
-              label="Notes"
-              value={basicFormValues.notes}
-              onChange={handleBasicFormValueInputChange}
-            />
-            <HurtToggleGroup
-              collection={hurts}
-              showing={showAddHurts}
-              selected={selectedHurts}
-              setShowing={setShowAddHurts}
-              onAdd={handleSelectHurt}
-              onRemove={deselectHurtById}
-            />
-            <ShowHideSection
-              showhidetext="Links"
-              showing={showAddLinks}
-              setShowing={setShowAddLinks}
-            >
-              <div className="linkform">
-                <div className="row linkform--row">
-                  <fieldset className="linkform__field">
-                    <label htmlFor="linktext">Link Text</label>
-                    <input ref={linkTextRef} name="linktext" />
-                  </fieldset>
+      {isLoaded && (
+        <div className="basicwrapper">
+          <FormPageLayout
+            resource="Treatment"
+            isEditMode={editMode}
+            onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
+          >
+            <main className="treatmentform">
+              <TextInput
+                name="name"
+                label="Name"
+                onChange={handleBasicFormValueInputChange}
+                value={basicFormValues.name}
+              />
+              <TreatmentTypeSelectBar
+                name="treatmenttype_id"
+                onChange={handleBasicFormValueInputChange}
+                value={basicFormValues.treatmenttype_id}
+              />
+              <BodypartSelectBar
+                name="bodypart_id"
+                onChange={handleBasicFormValueInputChange}
+                value={basicFormValues.bodypart_id}
+              />
+              <TextArea
+                name="notes"
+                label="Notes"
+                value={basicFormValues.notes}
+                onChange={handleBasicFormValueInputChange}
+              />
+              <HurtToggleGroup
+                collection={hurts}
+                showing={showAddHurts}
+                selected={selectedHurts}
+                setShowing={setShowAddHurts}
+                onAdd={handleSelectHurt}
+                onRemove={deselectHurtById}
+              />
+              <ShowHideSection
+                showhidetext="Links"
+                showing={showAddLinks}
+                setShowing={setShowAddLinks}
+              >
+                <div className="linkform">
+                  <div className="row linkform--row">
+                    <fieldset className="linkform__field">
+                      <label htmlFor="linktext">Link Text</label>
+                      <input ref={linkTextRef} name="linktext" />
+                    </fieldset>
+                  </div>
+                  <div className="row">
+                    <fieldset className="linkform__field">
+                      <label htmlFor="linkurl">Link URL</label>
+                      <input ref={linkURLRef} name="linkurl" />
+                    </fieldset>
+                  </div>
+                  <div className="row">
+                    <Button onClick={handleAddLink}>Save Link</Button>
+                  </div>
                 </div>
-                <div className="row">
-                  <fieldset className="linkform__field">
-                    <label htmlFor="linkurl">Link URL</label>
-                    <input ref={linkURLRef} name="linkurl" />
-                  </fieldset>
-                </div>
-                <div className="row">
-                  <Button onClick={handleAddLink}>Save Link</Button>
-                </div>
-              </div>
-            </ShowHideSection>
-            <BadgeField
-              selected={selectedLinks}
-              badgeText="linktext"
-              direction="remove"
-              onRemove={removeLinkById}
-            />
-          </main>
-        </FormPageLayout>
-      </div>
+              </ShowHideSection>
+              <BadgeField
+                selected={selectedLinks}
+                badgeText="linktext"
+                direction="remove"
+                onRemove={removeLinkById}
+              />
+            </main>
+          </FormPageLayout>
+        </div>
+      )}
     </BasicPage>
   );
 };

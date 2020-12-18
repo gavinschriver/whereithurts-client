@@ -5,16 +5,14 @@ import HomePage from "./homepage/Homepage";
 import TreatmentRoutes from "./TreatmentRoutes";
 
 const AppViews = () => {
-
   return (
     <>
       <Route exact path="/">
         <HomePage />
       </Route>
 
-      <TreatmentRoutes/>
+      <TreatmentRoutes />
       <HealingRoutes />
-      
     </>
   );
 };

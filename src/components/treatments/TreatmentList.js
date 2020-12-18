@@ -33,7 +33,20 @@ const TreatmentList = (props) => {
                                           <h3>Name: {t.name}
                                           </h3>
                                           <h3>Bodypart: {t.bodypart.name}</h3>
-                                    </div>
+                                      </div>
+                                      <div className="listitem__subcollection"> 
+                                          {
+                                              t.hurts.map((h) => {
+                                                  if (h.patient.id === parseInt(localStorage.getItem("patient_id"))) {
+                                                      return (
+                                                          <span key={h.id} className="listitem__subcollection__item">
+                                                              {h.name}
+                                                          </span>
+                                                      )
+                                                  }
+                                              })
+                                        }
+                                      </div>
                                   </Button>
                               </div>
                           )
