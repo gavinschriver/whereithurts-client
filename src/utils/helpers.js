@@ -19,7 +19,9 @@ export const deselectItemById = (selected, setSelected) => {
   };
 };
 
-/** quick way to access the Patient id of the currently logged-in user */
+/** quick way to access the Patient id of the currently logged-in user 
+ * this is currently not working or something?
+*/
 export const current_patient_id = parseInt(localStorage.getItem("patient_id"))
 
 /** convert an int value of seconds into minutes

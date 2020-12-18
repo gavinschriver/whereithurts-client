@@ -20,14 +20,16 @@ const TreatmentForm = (props) => {
   //if we're in edit mode, we'll be accessing the values from the treatmentToUpdate, which is loaded into state from the response body,
   // and setting them to the corresponding state variable values (basicFormValues, selectedHurts and selectedLinks)
 
-  const history = useHistory;
+  const history = useHistory();
   const location = useLocation();
   const { treatmentId } = useParams();
 
   const editMode = location.pathname.includes("edit");
 
   //treatment
-  const { createTreatment, getTreatmentById, updateTreatment } = useContext(TreatmentContext);
+  const { createTreatment, getTreatmentById, updateTreatment } = useContext(
+    TreatmentContext
+  );
   const [treatmentToUpdate, setTreatmentToUpdate] = useState({
     notes: "",
     name: "",
@@ -62,10 +64,11 @@ const TreatmentForm = (props) => {
       treatment_links: selectedLinks,
     };
     const createdTreatment = await createTreatment(newTreatment);
+    history.push("/treatments");
   };
 
   const handleSubmitUpdate = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const updatedTreatment = {
       id: treatmentToUpdate.id,
       name: basicFormValues.name,
@@ -73,9 +76,10 @@ const TreatmentForm = (props) => {
       bodypart_id: parseInt(basicFormValues.bodypart_id),
       treatmenttype_id: parseInt(basicFormValues.treatmenttype_id),
       hurt_ids: selectedHurts.map((h) => h.id),
-      treatment_links: selectedLinks
-    }
-    await updateTreatment(treatmentId, updatedTreatment)
+      treatment_links: selectedLinks,
+    };
+    await updateTreatment(treatmentId, updatedTreatment);
+    history.push("/treatments");
   };
 
   //hurts
@@ -109,7 +113,7 @@ const TreatmentForm = (props) => {
   //every time selectedlinks changes, where its an addition or removal, increment linkIdcount by 1 so its always unique
   useEffect(() => {
     setLinkIdCount((linkIDcount) => linkIDcount + 1);
-  },[selectedLinks])
+  }, [selectedLinks]);
 
   const removeLinkById = deselectItemById(selectedLinks, setSelectedLinks);
 
@@ -133,7 +137,13 @@ const TreatmentForm = (props) => {
       bodypart_id: treatmentToUpdate.bodypart.id,
     });
     // set linkIDcount to equal the value of the highest Numerical id in the array of links that come back so we dont get any duplicates
-    if (treatmentToUpdate.links) setLinkIdCount(treatmentToUpdate.links.map((tl) => tl.id).sort().reverse()[0])
+    if (treatmentToUpdate.links)
+      setLinkIdCount(
+        treatmentToUpdate.links
+          .map((tl) => tl.id)
+          .sort()
+          .reverse()[0]
+      );
   }, [treatmentToUpdate]);
 
   return (

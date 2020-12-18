@@ -13,6 +13,9 @@ export const NavBar = () => {
         <Button>
           <NavLink to="/healings">Healings</NavLink>
         </Button>
+        <Button>
+          <NavLink to="/treatments">Treatments</NavLink>
+        </Button>
       </div>
       <Button>Logout</Button>
     </nav>

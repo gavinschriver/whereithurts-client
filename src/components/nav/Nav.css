@@ -24,3 +24,10 @@
     color: #18A0FB;
     text-decoration: none;
 }
+
+
+.nav__menu {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
