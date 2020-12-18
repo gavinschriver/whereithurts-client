@@ -45,10 +45,6 @@ const TreatmentDetail = (props) => {
           <DetailPageLayout
             onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
             onDelete={() => handleDeleteTreatment(treatment.id)}
-            iscurrentpatients={
-              treatment.added_by.id ===
-              parseInt(localStorage.getItem("patient_id"))
-            }
           >
             <main div className="treatmentdetail">
               <div className="treatment">

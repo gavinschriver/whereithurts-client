@@ -46,7 +46,7 @@ const HealingDetail = (props) => {
         <div className="basicwrapper">
           <DetailPageLayout
             onEdit={() => history.push(`/healings/edit/${healing.id}`)}
-            onDelete={() => handleDeleteHealing(healing.id)}
+          onDelete={() => handleDeleteHealing(healing.id)}
           >
             <main className="healingdetail">
               <div className="healing">
