@@ -25,8 +25,8 @@ const TreatmentDetail = (props) => {
   };
 
   //check for ID in response (treatment was successfully found)
-  useEffect(() => {
-    getTreatmentById(treatmentId);
+  useEffect(async () => {
+    const treatment = await getTreatmentById(treatmentId);
     if ("id" in treatment) {
       setTreatment(treatment);
     }
@@ -39,7 +39,7 @@ const TreatmentDetail = (props) => {
     return <FourOhFourPage />;
   }
   return (
-    <BasicPage>
+    <BasicPage >
       {isLoaded && treatment.id && (
         <div className="basicwrapper">
           <DetailPageLayout
