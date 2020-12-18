@@ -14,7 +14,7 @@ const HealingRoutes = (props) => {
         path="/healings/edit/:healingId(\d+)"
         render={(p) => <HealingForm {...p} />}
       />
-      <Route path="/healings/:healingId(\d)" render={(p) => <HealingDetail/>} />
+      <Route path="/healings/:healingId(\d+)" render={(p) => <HealingDetail/>} />
     </HealingProviders>
   );
 };

@@ -12,7 +12,7 @@ const HealingList = (props) => {
   const history = useHistory();
 
   useEffect(async () => {
-    await getHealingDataByPatientId(current_patient_id);
+    await getHealingDataByPatientId(localStorage.getItem("patient_id"));
   }, []);
 
   return (

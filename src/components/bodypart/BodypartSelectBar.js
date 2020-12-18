@@ -7,8 +7,8 @@ const BodypartSelectBar = (props) => {
     BodypartContext
   );
 
-  useEffect(async () => {
-    await getBodyparts();
+  useEffect( () => {
+     getBodyparts();
   }, []);
 
   return (

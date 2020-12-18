@@ -13,29 +13,34 @@ import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
 import { HealingContext } from "./HealingProvider";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
+import FourOhFourPage from "../auth/404Page";
 
 const HealingForm = (props) => {
-  //access History, Location and Param objects; establish if we're in editMode or not 
+  //access History, Location and Param objects; establish if we're in editMode or not
 
   const history = useHistory();
   const location = useLocation();
   const { healingId } = useParams();
 
-  const editMode = location.pathname.includes('edit');
+  const editMode = location.pathname.includes("edit");
 
   //healing
-  const { getHealingById, createHealing, updateHealing } = useContext(HealingContext);
+  const { getHealingById, createHealing, updateHealing } = useContext(
+    HealingContext
+  );
 
   //state value object to load initial values from item to edit
   const [healing, setHealing] = useState({
     treatments: [],
     hurts: [],
     notes: "",
+    patient: {},
   });
 
-  // refactor these badboys together at some point. soon. 
+  // refactor these badboys together at some point. soon.
   const handleSubmitNew = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const newHealing = {
       duration: timer.timeTotal,
       treatment_ids: selectedTreatments.map((t) => t.id),
@@ -47,7 +52,7 @@ const HealingForm = (props) => {
   };
 
   const handleSubmitUpdate = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const updatedHealing = {
       id: healing.id,
       duration: timer.timeTotal,
@@ -56,7 +61,7 @@ const HealingForm = (props) => {
       notes: notes,
     };
     await updateHealing(healingId, updatedHealing);
-    history.push(`/healings`)
+    history.push(`/healings`);
   };
 
   //treatments
@@ -118,75 +123,100 @@ const HealingForm = (props) => {
     setNotes(value);
   };
 
-
-
-  // initial hook to get toggleable items by patient_id === added_by_id
+  // initial hook to get toggleable items by patient_id === added_by_id, then get/load the healing if we're in editMode
   useEffect(async () => {
     await getTreatmentsByPatientId(localStorage.getItem("patient_id"));
     await getHurtsByPatientId(localStorage.getItem("patient_id"));
     if (editMode && healingId) {
       const healing = await getHealingById(healingId);
-      setHealing(healing);
+      if ("id" in healing) {
+        setHealing(healing);
+      }
     }
+    setIsLoaded(true);
   }, []);
 
   //if we're in edit mode, read the loaded "healing" values to set the state values associated w/ each UI
   useEffect(() => {
     if (healing.hurts) setSelectedHurts(healing.hurts);
     if (healing.treatments) setSelectedTreatments(healing.treatments);
-    if (healing.notes) setNotes(healing.notes)
+    if (healing.notes) setNotes(healing.notes);
     if (healing.duration)
       setTimer((timer) => ({ ...timer, timeTotal: healing.duration }));
   }, [healing]);
 
+  //loading state/permissions/404s
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  //if the page has loaded AND we're in edit mode AND there's no healing id, its a 404
+  if (isLoaded && editMode && !healing.id) {
+    return <FourOhFourPage />;
+  }
+
+//if the page has loaded AND we're in edit mode AND theres a healing ID BUT that healing ID isn't that of the current user, return unauthorized
+  if (
+    isLoaded &&
+    editMode &&
+    healing.id &&
+    !(healing.patient.id === parseInt(localStorage.getItem("patient_id")))
+  ) {
+    return <UnauthorizedPage />;
+  }
+
   return (
     <BasicPage>
-      <div className="basicwrapper">
-        <FormPageLayout
-          resource="Healing"
-          isEditMode={editMode}
-          onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
-        >
-          <main className="healingform">
-            <TreatmentToggleGroup
-              collection={treatments}
-              showing={showAddTreatments}
-              selected={selectedTreatments}
-              setShowing={setShowAddTreatments}
-              onAdd={handleSelectTreatment}
-              onRemove={deselectTreatmentById}
-            />
-            <HurtToggleGroup
-              collection={hurts}
-              showing={showAddHurts}
-              selected={selectedHurts}
-              setShowing={setShowAddHurts}
-              onAdd={handleSelectHurt}
-              onRemove={deselectHurtById}
-            />
-            <ShowHideSection
-              showing={showTimer}
-              setShowing={setShowTimer}
-              showhidetext="Time"
-            >
-              <TimerSelectBar onChange={handleTimerChange} />
-              <Timer timer={timer} setTimer={setTimer} />
-              <TextInput
-                type="number"
-                name="sessionTotal"
-                label="Add or Edit Time"
-                onChange={handleSessionTotalChange}
-                value={timer.timeTotal || ""}
-              ></TextInput>
-            </ShowHideSection>
-            <div className="row" style={{ justifyContent: `flex-start` }}>
-              <span>Currently logged time: {timer.timeTotal}</span>
-            </div>
-            <h3>Notes</h3>
-            <TextArea name="notes" onChange={handleNotesChange} value={notes} />
-          </main>
-        </FormPageLayout>
-      </div>
+      {isLoaded && (
+        <div className="basicwrapper">
+          <FormPageLayout
+            resource="Healing"
+            isEditMode={editMode}
+            onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
+          >
+            <main className="healingform">
+              <TreatmentToggleGroup
+                collection={treatments}
+                showing={showAddTreatments}
+                selected={selectedTreatments}
+                setShowing={setShowAddTreatments}
+                onAdd={handleSelectTreatment}
+                onRemove={deselectTreatmentById}
+              />
+              <HurtToggleGroup
+                collection={hurts}
+                showing={showAddHurts}
+                selected={selectedHurts}
+                setShowing={setShowAddHurts}
+                onAdd={handleSelectHurt}
+                onRemove={deselectHurtById}
+              />
+              <ShowHideSection
+                showing={showTimer}
+                setShowing={setShowTimer}
+                showhidetext="Time"
+              >
+                <TimerSelectBar onChange={handleTimerChange} />
+                <Timer timer={timer} setTimer={setTimer} />
+                <TextInput
+                  type="number"
+                  name="sessionTotal"
+                  label="Add or Edit Time"
+                  onChange={handleSessionTotalChange}
+                  value={timer.timeTotal || ""}
+                ></TextInput>
+              </ShowHideSection>
+              <div className="row" style={{ justifyContent: `flex-start` }}>
+                <span>Currently logged time: {timer.timeTotal}</span>
+              </div>
+              <h3>Notes</h3>
+              <TextArea
+                name="notes"
+                onChange={handleNotesChange}
+                value={notes}
+              />
+            </main>
+          </FormPageLayout>
+        </div>
+      )}
     </BasicPage>
   );
 };

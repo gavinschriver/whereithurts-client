@@ -7,12 +7,12 @@ const DetailPageLayout = (props) => {
   return (
     <div className="detailpage_layout">
       {props.children}
-      <div className="row align-right">
-        <Button onClick={onEdit} {...props}>
-          Edit
-        </Button>
-        <DeleteButton onDelete={onDelete} />
-      </div>
+        <div className="row align-right">
+          <Button onClick={onEdit} {...props}>
+            Edit
+          </Button>
+          <DeleteButton onDelete={onDelete} />
+        </div>
     </div>
   );
 };
