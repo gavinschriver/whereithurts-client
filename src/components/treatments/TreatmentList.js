@@ -10,8 +10,8 @@ const TreatmentList = (props) => {
 
   const history = useHistory();
 
-  useEffect(async () => {
-    await getTreatmentsByPatientId(localStorage.getItem("patient_id"));
+  useEffect( () => {
+     getTreatmentsByPatientId(localStorage.getItem("patient_id"));
   }, []);
 
   return (

@@ -1,9 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect, useHistory } from "react-router-dom";
 import Button from "../ui/Button";
 import "./Nav.css";
 
 export const NavBar = () => {
+  const history = useHistory()
+
   return (
     <nav className="nav">
       <Button>
@@ -16,8 +18,15 @@ export const NavBar = () => {
         <Button>
           <NavLink to="/treatments">Treatments</NavLink>
         </Button>
+        <Button>
+          <NavLink to="/hurts">Hurts</NavLink>
+        </Button>
       </div>
-      <Button>Logout</Button>
+      <Button onClick={() => {
+        localStorage.removeItem("patient_id")
+        localStorage.removeItem("patient_token")
+        history.push("/login")
+      }}>Logout</Button>
     </nav>
   );
 };
