@@ -37,6 +37,7 @@ const HurtDetail = () => {
           <main className="hurtdetail">
             <h2>Hurt: {hurt.name}</h2>
             <h3>Bodypart: {hurt.bodypart.name}</h3>
+            <h3>Starting Pain Level: {hurt.pain_level}</h3>
             <h3>Notes: </h3>
             <p>{hurt.notes}</p>
             <h3>Tagged Treatments:</h3>

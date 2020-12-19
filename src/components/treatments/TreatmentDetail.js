@@ -42,7 +42,6 @@ const TreatmentDetail = (props) => {
   }
   return (
     <BasicPage >
-      {/* {isLoaded && treatment.id && ( */}
         <div className="basicwrapper">
           <DetailPageLayout
             onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
@@ -74,7 +73,6 @@ const TreatmentDetail = (props) => {
             </main>
           </DetailPageLayout>
         </div>
-      {/* )} */}
     </BasicPage>
   );
 };

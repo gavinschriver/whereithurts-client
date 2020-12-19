@@ -5,7 +5,7 @@ import TreatmentDetail from "./treatments/TreatmentDetail";
 import TreatmentForm from "./treatments/TreatmentForm";
 import TreatmentList from "./treatments/TreatmentList";
 
-const TreatmentRoutes = (props) => {
+const TreatmentRoutes = () => {
   return (
     <TreatmentProviders>
       <Route path="/treatments/new" render={(p) => <TreatmentForm {...p} />} />
