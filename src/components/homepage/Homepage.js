@@ -19,7 +19,9 @@ const HomePage = () => {
           <h1>Welcome, {patient.first_name}</h1>
           <section className="homepage__buttons">
             <Button>
-              <h2>Add a Hurt</h2>
+              <Link to="/hurts/new">
+                <h2>Add a Hurt</h2>
+              </Link>
             </Button>
             <Button>
               <Link to="/treatments/new">
