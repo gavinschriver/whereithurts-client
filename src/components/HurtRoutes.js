@@ -6,7 +6,8 @@ import HurtForm from "./hurts/HurtForm";
 const HurtRoutes = (props) => {
   return (
     <HurtProviders>
-      <Route path="/hurts/new" render={(p) => <HurtForm />} />
+          <Route path="/hurts/new" render={(p) => <HurtForm />} />
+          <Route path="/hurts/edit/:hurtId(\d+)" render={(p) => <HurtForm />} />
     </HurtProviders>
   );
 };

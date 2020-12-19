@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { deselectItemById } from "../../utils/helpers";
 import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import BasicPage from "../layouts/BasicPage";
@@ -8,12 +9,20 @@ import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 import PainLevelSelectBar from "../ui/PainLevelSelectBar";
 import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
+import { HurtContext } from "./HurtProvider";
 import "./Hurts.css";
 
 const HurtForm = (props) => {
+  //initial info
   const current_patient_id = parseInt(localStorage.getItem("patient_id"));
 
+  const location = useLocation();
+  const history = useHistory();
+  const { hurtId } = useParams();
+  const editMode = location.pathname.includes("edit");
+
   //hurt
+  const { createHurt, getHurtById, updateHurt } = useContext(HurtContext);
   const [basicFormValues, setBasicFormValues] = useState({
     name: "",
     bodypart_id: 0,
@@ -44,21 +53,46 @@ const HurtForm = (props) => {
     setSelectedTreatments
   );
 
-  //initializer effect to bring in treatments
+  //initializer effect to bring in treatments added_by this patient **
   useEffect(() => {
-    getTreatmentsByPatientId(current_patient_id);
+    getTreatmentsByPatientId(current_patient_id).then(() => {
+      if (editMode && hurtId) {
+        getInitialValues();
+      }
+    });
   }, []);
 
-  const handleSubmit = (e) => {
+  const getInitialValues = async () => {
+    const hurt = await getHurtById(hurtId);
+    setBasicFormValues({
+      name: hurt.name,
+      notes: hurt.notes,
+      pain_level: hurt.pain_level,
+      bodypart_id: hurt.bodypart.id,
+    });
+    setCheckBoxValue(hurt.is_active);
+    setSelectedTreatments(hurt.treatments);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const hurt = {
+
+    const hurtToSave = {
       name: basicFormValues.name,
-      bodypart_id: basicFormValues.bodypart_id,
-      pain_level: basicFormValues.pain_level,
+      bodypart_id: parseInt(basicFormValues.bodypart_id),
+      pain_level: parseInt(basicFormValues.pain_level),
       treatment_ids: selectedTreatments.map((st) => st.id),
-      active: checkBoxValue,
+      notes: basicFormValues.notes,
+      is_active: checkBoxValue,
     };
-    console.log(hurt);
+
+    if (editMode && hurtId) {
+      await updateHurt(hurtId, hurtToSave);
+      history.push(`/hurts`);
+    } else {
+        await createHurt(hurtToSave);
+        history.push(`/hurts`)
+    }
   };
 
   return (
@@ -72,7 +106,11 @@ const HurtForm = (props) => {
               value={basicFormValues.name}
               onChange={handleBasicFormValueChange}
             />
-            <BodypartSelectBar />
+            <BodypartSelectBar
+              name="bodypart_id"
+              onChange={handleBasicFormValueChange}
+              value={basicFormValues.bodypart_id}
+            />
             <TextArea
               name="notes"
               label="Notes"
