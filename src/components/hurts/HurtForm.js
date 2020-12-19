@@ -69,6 +69,7 @@ const HurtForm = (props) => {
       notes: hurt.notes,
       pain_level: hurt.pain_level,
       bodypart_id: hurt.bodypart.id,
+      first_update_id: hurt.first_update_id,
     });
     setCheckBoxValue(hurt.is_active);
     setSelectedTreatments(hurt.treatments);
@@ -84,21 +85,27 @@ const HurtForm = (props) => {
       treatment_ids: selectedTreatments.map((st) => st.id),
       notes: basicFormValues.notes,
       is_active: checkBoxValue,
+      first_update_id: basicFormValues.first_update_id,
     };
 
     if (editMode && hurtId) {
       await updateHurt(hurtId, hurtToSave);
       history.push(`/hurts`);
     } else {
-        await createHurt(hurtToSave);
-        history.push(`/hurts`)
+      await createHurt(hurtToSave);
+      history.push(`/hurts`);
     }
+    console.log(hurtToSave);
   };
 
   return (
     <BasicPage>
       <div className="basicwrapper">
-        <FormPageLayout resource="Hurt" onClick={handleSubmit}>
+        <FormPageLayout
+          resource="Hurt"
+          onClick={handleSubmit}
+          isEditMode={editMode}
+        >
           <main className="hurtform">
             <TextInput
               name="name"

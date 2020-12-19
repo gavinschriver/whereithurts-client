@@ -31,7 +31,7 @@ export const HurtProvider = props => {
   }
 
   return (
-    <HurtContext.Provider value={{ hurts, getHurtsByPatientId, createHurt, getHurtById }}>
+    <HurtContext.Provider value={{ hurts, getHurtsByPatientId, createHurt, getHurtById, updateHurt }}>
       {props.children}
     </HurtContext.Provider>
   );
