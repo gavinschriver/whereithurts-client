@@ -29,7 +29,7 @@ const HurtList = (props) => {
                                                 <h3>Name: {h.name}</h3>
                                                 <h3>Bodypart: {h.bodypart.name}</h3>
                                             </div>
-                                            <div className="col">
+                                            <div className="col align-text-right">
                                                 <h3>Last update: {h.last_update}</h3>
                                                 <h3>Healings: {h.healing_count}</h3>
                                             </div>

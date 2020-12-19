@@ -18,6 +18,10 @@
   text-align: left;
 }
 
+.align-text-right {
+  text-align: right;
+}
+
 /* BASIC PAGE */
 
 /* top-level div for all content outside of navbar */

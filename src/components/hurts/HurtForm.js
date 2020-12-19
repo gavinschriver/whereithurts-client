@@ -95,7 +95,6 @@ const HurtForm = (props) => {
       await createHurt(hurtToSave);
       history.push(`/hurts`);
     }
-    console.log(hurtToSave);
   };
 
   return (
