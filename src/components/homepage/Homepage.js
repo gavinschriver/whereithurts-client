@@ -34,7 +34,9 @@ const HomePage = () => {
               </Link>
             </Button>
             <Button>
-              <h2>Add an Update</h2>
+              <Link to="updates/new">
+                <h2>Add an Update</h2>
+              </Link>
             </Button>
           </section>
         </div>

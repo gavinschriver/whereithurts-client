@@ -43,5 +43,5 @@ export const UpdateProvider = (props) => {
     await request(`${resourceURL}/${updateId}`, "DELETE");
   };
 
-  return <UpdateContext.Provider value={{createUpdate, getUpdateById, updateUpdate, getUpdates, deleteUpdate, getUpdatesByPatientId}}>{props.children}</UpdateContext.Provider>;
+  return <UpdateContext.Provider value={{createUpdate, getUpdateById, updateUpdate, getUpdates, deleteUpdate, getUpdatesByPatientId, updates}}>{props.children}</UpdateContext.Provider>;
 };

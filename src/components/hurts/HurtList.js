@@ -23,7 +23,7 @@ const HurtList = (props) => {
                         {
                             hurts.map((h) => {
                                 return (
-                                    <div className="listitem" key={h.id}>
+                                    <div className={h.is_active ? "listitem" : "listitem--inactive" } key={h.id}>
                                         <Button onClick={() => history.push(`hurts/${h.id}`)}>
                                             <div className="col">
                                                 <h3>Name: {h.name}</h3>

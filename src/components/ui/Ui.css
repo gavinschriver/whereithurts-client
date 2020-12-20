@@ -38,14 +38,18 @@ fieldset {
   display: flex;
   height: auto;
   color: black;
+  padding: 0;
+}
+
+.addnew--button .button {
+  background-color: white;
+}
+.addnew--button .button img {
+  max-height: 40px;
 }
 
 .addnew--button > * {
   padding: 10px;
-}
-
-.addnew--button img {
-  max-height: 40px;
 }
 
 /* TEXT INPUT */

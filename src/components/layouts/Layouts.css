@@ -91,6 +91,13 @@
   /* box-shadow: 5px 5px 5px grey; */
 }
 
+.listitem--inactive {
+  margin: 1em 0 1em 0;
+  padding: 0.25rem;
+  border-radius: 2.5px;
+  /* box-shadow: 5px 5px 5px grey; */
+}
+
 .listitem .row {
   justify-content: space-between;
 }
@@ -99,6 +106,15 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.listitem--inactive .button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  background-color: #bebebe;
+  box-shadow: none;
 }
 
 .listitem h3 {
@@ -123,6 +139,12 @@
 .listpage__header {
   justify-content: space-between;
 }
+.listitem .button, .listitem--inactive .button {
+  align-items: flex-start;
+}
+
+.listitem
+
 
 .listpage__header .button {
   background-color: white;
