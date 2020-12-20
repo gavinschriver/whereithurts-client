@@ -16,6 +16,8 @@ const TreatmentDetail = (props) => {
   const [treatment, setTreatment] = useState({
     added_by: {},
     hurts: [],
+    bodypart: {},
+    links: []
   });
 
   //delete handler
@@ -40,13 +42,12 @@ const TreatmentDetail = (props) => {
   }
   return (
     <BasicPage >
-      {isLoaded && treatment.id && (
         <div className="basicwrapper">
           <DetailPageLayout
             onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
             onDelete={() => handleDeleteTreatment(treatment.id)}
           >
-            <main div className="treatmentdetail">
+            <main className="treatmentdetail">
               <div className="treatment">
                 <h2>Treatment: {treatment.name}</h2>
                 <h3>Bodypart: {treatment.bodypart.name}</h3>
@@ -65,13 +66,13 @@ const TreatmentDetail = (props) => {
                       );
                     })}
                   </div>
+                  <h3>Tagged Hurts</h3>
                   <BadgeField selected={treatment.hurts} badgeText="name" />
                 </div>
               </div>
             </main>
           </DetailPageLayout>
         </div>
-      )}
     </BasicPage>
   );
 };

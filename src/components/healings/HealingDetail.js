@@ -7,7 +7,7 @@ import DetailPageLayout from "../layouts/DetailPageLayout";
 import BadgeField from "../ui/BadgeField";
 import { HealingContext } from "./HealingProvider";
 
-const HealingDetail = (props) => {
+const HealingDetail = () => {
   //Router Hooks
   const history = useHistory();
   const { healingId } = useParams();

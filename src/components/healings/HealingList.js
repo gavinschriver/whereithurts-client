@@ -1,18 +1,19 @@
 import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { current_patient_id, secondsToRoundedMinutes } from "../../utils/helpers";
+import { secondsToRoundedMinutes } from "../../utils/helpers";
 import BasicPage from "../layouts/BasicPage";
 import ListPageLayout from "../layouts/ListPage";
 import Button from "../ui/Button";
 import { HealingContext } from "./HealingProvider";
 
 const HealingList = (props) => {
+  const current_user_id = parseInt(localStorage.getItem("patient_id"))
   const { getHealingDataByPatientId, healingData } = useContext(HealingContext);
 
   const history = useHistory();
 
-  useEffect(async () => {
-    await getHealingDataByPatientId(localStorage.getItem("patient_id"));
+  useEffect( () => {
+     getHealingDataByPatientId(current_user_id);
   }, []);
 
   return (

@@ -8,6 +8,12 @@ export const TreatmentContext = createContext();
 export const TreatmentProvider = (props) => {
   const [treatments, setTreatments] = useState([]);
 
+  const getTreatments = async () => {
+    const response = await request(`${resourceURL}`)
+    const treatments = await response.json()
+    setTreatments(treatments)
+  }
+
   const getTreatmentsByPatientId = async (patientId) => {
     const response = await request(`${resourceURL}?patient_id=${patientId}`);
     const treatments = await response.json();
@@ -42,6 +48,7 @@ export const TreatmentProvider = (props) => {
     <TreatmentContext.Provider
       value={{
         treatments,
+        getTreatments,
         createTreatment,
         getTreatmentsByPatientId,
         getTreatmentById,
