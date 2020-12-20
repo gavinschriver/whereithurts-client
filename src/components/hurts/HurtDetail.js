@@ -10,7 +10,7 @@ const HurtDetail = () => {
 
   const { hurtId } = useParams();
 
-  const { getHurtById } = useContext(HurtContext);
+  const { getHurtById, deleteHurt } = useContext(HurtContext);
 
   const [hurt, setHurt] = useState(null);
 
@@ -18,6 +18,11 @@ const HurtDetail = () => {
     const _hurt = await getHurtById(hurtId);
 
     setHurt(_hurt);
+  };
+
+  const handleDeleteHurt = async (hurtId) => {
+    await deleteHurt(hurtId);
+    history.push(`/hurts`);
   };
 
   useEffect(() => {
@@ -33,6 +38,7 @@ const HurtDetail = () => {
       <div className="basicwrapper">
         <DetailPageLayout
           onEdit={() => history.push(`/hurts/edit/${hurtId}`)}
+          onDelete={() => handleDeleteHurt(hurtId)}
         >
           <main className="hurtdetail">
             <h2>Hurt: {hurt.name}</h2>

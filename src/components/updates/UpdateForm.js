@@ -58,7 +58,7 @@ const UpdateForm = () => {
   return (
     <BasicPage>
       <div className="basicwrapper">
-        <FormPageLayout resource="Update" onClick={handleSubmit}>
+        <FormPageLayout resource="Update" onClick={handleSubmit} isEditMode={isEditMode}>
           <main className="updateform">
             <HurtSelectBar
               name="hurt_id"

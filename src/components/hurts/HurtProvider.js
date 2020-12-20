@@ -30,8 +30,12 @@ export const HurtProvider = props => {
     await request(`${resourceURL}/${hurtId}`, "PUT", hurt)
   }
 
+  const deleteHurt = async (hurtId) => {
+    await request(`${resourceURL}/${hurtId}`, "DELETE")
+  }
+
   return (
-    <HurtContext.Provider value={{ hurts, getHurtsByPatientId, createHurt, getHurtById, updateHurt }}>
+    <HurtContext.Provider value={{ hurts, getHurtsByPatientId, createHurt, getHurtById, updateHurt, deleteHurt }}>
       {props.children}
     </HurtContext.Provider>
   );
