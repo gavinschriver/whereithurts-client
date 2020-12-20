@@ -33,20 +33,6 @@ fieldset {
   color: white;
 }
 
-/* TEXT INPUT */
-
-.textinput {
-  padding: 0;
-  margin: 0;
-}
-
-/* TEXT AREA */
-
-.textarea {
-  padding: 0;
-  margin: 0;
-}
-
 .addnew--button {
   background-color: white;
   display: flex;
@@ -61,6 +47,29 @@ fieldset {
 .addnew--button img {
   max-height: 40px;
 }
+
+/* TEXT INPUT */
+
+.textinput {
+  padding: 0;
+  margin: 0;
+}
+
+/* TEXT AREA */
+
+.textarea {
+  padding: 0;
+  margin: 0;
+}
+
+.formpage_layout .textarea {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
 
 /* SELECT BAR */
 

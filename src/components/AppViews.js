@@ -4,6 +4,7 @@ import HealingRoutes from "./HealingRoutes";
 import HomePage from "./homepage/Homepage";
 import HurtRoutes from "./HurtRoutes";
 import TreatmentRoutes from "./TreatmentRoutes";
+import UpdateRoutes from "./UpdateRoutes";
 
 const AppViews = () => {
   return (
@@ -15,6 +16,8 @@ const AppViews = () => {
       <TreatmentRoutes />
       <HealingRoutes />
       <HurtRoutes />
+      <UpdateRoutes/>
+
     </>
   );
 };

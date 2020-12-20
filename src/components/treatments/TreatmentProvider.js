@@ -11,6 +11,7 @@ export const TreatmentProvider = (props) => {
   const getTreatments = async () => {
     const response = await request(`${resourceURL}`)
     const treatments = await response.json()
+    setTreatments(treatments)
   }
 
   const getTreatmentsByPatientId = async (patientId) => {
