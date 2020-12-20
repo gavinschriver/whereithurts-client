@@ -139,6 +139,12 @@
 .listpage__header {
   justify-content: space-between;
 }
+.listitem .button, .listitem--inactive .button {
+  align-items: flex-start;
+}
+
+.listitem
+
 
 .listpage__header .button {
   background-color: white;

@@ -25,13 +25,21 @@ const UpdateList = () => {
           }}
         >
           <main className="updatelist">
-            {updates.map((u) => {
+            {updates.filter((u) => !u.is_first_update).map((u) => {
               return (
-                <div className={u.hurt.is_active ? "listitem" : "listitem--inactive"} key={u.id}>
-                  <Button>
+                <div
+                  className={
+                    u.hurt.is_active ? "listitem" : "listitem--inactive"
+                  }
+                  key={u.id}
+                >
+                  <Button onClick={() => history.push(`/updates/${u.id}`)}>
                     <div className="col">
                       <h3>Update for: {u.hurt.name}</h3>
                       <h3>Pain Level: {u.pain_level}</h3>
+                    </div>
+                      <div className="align-right">
+                        <h3>Date: {u.date_added}</h3>
                     </div>
                   </Button>
                 </div>
