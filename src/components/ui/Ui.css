@@ -127,6 +127,7 @@ fieldset {
 .detailpage_layout .badgefield .button{
   box-shadow: none;
   color: white;
+  font-size: larger;
 }
 
 
