@@ -24,6 +24,9 @@ export const NavBar = () => {
         <Button>
           <NavLink to="/updates">Updates</NavLink>
         </Button>
+        <Button>
+          <NavLink to="/snapshot">Snapshot</NavLink>
+        </Button>
       </div>
       <Button onClick={() => {
         localStorage.removeItem("patient_id")
