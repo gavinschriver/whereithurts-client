@@ -118,7 +118,6 @@ const HealingForm = () => {
 
   // initial hooks to get toggleable items by patient_id === added_by_id, then get/load the healing if we're in editMode
   const _getInitialValues = async () => {
-    if (editMode && healingId) {
       const healing = await getHealingById(healingId);
       if ("id" in healing) {
         setSelectedHurts(healing.hurts)
@@ -126,8 +125,6 @@ const HealingForm = () => {
         setNotes(healing.notes)
         setTimer((timer) => ({...timer, timeTotal: healing.duration}))
       }
-    }
-    setIsLoaded(true);
   };
 
   useEffect(() => {
@@ -136,7 +133,10 @@ const HealingForm = () => {
         getHurtsByPatientId(localStorage.getItem("patient_id"));
       })
       .then(() => {
-        _getInitialValues();
+        if (editMode && healingId) {
+          _getInitialValues();
+        }
+        setIsLoaded(true)
       });
   }, []);
 
