@@ -35,14 +35,6 @@ const HealingForm = () => {
     HealingContext
   );
 
-  //state value object to load initial values from item to edit
-  const [healing, setHealing] = useState({
-    treatments: [],
-    hurts: [],
-    notes: "",
-    patient: {},
-  });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newHealing = {
@@ -101,11 +93,8 @@ const HealingForm = () => {
     }));
   };
 
-  //display to the user
   const [humanTime, setHumanTime] = useState("00:00");
 
-  // when user manually changes value of total time,
-  // convert the input to M:SS, then use convert that val to secs and set it as the timerTotal value of seconds
   const handleSessionTotalChange = (e) => {
     const formatted = formatToMSSTimeString(e.target.value);
     setHumanTime(formatted);
@@ -115,11 +104,10 @@ const HealingForm = () => {
     }));
   };
 
-  //when value of timerTotal changes, update the human time to appropriate format;
-  //
   useEffect(() => {
     setHumanTime(convertSecondsToTimeString(timer.timeTotal));
   }, [timer.timeTotal]);
+
 
   // notes
   const [notes, setNotes] = useState("");
@@ -133,7 +121,10 @@ const HealingForm = () => {
     if (editMode && healingId) {
       const healing = await getHealingById(healingId);
       if ("id" in healing) {
-        setHealing(healing);
+        setSelectedHurts(healing.hurts)
+        setSelectedTreatments(healing.treatments)
+        setNotes(healing.notes)
+        setTimer((timer) => ({...timer, timeTotal: healing.duration}))
       }
     }
     setIsLoaded(true);
@@ -149,32 +140,8 @@ const HealingForm = () => {
       });
   }, []);
 
-  //if we're in edit mode, read the loaded "healing" values to set the state values associated w/ each UI
-  useEffect(() => {
-    if (healing.hurts) setSelectedHurts(healing.hurts);
-    if (healing.treatments) setSelectedTreatments(healing.treatments);
-    if (healing.notes) setNotes(healing.notes);
-    if (healing.duration)
-      setTimer((timer) => ({ ...timer, timeTotal: healing.duration }));
-  }, [healing]);
-
   //loading state/permissions/404s
   const [isLoaded, setIsLoaded] = useState(false);
-
-  //if the page has loaded AND we're in edit mode AND there's no healing id, its a 404
-  if (isLoaded && editMode && !healing.id) {
-    return <FourOhFourPage />;
-  }
-
-  //if the page has loaded AND we're in edit mode AND theres a healing ID BUT that healing ID isn't that of the current user, return unauthorized
-  if (
-    isLoaded &&
-    editMode &&
-    healing.id &&
-    !(healing.patient.id === parseInt(localStorage.getItem("patient_id")))
-  ) {
-    return <UnauthorizedPage />;
-  }
 
   return (
     <BasicPage>
