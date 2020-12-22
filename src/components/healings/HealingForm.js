@@ -21,7 +21,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import UnauthorizedPage from "../auth/UnauthorizedPage";
 import FourOhFourPage from "../auth/404Page";
 
-const HealingForm = (props) => {
+const HealingForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
 
   const history = useHistory();
@@ -53,8 +53,7 @@ const HealingForm = (props) => {
     };
     if (editMode) {
       await updateHealing(healingId, newHealing);
-    } else
-    await createHealing(newHealing);
+    } else await createHealing(newHealing);
     history.push(`/healings`);
   };
 
@@ -105,12 +104,10 @@ const HealingForm = (props) => {
   //display to the user
   const [humanTime, setHumanTime] = useState("00:00");
 
-
   // when user manually changes value of total time,
   // convert the input to M:SS, then use convert that val to secs and set it as the timerTotal value of seconds
   const handleSessionTotalChange = (e) => {
-    const newHumanTime = e.target.value;
-    const formatted = formatToMSSTimeString(newHumanTime);
+    const formatted = formatToMSSTimeString(e.target.value);
     setHumanTime(formatted);
     setTimer((timer) => ({
       ...timer,
@@ -131,10 +128,8 @@ const HealingForm = (props) => {
     setNotes(value);
   };
 
-  // initial hook to get toggleable items by patient_id === added_by_id, then get/load the healing if we're in editMode
-  useEffect(async () => {
-    await getTreatmentsByPatientId(localStorage.getItem("patient_id"));
-    await getHurtsByPatientId(localStorage.getItem("patient_id"));
+  // initial hooks to get toggleable items by patient_id === added_by_id, then get/load the healing if we're in editMode
+  const _getInitialValues = async () => {
     if (editMode && healingId) {
       const healing = await getHealingById(healingId);
       if ("id" in healing) {
@@ -142,6 +137,16 @@ const HealingForm = (props) => {
       }
     }
     setIsLoaded(true);
+  };
+
+  useEffect(() => {
+    getTreatmentsByPatientId(localStorage.getItem("patient_id"))
+      .then(() => {
+        getHurtsByPatientId(localStorage.getItem("patient_id"));
+      })
+      .then(() => {
+        _getInitialValues();
+      });
   }, []);
 
   //if we're in edit mode, read the loaded "healing" values to set the state values associated w/ each UI
