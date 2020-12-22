@@ -10,7 +10,9 @@ const TreatmentToggleGroup = (props) => {
         showhidetext="Treatments"
         badgeText="name"
         {...props}
-      />
+      >
+        {props.children}
+        </BadgeToggleGroup>
     </div>
   );
 };

@@ -1,11 +1,11 @@
-import React, {createContext, useState, useEffect} from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { request, BASE_URL } from "../../utils/request";
 
-const resourceURL = `${BASE_URL}hurts`
+const resourceURL = `${BASE_URL}hurts`;
 
 export const HurtContext = createContext();
 
-export const HurtProvider = props => {
+export const HurtProvider = (props) => {
   const [hurts, setHurts] = useState([]);
 
   const getHurtsByPatientId = async (patientId) => {
@@ -15,27 +15,43 @@ export const HurtProvider = props => {
   };
 
   const createHurt = async (newHurt) => {
-    const response = await request(`${resourceURL}`, "POST", newHurt)
-    const hurt = await response.json()
-    return hurt
-  }
+    const response = await request(`${resourceURL}`, "POST", newHurt);
+    const hurt = await response.json();
+    return hurt;
+  };
 
   const getHurtById = async (hurtId) => {
-    const response = await request(`${resourceURL}/${hurtId}`)
-    const hurt = await response.json()
-    return hurt
-  }
+    const response = await request(`${resourceURL}/${hurtId}`);
+    const hurt = await response.json();
+    return hurt;
+  };
 
   const updateHurt = async (hurtId, hurt) => {
-    await request(`${resourceURL}/${hurtId}`, "PUT", hurt)
-  }
+    await request(`${resourceURL}/${hurtId}`, "PUT", hurt);
+  };
 
   const deleteHurt = async (hurtId) => {
-    await request(`${resourceURL}/${hurtId}`, "DELETE")
-  }
+    await request(`${resourceURL}/${hurtId}`, "DELETE");
+  };
+
+  const sortHurtHistory = async (hurtId, queryString) => {
+    const response = await request(`${resourceURL}/${hurtId}?${queryString}`);
+    const hurt = await response.json();
+    return hurt;
+  };
 
   return (
-    <HurtContext.Provider value={{ hurts, getHurtsByPatientId, createHurt, getHurtById, updateHurt, deleteHurt }}>
+    <HurtContext.Provider
+      value={{
+        hurts,
+        getHurtsByPatientId,
+        createHurt,
+        getHurtById,
+        updateHurt,
+        deleteHurt,
+        sortHurtHistory
+      }}
+    >
       {props.children}
     </HurtContext.Provider>
   );
