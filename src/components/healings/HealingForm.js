@@ -180,7 +180,8 @@ const HealingForm = (props) => {
                 setShowing={setShowAddTreatments}
                 onAdd={handleSelectTreatment}
                 onRemove={deselectTreatmentById}
-              />
+              >
+              </TreatmentToggleGroup>
               <HurtToggleGroup
                 collection={hurts}
                 showing={showAddHurts}

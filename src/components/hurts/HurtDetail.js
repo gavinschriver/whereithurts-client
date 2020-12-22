@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import BasicPage from "../layouts/BasicPage";
 import DetailPageLayout from "../layouts/DetailPageLayout";
 import BadgeField from "../ui/BadgeField";
+import HurtHistory from "./HurtHistory";
 import { HurtContext } from "./HurtProvider";
 
 const HurtDetail = () => {
@@ -10,13 +11,18 @@ const HurtDetail = () => {
 
   const { hurtId } = useParams();
 
-  const { getHurtById, deleteHurt } = useContext(HurtContext);
+  const { getHurtById, deleteHurt, sortHurtHistory } = useContext(HurtContext);
 
   const [hurt, setHurt] = useState(null);
 
   const _getHurtById = async (hurtId) => {
     const _hurt = await getHurtById(hurtId);
 
+    setHurt(_hurt);
+  };
+
+  const _sortHurtHistory = async (hurtId, queryString) => {
+    const _hurt = await sortHurtHistory(hurtId, queryString);
     setHurt(_hurt);
   };
 
@@ -50,6 +56,10 @@ const HurtDetail = () => {
             <BadgeField selected={hurt.treatments} badgeText="name" />
           </main>
         </DetailPageLayout>
+        <HurtHistory
+          history={hurt.history}
+          hurtId={hurtId}
+        />
       </div>
     </BasicPage>
   );

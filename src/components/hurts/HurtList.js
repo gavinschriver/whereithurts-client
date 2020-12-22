@@ -5,7 +5,7 @@ import ListPage from "../layouts/ListPage"
 import Button from "../ui/Button"
 import { HurtContext } from "./HurtProvider"
 
-const HurtList = (props) => {
+const HurtList = () => {
     const current_user_id = parseInt(localStorage.getItem("patient_id"))
     const { hurts, getHurtsByPatientId } = useContext(HurtContext)
 

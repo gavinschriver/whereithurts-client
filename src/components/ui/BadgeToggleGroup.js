@@ -10,6 +10,7 @@ const BadgeToggleGroup = ({ showing, setShowing, ...props }) => {
         setShowing={setShowing}
         {...props}
       >
+        {props.children}
         <BadgeField direction="add" {...props} />
       </ShowHideSection>
 

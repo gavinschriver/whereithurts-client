@@ -16,7 +16,7 @@ import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
 import { TreatmentContext } from "./TreatmentProvider";
 
-const TreatmentForm = (props) => {
+const TreatmentForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
 
   //if we're in edit mode, we'll be accessing the values from the treatmentToUpdate, which is loaded into state from the response body,
