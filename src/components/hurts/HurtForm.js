@@ -12,7 +12,7 @@ import TextInput from "../ui/TextInput";
 import { HurtContext } from "./HurtProvider";
 import "./Hurts.css";
 
-const HurtForm = (props) => {
+const HurtForm = () => {
   //initial info
   const current_patient_id = parseInt(localStorage.getItem("patient_id"));
 

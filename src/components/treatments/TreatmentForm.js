@@ -32,14 +32,6 @@ const TreatmentForm = () => {
   const { createTreatment, getTreatmentById, updateTreatment } = useContext(
     TreatmentContext
   );
-  const [treatmentToUpdate, setTreatmentToUpdate] = useState({
-    notes: "",
-    name: "",
-    treatmenttype: { id: 0 },
-    bodypart: { id: 0 },
-    hurts: [],
-    links: [],
-  });
 
   const [basicFormValues, setBasicFormValues] = useState({
     bodypart_id: "",
@@ -65,22 +57,9 @@ const TreatmentForm = () => {
       hurt_ids: selectedHurts.map((h) => h.id),
       treatment_links: selectedLinks,
     };
-    const createdTreatment = await createTreatment(newTreatment);
-    history.push("/treatments");
-  };
-
-  const handleSubmitUpdate = async (e) => {
-    e.preventDefault();
-    const updatedTreatment = {
-      id: treatmentToUpdate.id,
-      name: basicFormValues.name,
-      notes: basicFormValues.notes,
-      bodypart_id: parseInt(basicFormValues.bodypart_id),
-      treatmenttype_id: parseInt(basicFormValues.treatmenttype_id),
-      hurt_ids: selectedHurts.map((h) => h.id),
-      treatment_links: selectedLinks,
-    };
-    await updateTreatment(treatmentId, updatedTreatment);
+    if (editMode) {
+      await updateTreatment(treatmentId, newTreatment);
+    } else await createTreatment(newTreatment);
     history.push("/treatments");
   };
 
@@ -102,7 +81,6 @@ const TreatmentForm = () => {
   const [linkIDcount, setLinkIdCount] = useState(0);
   const [selectedLinks, setSelectedLinks] = useState([]);
 
-  // when a link is added, make an object with an Id that's equal to the current linkIdcount plus 1
   const handleAddLink = (e) => {
     const newLink = {
       id: linkIDcount + 1,
@@ -112,65 +90,45 @@ const TreatmentForm = () => {
     setSelectedLinks([...selectedLinks, newLink]);
   };
 
-  //every time selectedlinks changes, where its an addition or removal, increment linkIdcount by 1 so its always unique
   useEffect(() => {
     setLinkIdCount((linkIDcount) => linkIDcount + 1);
   }, [selectedLinks]);
 
   const removeLinkById = deselectItemById(selectedLinks, setSelectedLinks);
 
-  // initial hook to get toggleable items by patient_id === added_by_id
-  useEffect(async () => {
-    await getHurtsByPatientId(localStorage.getItem("patient_id"));
-    if (editMode && treatmentId) {
-      const treatmentToUpdate = await getTreatmentById(treatmentId);
-      if ("id" in treatmentToUpdate) {
-        setTreatmentToUpdate(treatmentToUpdate);
-      }
-    }
-    setIsLoaded(true);
-  }, []);
-
-  //if we're in edit mode, this use effect will read the loaded "treatmentToUpdate" values to set the state values associated w/ each UI
-  useEffect(() => {
-    if (treatmentToUpdate.hurts) setSelectedHurts(treatmentToUpdate.hurts);
-    if (treatmentToUpdate.links) setSelectedLinks(treatmentToUpdate.links);
-    setBasicFormValues({
-      name: treatmentToUpdate.name,
-      notes: treatmentToUpdate.notes,
-      treatmenttype_id: treatmentToUpdate.treatmenttype.id,
-      bodypart_id: treatmentToUpdate.bodypart.id,
-    });
-    // set linkIDcount to equal the value of the highest Numerical id in the array of links that come back so we dont get any duplicates
-    if (treatmentToUpdate.links.length)
+  // initial hooks
+  const _getInitialValues = async () => {
+    const treatment = await getTreatmentById(treatmentId);
+    if ("id" in treatment) {
+      setSelectedHurts(treatment.hurts);
+      setSelectedLinks(treatment.links);
+      setBasicFormValues({
+        name: treatment.name,
+        notes: treatment.notes,
+        treatmenttype_id: treatment.treatmenttype.id,
+        bodypart_id: treatment.bodypart.id,
+      });
+      if (treatment.links.length)
       setLinkIdCount(
-        treatmentToUpdate.links
+        treatment.links
           .map((tl) => tl.id)
           .sort()
           .reverse()[0]
-      );
-  }, [treatmentToUpdate]);
+      )
+    }
+  };
 
-  //loading state/permissions/404s
+  useEffect(() => {
+    getHurtsByPatientId(localStorage.getItem("patient_id")).then(() => {
+      if (editMode && treatmentId) {
+        _getInitialValues();
+      }
+      setIsLoaded(true);
+    });
+  }, []);
+
+  //loading state
   const [isLoaded, setIsLoaded] = useState(false);
-
-  //if the page has loaded AND we're in edit mode AND there's no treatment id, its a 404
-  if (isLoaded && editMode && !treatmentToUpdate.id) {
-    return <FourOhFourPage />;
-  }
-
-  //if the page has loaded AND we're in edit mode AND theres a healing ID BUT that healing ID isn't that of the current user, return unauthorized
-  if (
-    isLoaded &&
-    editMode &&
-    treatmentToUpdate.id &&
-    !(
-      treatmentToUpdate.added_by.id ===
-      parseInt(localStorage.getItem("patient_id"))
-    )
-  ) {
-    return <UnauthorizedPage />;
-  }
 
   return (
     <BasicPage>
@@ -179,7 +137,7 @@ const TreatmentForm = () => {
           <FormPageLayout
             resource="Treatment"
             isEditMode={editMode}
-            onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
+            onClick={handleSubmitNew}
           >
             <main className="treatmentform">
               <TextInput
@@ -244,7 +202,9 @@ const TreatmentForm = () => {
             </main>
           </FormPageLayout>
         </div>
-      ) : <div>Still loading...</div>}
+      ) : (
+        <div>Still loading...</div>
+      )}
     </BasicPage>
   );
 };
