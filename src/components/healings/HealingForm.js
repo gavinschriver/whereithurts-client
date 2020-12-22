@@ -1,9 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import BasicPage from "../layouts/BasicPage";
 import FormPageLayout from "../layouts/FormPageLayout";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
-import { deselectItemById } from "../../utils/helpers";
+import {
+  deselectItemById,
+  convertSecondsToTimeString,
+  formatToMSSTimeString,
+  convertTimeStringToSeconds,
+} from "../../utils/helpers";
 import { HurtContext } from "../hurts/HurtProvider";
 import HurtToggleGroup from "../hurts/HurtToggleGroup";
 import Timer from "../timer/Timer";
@@ -38,8 +43,7 @@ const HealingForm = (props) => {
     patient: {},
   });
 
-  // refactor these badboys together at some point. soon.
-  const handleSubmitNew = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newHealing = {
       duration: timer.timeTotal,
@@ -47,20 +51,10 @@ const HealingForm = (props) => {
       hurt_ids: selectedHurts.map((h) => h.id),
       notes: notes,
     };
-    const createdHealing = await createHealing(newHealing);
-    history.push(`/healings`);
-  };
-
-  const handleSubmitUpdate = async (e) => {
-    e.preventDefault();
-    const updatedHealing = {
-      id: healing.id,
-      duration: timer.timeTotal,
-      treatment_ids: selectedTreatments.map((t) => t.id),
-      hurt_ids: selectedHurts.map((h) => h.id),
-      notes: notes,
-    };
-    await updateHealing(healingId, updatedHealing);
+    if (editMode) {
+      await updateHealing(healingId, newHealing);
+    } else
+    await createHealing(newHealing);
     history.push(`/healings`);
   };
 
@@ -99,6 +93,7 @@ const HealingForm = (props) => {
     timeTotal: 0,
   });
 
+  // change to timer SelectBar
   const handleTimerChange = (e) => {
     setTimer((timer) => ({
       ...timer,
@@ -107,14 +102,27 @@ const HealingForm = (props) => {
     }));
   };
 
+  //display to the user
+  const [humanTime, setHumanTime] = useState("00:00");
+
+
+  // when user manually changes value of total time,
+  // convert the input to M:SS, then use convert that val to secs and set it as the timerTotal value of seconds
   const handleSessionTotalChange = (e) => {
-    let newTotal = parseInt(e.target.value);
-    if (isNaN(newTotal)) newTotal = 0;
+    const newHumanTime = e.target.value;
+    const formatted = formatToMSSTimeString(newHumanTime);
+    setHumanTime(formatted);
     setTimer((timer) => ({
       ...timer,
-      timeTotal: newTotal,
+      timeTotal: convertTimeStringToSeconds(formatted),
     }));
   };
+
+  //when value of timerTotal changes, update the human time to appropriate format;
+  //
+  useEffect(() => {
+    setHumanTime(convertSecondsToTimeString(timer.timeTotal));
+  }, [timer.timeTotal]);
 
   // notes
   const [notes, setNotes] = useState("");
@@ -153,7 +161,7 @@ const HealingForm = (props) => {
     return <FourOhFourPage />;
   }
 
-//if the page has loaded AND we're in edit mode AND theres a healing ID BUT that healing ID isn't that of the current user, return unauthorized
+  //if the page has loaded AND we're in edit mode AND theres a healing ID BUT that healing ID isn't that of the current user, return unauthorized
   if (
     isLoaded &&
     editMode &&
@@ -170,7 +178,7 @@ const HealingForm = (props) => {
           <FormPageLayout
             resource="Healing"
             isEditMode={editMode}
-            onClick={editMode ? handleSubmitUpdate : handleSubmitNew}
+            onClick={handleSubmit}
           >
             <main className="healingform">
               <TreatmentToggleGroup
@@ -180,8 +188,7 @@ const HealingForm = (props) => {
                 setShowing={setShowAddTreatments}
                 onAdd={handleSelectTreatment}
                 onRemove={deselectTreatmentById}
-              >
-              </TreatmentToggleGroup>
+              ></TreatmentToggleGroup>
               <HurtToggleGroup
                 collection={hurts}
                 showing={showAddHurts}
@@ -198,15 +205,18 @@ const HealingForm = (props) => {
                 <TimerSelectBar onChange={handleTimerChange} />
                 <Timer timer={timer} setTimer={setTimer} />
                 <TextInput
-                  type="number"
+                  type="text"
                   name="sessionTotal"
                   label="Add or Edit Time"
                   onChange={handleSessionTotalChange}
-                  value={timer.timeTotal || ""}
-                ></TextInput>
+                  value={humanTime}
+                />
               </ShowHideSection>
               <div className="row" style={{ justifyContent: `flex-start` }}>
-                <span>Currently logged time: {timer.timeTotal}</span>
+                <span>
+                  Currently logged time: {humanTime} -- in seconds?{" "}
+                  {timer.timeTotal}
+                </span>
               </div>
               <h3>Notes</h3>
               <TextArea
@@ -223,3 +233,5 @@ const HealingForm = (props) => {
 };
 
 export default HealingForm;
+
+// working verion value for TextInput - timer.timeTotal
