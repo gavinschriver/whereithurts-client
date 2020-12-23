@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { convertSecondsToTimeString } from "../../utils/helpers";
 import Button from "../ui/Button";
 import bell from "../../assets/sounds/ship_bell.wav"
+import beeper from "../../assets/sounds/beeper.wav"
 import "./Timer.css";
 
 const Timer = ({ timer, setTimer }) => {
@@ -10,6 +11,7 @@ const Timer = ({ timer, setTimer }) => {
 
   //add chime for timer
   const chime = new Audio(bell)
+  const beep = new Audio(beeper)
 
   const playsound = sound => {
     sound.play()
@@ -57,7 +59,7 @@ const Timer = ({ timer, setTimer }) => {
         remaining: timerVal,
       }));
       setTimeout(() => {
-        playsound(chime);
+        playsound(beep);
       }, 500);
       setTimeout(() => {
         alert('TImes Up')
