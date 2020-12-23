@@ -58,8 +58,10 @@ const Timer = ({ timer, setTimer }) => {
       }));
       setTimeout(() => {
         playsound(chime);
-        alert("Times up")
       }, 500);
+      setTimeout(() => {
+        alert('TImes Up')
+      }, 700)
     }
   }, [isActive]);
 

@@ -61,7 +61,7 @@ fieldset {
 
 .textinput .textinput__input__extralabel {
   margin-right: 0.5rem;
-  color: #969696
+  color: #969696;
 }
 
 /* TEXT AREA */
@@ -79,10 +79,6 @@ textarea {
   display: flex;
   flex-direction: column;
 }
-
-
-
-
 
 /* SELECT BAR */
 
@@ -126,30 +122,36 @@ textarea {
   flex-wrap: wrap;
 }
 
-
 /* BADGES */
 .badge {
   display: flex;
   margin: 0.5rem 1rem 0 0.5rem;
 }
 
-.detailpage_layout .badgefield .button{
+.badge img {
+  max-width: 20px;
+}
+
+.detailpage_layout .badgefield .button {
   box-shadow: none;
   color: white;
   font-size: larger;
 }
 
-
 .badge .button {
   color: white;
   padding: none;
-  font-size: large
+  font-size: large;
+}
+
+
+.badge .toggle--button .button .toggle--button--add {
+  background-color: green;
 }
 
 .basicpage .showhidesection .badge .button {
   padding: 0px;
 }
-
 
 /* ALERT */
 
@@ -164,6 +166,18 @@ textarea {
 /* LINK FORM */
 
 .linkform {
-  margin: 0 0 1rem 0
+  margin: 0 0 1rem 0;
 }
 
+
+.basicpage .badge .button {
+  border-radius: 0;
+}
+
+.toggle--badge--button--left {
+  border-radius: 2rem 0 0 2rem !important;
+}
+
+.toggle--badge--button--right {
+  border-radius: 0 2rem 2rem 0 !important;
+}
