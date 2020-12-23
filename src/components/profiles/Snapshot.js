@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import BasicPage from "../layouts/BasicPage";
 import BadgeField from "../ui/BadgeField";
 import Button from "../ui/Button";
 import { ProfileContext } from "./ProfileProvider";
 
 const Snapshot = () => {
+  const history = useHistory()
   const { getSnapshotByPatientId } = useContext(ProfileContext);
   const current_patient_id = localStorage.getItem("patient_id");
 
@@ -44,13 +46,13 @@ const Snapshot = () => {
                 {snapshot.recent_hurts.map((h) => {
                   return (
                     <div className="listitem" key={h.id}>
-                      <Button>
+                      <Button onClick={() => history.push(`/hurts/${h.id}`)}>
                         <div className="row space-between">
                           <div className="col">
                             <h3>Name: {h.name}</h3>
                           </div>
                           <div className="col">
-                            <h3>Pain Level: {h.pain_level}</h3>
+                            <h3>Current Pain Level: {h.latest_pain_level}</h3>
                           </div>
                         </div>
                       </Button>
