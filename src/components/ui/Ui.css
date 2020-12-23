@@ -59,7 +59,16 @@ fieldset {
   margin: 0;
 }
 
+.textinput .textinput__input__extralabel {
+  margin-right: 0.5rem;
+  color: #969696
+}
+
 /* TEXT AREA */
+
+textarea {
+  font-family: sans-serif;
+}
 
 .textarea {
   padding: 0;
@@ -132,6 +141,13 @@ fieldset {
 
 
 .badge .button {
+  color: white;
+  padding: none;
+  font-size: large
+}
+
+.basicpage .showhidesection .badge .button {
+  padding: 0px;
 }
 
 
@@ -150,3 +166,4 @@ fieldset {
 .linkform {
   margin: 0 0 1rem 0
 }
+

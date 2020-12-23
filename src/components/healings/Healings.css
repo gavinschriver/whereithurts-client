@@ -1,0 +1,8 @@
+.formpage_layout .healingform .row  {
+    justify-content: flex-start;
+}
+
+.healingform__time h4 {
+    padding: none;
+    margin: none;
+}

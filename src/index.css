@@ -46,5 +46,13 @@ button:active {
   box-shadow: none;
 }
 
+input {
+  color:#969696;
+  font-size: 1rem;
+}
 
+select {
+  color: #969696;
+  font-size: 1rem;
+}
 

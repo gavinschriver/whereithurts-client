@@ -27,7 +27,7 @@ const HurtHistory = (props) => {
 
           return (
             <div
-              className={`row listitem history--listitem history--${classType}`}
+              className={`row listitem history--listitem history--${classType}`} key={`${i.history_type}-${i.id}`}
             >
               <div className="col">
                 <div className="history__heaing">
