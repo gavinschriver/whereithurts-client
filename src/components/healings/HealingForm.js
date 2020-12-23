@@ -18,8 +18,7 @@ import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
 import { HealingContext } from "./HealingProvider";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import UnauthorizedPage from "../auth/UnauthorizedPage";
-import FourOhFourPage from "../auth/404Page";
+import "./Healings.css"
 
 const HealingForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
@@ -108,7 +107,6 @@ const HealingForm = () => {
     setHumanTime(convertSecondsToTimeString(timer.timeTotal));
   }, [timer.timeTotal]);
 
-
   // notes
   const [notes, setNotes] = useState("");
   const handleNotesChange = (e) => {
@@ -118,13 +116,13 @@ const HealingForm = () => {
 
   // initial hooks to get toggleable items by patient_id === added_by_id, then get/load the healing if we're in editMode
   const _getInitialValues = async () => {
-      const healing = await getHealingById(healingId);
-      if ("id" in healing) {
-        setSelectedHurts(healing.hurts)
-        setSelectedTreatments(healing.treatments)
-        setNotes(healing.notes)
-        setTimer((timer) => ({...timer, timeTotal: healing.duration}))
-      }
+    const healing = await getHealingById(healingId);
+    if ("id" in healing) {
+      setSelectedHurts(healing.hurts);
+      setSelectedTreatments(healing.treatments);
+      setNotes(healing.notes);
+      setTimer((timer) => ({ ...timer, timeTotal: healing.duration }));
+    }
   };
 
   useEffect(() => {
@@ -136,7 +134,7 @@ const HealingForm = () => {
         if (editMode && healingId) {
           _getInitialValues();
         }
-        setIsLoaded(true)
+        setIsLoaded(true);
       });
   }, []);
 
@@ -179,16 +177,17 @@ const HealingForm = () => {
                 <TextInput
                   type="text"
                   name="sessionTotal"
-                  label="Add or Edit Time"
+                  label="Edit Time"
                   onChange={handleSessionTotalChange}
                   value={humanTime}
-                />
+                  extraLabel="mm:ss"
+                >
+                </TextInput>
               </ShowHideSection>
-              <div className="row" style={{ justifyContent: `flex-start` }}>
-                <span>
-                  Currently logged time: {humanTime} -- in seconds?{" "}
-                  {timer.timeTotal}
-                </span>
+              <div className="healingform__time">
+                <div className="row align-left">
+                  <h4>Currently logged: {humanTime}</h4>
+                </div>
               </div>
               <h3>Notes</h3>
               <TextArea
@@ -205,5 +204,3 @@ const HealingForm = () => {
 };
 
 export default HealingForm;
-
-// working verion value for TextInput - timer.timeTotal

@@ -1,9 +1,45 @@
 .timer .row {
-    justify-content: space-between;
     align-items: center;
     margin: .25rem 0 .25rem 0
 }
 
 .timer__controls {
     display:flex;
+    justify-content: center;
+}
+
+.button:disabled {
+    background-color: #bebebe;
+  }
+
+
+.showhidesection .timer .button {
+    background-color: #969696;
+    color: white;
+}
+
+.showhidesection .timer .button:disabled {
+    background-color: #bebebe;
+    color: white;
+    box-shadow: none;
+}
+
+.timer .timer__controls .timer__controls__startbutton .button{
+    border-radius: .5rem 0 0 .5rem
+}
+
+.timer .timer__controls .timer__controls__resetbutton .button{
+    border-radius: 0 0.5rem 0.5rem 0
+}
+
+.timer {
+    margin-bottom: 2rem;
+}
+
+.timer__remaining {
+    color: #969696
+}
+
+.formpage_layout .healingform .timer .row {
+    justify-content: flex-end;
 }

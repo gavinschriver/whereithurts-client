@@ -1,9 +1,21 @@
 import React, { useEffect } from "react";
+import { convertSecondsToTimeString } from "../../utils/helpers";
 import Button from "../ui/Button";
+import bell from "../../assets/sounds/ship_bell.wav"
+import beeper from "../../assets/sounds/beeper.wav"
 import "./Timer.css";
 
 const Timer = ({ timer, setTimer }) => {
   const { isActive, timeTotal, timerVal, remaining } = timer;
+
+
+  //add chime for timer
+  const chime = new Audio(bell)
+  const beep = new Audio(beeper)
+
+  const playsound = sound => {
+    sound.play()
+  }
 
   //switch Timer on or Off
   const toggle = () => {
@@ -47,31 +59,38 @@ const Timer = ({ timer, setTimer }) => {
         remaining: timerVal,
       }));
       setTimeout(() => {
-        alert("Times up");
+        playsound(beep);
       }, 500);
+      setTimeout(() => {
+        alert('TImes Up')
+      }, 700)
     }
   }, [isActive]);
 
   return (
     <div className="timer">
-      <div className="row">
-        <div>
-          <div className="timer__time">Currently remaining: {remaining}s</div>
-        </div>
-        <div className="timer__controls">
-          <Button
-            disabled={timerVal == 0 ? true : false}
-            style={{ color: `black` }}
-            className={`button button-primary button-primary-${
-              isActive ? "active" : "inactive"
-            }`}
-            onClick={toggle}
-          >
-            {isActive ? "Pause" : "Start"}
-          </Button>
-          <Button style={{ color: `black` }} onClick={reset}>
-            Reset
-          </Button>
+      <div className="row align-right">
+        <span className="timer__remaining">
+          Remaining: {convertSecondsToTimeString(remaining)}
+        </span>
+      </div>
+
+      <div className="timer__controls">
+        <div className="row">
+          <div className="timer__controls__startbutton">
+            <Button
+              disabled={timerVal == 0 ? true : false}
+              className={isActive ? "active" : "inactive"}
+              onClick={toggle}
+            >
+              {isActive ? "Pause" : "Start"}
+            </Button>
+          </div>
+          <div className="timer__controls__resetbutton">
+            <Button disabled={timerVal == 0 ? true : false} onClick={reset}>
+              Reset
+            </Button>
+          </div>
         </div>
       </div>
     </div>

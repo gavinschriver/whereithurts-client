@@ -59,7 +59,16 @@ fieldset {
   margin: 0;
 }
 
+.textinput .textinput__input__extralabel {
+  margin-right: 0.5rem;
+  color: #969696;
+}
+
 /* TEXT AREA */
+
+textarea {
+  font-family: sans-serif;
+}
 
 .textarea {
   padding: 0;
@@ -70,10 +79,6 @@ fieldset {
   display: flex;
   flex-direction: column;
 }
-
-
-
-
 
 /* SELECT BAR */
 
@@ -117,23 +122,37 @@ fieldset {
   flex-wrap: wrap;
 }
 
-
 /* BADGES */
 .badge {
   display: flex;
   margin: 0.5rem 1rem 0 0.5rem;
+  padding: 5px;
 }
 
-.detailpage_layout .badgefield .button{
+.badge img {
+  max-width: 20px;
+}
+
+.detailpage_layout .badgefield .button {
   box-shadow: none;
   color: white;
   font-size: larger;
 }
 
-
 .badge .button {
+  color: white;
+  padding: none;
+  font-size: large;
 }
 
+
+.badge .toggle--button .button .toggle--button--add {
+  background-color: green;
+}
+
+.basicpage .showhidesection .badge .button {
+  padding: 2px;
+}
 
 /* ALERT */
 
@@ -148,5 +167,18 @@ fieldset {
 /* LINK FORM */
 
 .linkform {
-  margin: 0 0 1rem 0
+  margin: 0 0 1rem 0;
+}
+
+
+.basicpage .badge .button {
+  border-radius: 0;
+}
+
+.toggle--badge--button--left {
+  border-radius: 2rem 0 0 2rem !important;
+}
+
+.toggle--badge--button--right {
+  border-radius: 0 2rem 2rem 0 !important;
 }
