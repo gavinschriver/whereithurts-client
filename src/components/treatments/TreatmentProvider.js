@@ -26,6 +26,12 @@ export const TreatmentProvider = (props) => {
     setTreatments(treatments)
   }
 
+  const getTreatmentsBySearchTerms = async (searchTerms) => {
+    const response = await request(`${resourceURL}?q=${searchTerms}`)
+    const treatments = await response.json()
+    setTreatments(treatments)
+  }
+
   const createTreatment = async (newTreatment) => {
     const response = await request(`${resourceURL}`, "POST", newTreatment);
     const treatment = response.json();
@@ -58,6 +64,7 @@ export const TreatmentProvider = (props) => {
         createTreatment,
         getTreatmentsByPatientId,
         getTreatmentsByQuerystring,
+        getTreatmentsBySearchTerms,
         getTreatmentById,
         updateTreatment,
         deleteTreatment

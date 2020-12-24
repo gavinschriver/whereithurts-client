@@ -34,16 +34,20 @@ const HealingForm = () => {
 
   const editMode = location.pathname.includes("edit");
 
-  //filters
+  //filter and search 
   const [bodypartId, setBodypartId] = useState(0);
   const [treatmentTypeId, setTreatmentTypeId] = useState(0);
   const [isOwner, setIsOwner] = useState(1);
   const [filters, setFilters] = useState({});
   const [searchTerms, setSearchTerms] = useState("");
 
-  const handleSelectSearchTerms = (e) => {
+  const handleChangeSearchTerms = (e) => {
     setSearchTerms(e.target.value);
   };
+
+  const handleSubmitSearchTerms = () => {
+    getTreatmentsBySearchTerms(searchTerms)
+  }
 
   const handleClearSearchTerms = () => {
     setSearchTerms("");
@@ -87,7 +91,7 @@ const HealingForm = () => {
   };
 
   //treatments
-  const { treatments, getTreatmentsByQuerystring } = useContext(
+  const { treatments, getTreatmentsByQuerystring, getTreatmentsBySearchTerms } = useContext(
     TreatmentContext
   );
   const [selectedTreatments, setSelectedTreatments] = useState([]);
@@ -223,19 +227,21 @@ const HealingForm = () => {
                   </div>
                   <BodypartSelectBar
                     label="Filter by Bodypart: "
+                    defaultoptiontext="No filter chosen"
                     onChange={(e) => setBodypartId(e.target.value)}
                     value={bodypartId}
                   />
                   <TreatmentTypeSelectBar
                     label="Filter by Treatment Type: "
+                    defaultoptiontext="No filter chosen"
                     onChange={(e) => setTreatmentTypeId(e.target.value)}
                     value={treatmentTypeId}
                   />
                   <SearchBar
                     label="Search all treatments:"
                     value={searchTerms}
-                    onChange={handleSelectSearchTerms}
-                    onSearch={() => alert("OVER 9000")}
+                    onChange={handleChangeSearchTerms}
+                    onSearch={handleSubmitSearchTerms}
                     onClear={handleClearSearchTerms}
                   />
                 </ControlGroup>

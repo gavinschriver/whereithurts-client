@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import SelectBar from "../ui/SelectBar";
 import { BodypartContext } from "./BodypartProvider";
 
-const BodypartSelectBar = ({ label = "Bodypart: " , ...props }) => {
+const BodypartSelectBar = ({ defaultoptiontext = "Select a bodypart", label = "Bodypart: " , ...props }) => {
   const { bodyparts, getBodyparts } = useContext(
     BodypartContext
   );
@@ -18,7 +18,7 @@ const BodypartSelectBar = ({ label = "Bodypart: " , ...props }) => {
       optionkey="id"
       optiontext="name"
       optionvalue="id"
-      defaultoptiontext="Select a bodypart"
+      defaultoptiontext={defaultoptiontext}
       collection={bodyparts}
       {...props}
     ></SelectBar>
