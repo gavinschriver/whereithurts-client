@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { HurtContext } from "./HurtProvider";
 import SelectBar from "../ui/SelectBar";
 
-const HurtSelectBar = (props) => {
+const HurtSelectBar = ({ label="Hurt: ", defaultoptiontext = "Select a hurt", ...props }) => {
   const current_patient_id = parseInt(localStorage.getItem("patient_id"));
 
   const { hurts, getHurtsByPatientId } = useContext(HurtContext);
@@ -14,11 +14,11 @@ const HurtSelectBar = (props) => {
   return (
     <SelectBar
       collection={hurts}
-      label="Hurt: "
+      label={label}
       optionkey="id"
       optiontext="name"
       optionvalue="id"
-      defaultoptiontext="Select a Hurt for this Update"
+      defaultoptiontext={defaultoptiontext}
       {...props}
     />
   );

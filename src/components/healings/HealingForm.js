@@ -34,11 +34,11 @@ const HealingForm = () => {
 
   const editMode = location.pathname.includes("edit");
 
-  //filter and search 
+  //filter and search
   const [bodypartId, setBodypartId] = useState(0);
   const [treatmentTypeId, setTreatmentTypeId] = useState(0);
   const [isOwner, setIsOwner] = useState(1);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({owner: 1});
   const [searchTerms, setSearchTerms] = useState("");
 
   const handleChangeSearchTerms = (e) => {
@@ -46,8 +46,8 @@ const HealingForm = () => {
   };
 
   const handleSubmitSearchTerms = () => {
-    getTreatmentsBySearchTerms(searchTerms)
-  }
+    getTreatmentsBySearchTerms(searchTerms);
+  };
 
   const handleClearSearchTerms = () => {
     setSearchTerms("");
@@ -91,9 +91,11 @@ const HealingForm = () => {
   };
 
   //treatments
-  const { treatments, getTreatmentsByQuerystring, getTreatmentsBySearchTerms } = useContext(
-    TreatmentContext
-  );
+  const {
+    treatments,
+    getTreatmentsByQuerystring,
+    getTreatmentsBySearchTerms,
+  } = useContext(TreatmentContext);
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [showAddTreatments, setShowAddTreatments] = useState(false);
   const handleSelectTreatment = (item) => {
@@ -116,6 +118,13 @@ const HealingForm = () => {
     } else setSelectedHurts([item]);
   };
   const deselectHurtById = deselectItemById(selectedHurts, setSelectedHurts);
+
+  // notes
+  const [notes, setNotes] = useState("");
+  const handleNotesChange = (e) => {
+    const { value } = e.target;
+    setNotes(value);
+  };
 
   //timer
   const [showTimer, setShowTimer] = useState(false);
@@ -150,13 +159,6 @@ const HealingForm = () => {
   useEffect(() => {
     setHumanTime(convertSecondsToTimeString(timer.timeTotal));
   }, [timer.timeTotal]);
-
-  // notes
-  const [notes, setNotes] = useState("");
-  const handleNotesChange = (e) => {
-    const { value } = e.target;
-    setNotes(value);
-  };
 
   // initial hooks to get hurts specific to this user, then get/load the healing if we're in editMode
   const _getInitialValues = async () => {
