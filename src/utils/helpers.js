@@ -71,3 +71,20 @@ export const convertTimeStringToSeconds = timeString => {
 
   return (60 * (parseInt(timeStringParts[0]) || 0)) + parseInt(timeStringParts[1]);
 };
+
+/** return a string built from passing an object
+ * @param {Object} filters Object with k/v pairs of a relevant querystring param name and matching value
+ */
+export const buildQueryString = (filters) => {
+  const filtersArray = Object.entries(filters);
+  let querystring = "?";
+  filtersArray.forEach((filter) => {
+    if (filter[1] !== 0) {
+      querystring += `${filter[0]}=${filter[1]}&`;
+    }
+  });
+  if (querystring.endsWith("&")) {
+    querystring = querystring.slice(0, -1);
+  }
+  return querystring;
+};

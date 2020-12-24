@@ -145,7 +145,6 @@ textarea {
   font-size: large;
 }
 
-
 .badge .toggle--button .button .toggle--button--add {
   background-color: green;
 }
@@ -170,7 +169,6 @@ textarea {
   margin: 0 0 1rem 0;
 }
 
-
 .basicpage .badge .button {
   border-radius: 0;
 }
@@ -181,4 +179,20 @@ textarea {
 
 .toggle--badge--button--right {
   border-radius: 0 2rem 2rem 0 !important;
+}
+
+/* SEARCHBAR */
+
+.searchbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchbar__control {
+  display: flex;
+}
+
+.controlgroup, .controlgroup > * {
+  font-size: smaller;
+  margin: 0.5rem 0 0.5rem 0;
 }
