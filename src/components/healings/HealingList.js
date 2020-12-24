@@ -34,7 +34,6 @@ const HealingList = () => {
       order_by: order,
       direction: direction,
     });
-    console.log(filters)
   }, [hurtId, order, direction]);
 
   //controls
@@ -46,7 +45,7 @@ const HealingList = () => {
     <BasicPage>
       <div className="basicwrapper">
         <ListPageLayout
-          resource="Healings"
+          resource="Your Healings"
           onClick={(e) => {
             e.preventDefault();
             history.push("/healings/new");
