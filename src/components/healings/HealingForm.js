@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import BasicPage from "../layouts/BasicPage";
 import FormPageLayout from "../layouts/FormPageLayout";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
@@ -8,6 +8,7 @@ import {
   convertSecondsToTimeString,
   formatToMSSTimeString,
   convertTimeStringToSeconds,
+  buildQueryString,
 } from "../../utils/helpers";
 import { HurtContext } from "../hurts/HurtProvider";
 import HurtToggleGroup from "../hurts/HurtToggleGroup";
@@ -16,9 +17,13 @@ import TimerSelectBar from "../timer/TimerSelectBar";
 import ShowHideSection from "../ui/ShowHideSection";
 import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
+import BodypartSelectBar from "../bodypart/BodypartSelectBar";
+import TreatmentTypeSelectBar from "../treatmenttypes/TreatmentTypeSelectBar";
 import { HealingContext } from "./HealingProvider";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import "./Healings.css"
+import "./Healings.css";
+import ControlGroup from "../ui/ControlGroup";
+import SearchBar from "../ui/SearchBar";
 
 const HealingForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
@@ -28,6 +33,43 @@ const HealingForm = () => {
   const { healingId } = useParams();
 
   const editMode = location.pathname.includes("edit");
+
+  //filter and search 
+  const [bodypartId, setBodypartId] = useState(0);
+  const [treatmentTypeId, setTreatmentTypeId] = useState(0);
+  const [isOwner, setIsOwner] = useState(1);
+  const [filters, setFilters] = useState({});
+  const [searchTerms, setSearchTerms] = useState("");
+
+  const handleChangeSearchTerms = (e) => {
+    setSearchTerms(e.target.value);
+  };
+
+  const handleSubmitSearchTerms = () => {
+    getTreatmentsBySearchTerms(searchTerms)
+  }
+
+  const handleClearSearchTerms = () => {
+    setSearchTerms("");
+    getTreatmentsByQuerystring(buildQueryString(filters));
+  };
+
+  // effect to bring in treatments on page load, intially with only current user's added_by treatments
+  useEffect(() => {
+    getTreatmentsByQuerystring(buildQueryString(filters));
+  }, [filters]);
+
+  useEffect(() => {
+    setFilters({
+      bodypart_id: parseInt(bodypartId),
+      treatmenttype_id: parseInt(treatmentTypeId),
+      owner: parseInt(isOwner),
+    });
+  }, [bodypartId, treatmentTypeId, isOwner]);
+
+  const handleRadioButtonChange = (e) => {
+    setIsOwner(e.target.value);
+  };
 
   //healing
   const { getHealingById, createHealing, updateHealing } = useContext(
@@ -49,7 +91,9 @@ const HealingForm = () => {
   };
 
   //treatments
-  const { treatments, getTreatmentsByPatientId } = useContext(TreatmentContext);
+  const { treatments, getTreatmentsByQuerystring, getTreatmentsBySearchTerms } = useContext(
+    TreatmentContext
+  );
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [showAddTreatments, setShowAddTreatments] = useState(false);
   const handleSelectTreatment = (item) => {
@@ -114,7 +158,7 @@ const HealingForm = () => {
     setNotes(value);
   };
 
-  // initial hooks to get toggleable items by patient_id === added_by_id, then get/load the healing if we're in editMode
+  // initial hooks to get hurts specific to this user, then get/load the healing if we're in editMode
   const _getInitialValues = async () => {
     const healing = await getHealingById(healingId);
     if ("id" in healing) {
@@ -125,10 +169,11 @@ const HealingForm = () => {
     }
   };
 
+  // need to getTreatmentsByQueryString with hardcoded value for owner, to override default response of a fetch to treatments? when 'fiters' state changes
   useEffect(() => {
-    getTreatmentsByPatientId(localStorage.getItem("patient_id"))
+    getHurtsByPatientId(localStorage.getItem("patient_id"))
       .then(() => {
-        getHurtsByPatientId(localStorage.getItem("patient_id"));
+        getTreatmentsByQuerystring("?owner=1");
       })
       .then(() => {
         if (editMode && healingId) {
@@ -158,7 +203,49 @@ const HealingForm = () => {
                 setShowing={setShowAddTreatments}
                 onAdd={handleSelectTreatment}
                 onRemove={deselectTreatmentById}
-              ></TreatmentToggleGroup>
+              >
+                <ControlGroup>
+                  <div className="treatments_collection_select">
+                    <label htmlFor="owner">Added By You</label>
+                    <input
+                      type="radio"
+                      id="owner"
+                      name="collection"
+                      value={1}
+                      checked={isOwner == 1}
+                      onChange={handleRadioButtonChange}
+                    />
+                    <label htmlFor="owner">From all users</label>
+                    <input
+                      type="radio"
+                      id="all"
+                      name="collection"
+                      value={0}
+                      checked={isOwner == 0}
+                      onChange={handleRadioButtonChange}
+                    />
+                  </div>
+                  <BodypartSelectBar
+                    label="Filter by Bodypart: "
+                    defaultoptiontext="No filter chosen"
+                    onChange={(e) => setBodypartId(e.target.value)}
+                    value={bodypartId}
+                  />
+                  <TreatmentTypeSelectBar
+                    label="Filter by Treatment Type: "
+                    defaultoptiontext="No filter chosen"
+                    onChange={(e) => setTreatmentTypeId(e.target.value)}
+                    value={treatmentTypeId}
+                  />
+                  <SearchBar
+                    label="Search all treatments:"
+                    value={searchTerms}
+                    onChange={handleChangeSearchTerms}
+                    onSearch={handleSubmitSearchTerms}
+                    onClear={handleClearSearchTerms}
+                  />
+                </ControlGroup>
+              </TreatmentToggleGroup>
               <HurtToggleGroup
                 collection={hurts}
                 showing={showAddHurts}
@@ -181,8 +268,7 @@ const HealingForm = () => {
                   onChange={handleSessionTotalChange}
                   value={humanTime}
                   extraLabel="mm:ss"
-                >
-                </TextInput>
+                ></TextInput>
               </ShowHideSection>
               <div className="healingform__time">
                 <div className="row align-left">
