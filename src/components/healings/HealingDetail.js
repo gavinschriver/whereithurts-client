@@ -43,32 +43,32 @@ const HealingDetail = () => {
 
   return (
     <BasicPage>
-        <div className="basicwrapper">
-          <DetailPageLayout
-            onEdit={() => history.push(`/healings/edit/${healing.id}`)}
+      <div className="basicwrapper">
+        <DetailPageLayout
+          onEdit={() => history.push(`/healings/edit/${healing.id}`)}
           onDelete={() => handleDeleteHealing(healing.id)}
-          >
-            <main className="healingdetail">
-              <div className="healing">
-                <h1>Healing on {healing.date_added}</h1>
-                <h3>
-                  Time Spent: {secondsToRoundedMinutes(healing.duration)}{" "}
-                  minutes
-                </h3>
-                <div className="healing__notes">
-                  <h3>Notes:</h3>
-                  <p>{healing.notes}</p>
-                </div>
-                <div className="healing__treatments">
-                  <h3>Tagged Treatments:</h3>
-                  <BadgeField selected={healing.treatments} badgeText="name" />
-                </div>
-                <h3>Tagged Hurts:</h3>
-                <BadgeField selected={healing.hurts} badgeText="name" />
+          isOwner={true}
+        >
+          <main className="healingdetail">
+            <div className="healing">
+              <h1>Healing on {healing.date_added}</h1>
+              <h3>
+                Time Spent: {secondsToRoundedMinutes(healing.duration)} minutes
+              </h3>
+              <div className="healing__notes">
+                <h3>Notes:</h3>
+                <p>{healing.notes}</p>
               </div>
-            </main>
-          </DetailPageLayout>
-        </div>
+              <div className="healing__treatments">
+                <h3>Tagged Treatments:</h3>
+                <BadgeField selected={healing.treatments} badgeText="name" />
+              </div>
+              <h3>Tagged Hurts:</h3>
+              <BadgeField selected={healing.hurts} badgeText="name" />
+            </div>
+          </main>
+        </DetailPageLayout>
+      </div>
     </BasicPage>
   );
 };
