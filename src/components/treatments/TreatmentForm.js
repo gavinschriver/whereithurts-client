@@ -56,6 +56,7 @@ const TreatmentForm = () => {
       bodypart_id: parseInt(basicFormValues.bodypart_id),
       hurt_ids: selectedHurts.map((h) => h.id),
       treatment_links: selectedLinks,
+      public: isPublic
     };
     if (editMode) {
       await updateTreatment(treatmentId, newTreatment);
@@ -96,12 +97,19 @@ const TreatmentForm = () => {
 
   const removeLinkById = deselectItemById(selectedLinks, setSelectedLinks);
 
+  // public or private
+  const [isPublic, setIsPublic] = useState(false);
+  const handlePublicPrivateToggle = (e) => {
+    setIsPublic((isPublic) => !isPublic);
+  };
+
   // initial hooks
   const _getInitialValues = async () => {
     const treatment = await getTreatmentById(treatmentId);
     if ("id" in treatment) {
       setSelectedHurts(treatment.hurts);
       setSelectedLinks(treatment.links);
+      setIsPublic(treatment.public)
       setBasicFormValues({
         name: treatment.name,
         notes: treatment.notes,
@@ -109,12 +117,12 @@ const TreatmentForm = () => {
         bodypart_id: treatment.bodypart.id,
       });
       if (treatment.links.length)
-      setLinkIdCount(
-        treatment.links
-          .map((tl) => tl.id)
-          .sort()
-          .reverse()[0]
-      )
+        setLinkIdCount(
+          treatment.links
+            .map((tl) => tl.id)
+            .sort()
+            .reverse()[0]
+        );
     }
   };
 
@@ -199,6 +207,12 @@ const TreatmentForm = () => {
                 direction="remove"
                 onRemove={removeLinkById}
               />
+              <div className="public_private_select">
+                <label htmlFor="is_private">Private</label>
+                <input name="public_private" id="is_private" value={false} checked={!isPublic} type="radio" onChange={handlePublicPrivateToggle}/>
+                <label htmlFor="is_public">Public</label>
+                <input name="public_private"  id="is_public" value={true} checked={isPublic} type="radio" onChange={handlePublicPrivateToggle} />
+              </div>
             </main>
           </FormPageLayout>
         </div>

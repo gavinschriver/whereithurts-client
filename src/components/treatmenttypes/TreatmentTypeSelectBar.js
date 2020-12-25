@@ -2,7 +2,11 @@ import React, { useContext, useEffect } from "react";
 import SelectBar from "../ui/SelectBar";
 import { TreatmentTypeContext } from "./TreatmentTypeProvider";
 
-const TreatmentTypeSelectBar = ({ defaultoptiontext = "Select a treatment type" ,...props }) => {
+const TreatmentTypeSelectBar = ({
+  name = "treatmenttype",
+  defaultoptiontext = "Select a treatment type",
+  ...props
+}) => {
   const { treatmentTypes, getTreatmentTypes } = useContext(
     TreatmentTypeContext
   );
@@ -13,7 +17,7 @@ const TreatmentTypeSelectBar = ({ defaultoptiontext = "Select a treatment type" 
 
   return (
     <SelectBar
-      name="treatmenttype"
+      name={name}
       label="Type: "
       optionkey="id"
       optiontext="name"

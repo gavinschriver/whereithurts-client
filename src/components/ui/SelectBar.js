@@ -1,5 +1,7 @@
 import React from "react";
 
+/** Generic UI Select Bar. Default option value is 0 but can be overriden (e.g. for a default sort option) */ 
+
 const SelectBar = (props) => {
   const {
     collection = [],
@@ -7,13 +9,17 @@ const SelectBar = (props) => {
     optionvalue,
     optiontext,
     defaultoptiontext,
+    defaultoptionvalue = 0,
     label,
   } = props;
   return (
     <fieldset className="selectbar">
       <label htmlFor={props.name}>{label}</label>
       <select className="selectbar__dropdown" {...props}>
-        <option className="selectbar__dropdown__option" value={0}>
+        <option
+          className="selectbar__dropdown__option"
+          value={defaultoptionvalue}
+        >
           {defaultoptiontext}
         </option>
         {collection.map((i) => {

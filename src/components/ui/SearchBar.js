@@ -7,7 +7,7 @@ const SearchBar = ({label, onSearch, onClear, value, onChange, ...props}) => {
     <div className="searchbar">
       <div className="searchbar__label">{label}</div>
       <div className="searchbar__control">
-              <TextInput value={value} onChange={onChange}/>
+        <TextInput value={value} onChange={onChange} {...props}/>
           <Button onClick={onSearch}>Search</Button>
           <Button onClick={onClear}>Clear</Button>
       </div>

@@ -82,9 +82,10 @@ textarea {
 
 /* SELECT BAR */
 
-.selectbar {
+.selectbar, .selectbar option {
   padding: 0;
   margin: 0;
+  text-align: right;
 }
 
 /* SHOWHIDE SECTION */
@@ -113,6 +114,21 @@ textarea {
 
 .showhidesection img {
   max-width: 20px;
+}
+
+/* SHOWHIDE CONTROLS */
+
+.showhidecontrols {
+  margin: 2rem 0 2rem 0;
+  display: flex; 
+  flex-direction: column;
+}
+
+.showhidecontrols .button {
+  color: #969696;
+  background-color: white;
+  box-shadow: none;
+  font-size: inherit;
 }
 
 /* BADGE FIELDS */

@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { deselectItemById } from "../../utils/helpers";
+import { buildQueryString, deselectItemById } from "../../utils/helpers";
 import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import BasicPage from "../layouts/BasicPage";
 import FormPageLayout from "../layouts/FormPageLayout";
+import TreatmentControlGroup from "../treatments/TreatmentControlGroup";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 import PainLevelSelectBar from "../ui/PainLevelSelectBar";
@@ -21,6 +22,49 @@ const HurtForm = () => {
   const { hurtId } = useParams();
   const editMode = location.pathname.includes("edit");
 
+  //filters and actions for treatments
+  const [bodypartId, setBodypartId] = useState(0);
+  const [treatmentTypeId, setTreatmentTypeId] = useState(0);
+  const [isTreatmentOwner, setIsTreatmentOwner] = useState(1);
+  const [treatmentFilters, setTreatmentFilters] = useState({ owner: 1 });
+  const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
+
+  const handleChangeTreatmentSearchTerms = (e) => {
+    setTreatmentSearchTerms(e.target.value);
+  };
+  const handleSubmitSearchTerms = () => {
+    getTreatmentsBySearchTerms(treatmentSearchTerms);
+  };
+
+  const handleSelectBodypart = (e) => {
+    setBodypartId(e.target.value);
+  };
+
+  const handleSelectTreatmentType = (e) => {
+    setTreatmentTypeId(e.target.value);
+  };
+
+  const handleSelectTreatmentCollection = (e) => {
+    setIsTreatmentOwner(e.target.value);
+  };
+
+  const handleClearSearchTerms = () => {
+    setTreatmentSearchTerms("");
+    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
+  };
+
+  useEffect(() => {
+    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
+  }, [treatmentFilters]);
+
+  useEffect(() => {
+    setTreatmentFilters({
+      bodypart_id: parseInt(bodypartId),
+      treatmenttype_id: parseInt(treatmentTypeId),
+      owner: parseInt(isTreatmentOwner),
+    });
+  }, [bodypartId, treatmentTypeId, isTreatmentOwner]);
+
   //hurt
   const { createHurt, getHurtById, updateHurt } = useContext(HurtContext);
   const [basicFormValues, setBasicFormValues] = useState({
@@ -30,7 +74,7 @@ const HurtForm = () => {
     pain_level: 0,
   });
   const [checkBoxValue, setCheckBoxValue] = useState(true);
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = () => {
     setCheckBoxValue(!checkBoxValue);
   };
 
@@ -40,7 +84,12 @@ const HurtForm = () => {
   };
 
   //treatments
-  const { treatments, getTreatmentsByPatientId } = useContext(TreatmentContext);
+  const {
+    treatments,
+    getTreatmentsByPatientId,
+    getTreatmentsBySearchTerms,
+    getTreatmentsByQuerystring,
+  } = useContext(TreatmentContext);
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [showAddTreatments, setShowAddTreatments] = useState(false);
   const handleSelectTreatment = (item) => {
@@ -135,7 +184,20 @@ const HurtForm = () => {
               selected={selectedTreatments}
               onAdd={handleSelectTreatment}
               onRemove={deselectTreatmentById}
-            />
+            >
+              <TreatmentControlGroup
+                isOwner={isTreatmentOwner}
+                selectRadioButton={handleSelectTreatmentCollection}
+                searchTerms={treatmentSearchTerms}
+                changeSearchTerms={handleChangeTreatmentSearchTerms}
+                clearSearchTerms={handleClearSearchTerms}
+                submitSearchTerms={handleSubmitSearchTerms}
+                treatmentTypeId={treatmentTypeId}
+                selectTreatmentType={handleSelectTreatmentType}
+                bodypartId={bodypartId}
+                selectBodypart={handleSelectBodypart}
+              />
+            </TreatmentToggleGroup>
             <fieldset className="hurtstatustoggle">
               <label htmlFor="active">Active?</label>
               <input

@@ -14,6 +14,12 @@ export const HealingProvider = (props) => {
         setHealingData(healingData)
     }
 
+    const getHealingDataByQuerystring = async (querystring) => {
+        const response = await request(`${resourceURL}${querystring}`)
+        const healingData = await response.json()
+        setHealingData(healingData)
+      }
+
     const getHealingById = async (healingId) => {
         const response = await request(`${resourceURL}/${healingId}`);
         const healing = await response.json();
@@ -41,7 +47,7 @@ export const HealingProvider = (props) => {
     }
 
     return (
-        <HealingContext.Provider value={{healingData, getHealingData, getHealingById, createHealing, updateHealing, getHealingDataByPatientId, deleteHealing}}>
+        <HealingContext.Provider value={{healingData, getHealingData, getHealingDataByQuerystring, getHealingById, createHealing, updateHealing, getHealingDataByPatientId, deleteHealing}}>
             {props.children}
         </HealingContext.Provider>
     )

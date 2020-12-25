@@ -6,7 +6,7 @@ import DetailPageLayout from "../layouts/DetailPageLayout";
 import { TreatmentContext } from "./TreatmentProvider";
 import BadgeField from "../ui/BadgeField";
 
-const TreatmentDetail = (props) => {
+const TreatmentDetail = () => {
   //Router Hooks
   const history = useHistory();
   const { treatmentId } = useParams();
@@ -17,7 +17,8 @@ const TreatmentDetail = (props) => {
     added_by: {},
     hurts: [],
     bodypart: {},
-    links: []
+    treatmenttype: {},
+    links: [],
   });
 
   //delete handler
@@ -41,38 +42,39 @@ const TreatmentDetail = (props) => {
     return <FourOhFourPage />;
   }
   return (
-    <BasicPage >
-        <div className="basicwrapper">
-          <DetailPageLayout
-            onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
-            onDelete={() => handleDeleteTreatment(treatment.id)}
-          >
-            <main className="treatmentdetail">
-              <div className="treatment">
-                <h2>Treatment: {treatment.name}</h2>
-                <h3>Bodypart: {treatment.bodypart.name}</h3>
-                <div className="treatment__notes">
-                  <h3>Notes:</h3>
-                  <p>{treatment.notes}</p>
-                  <div className="treatment__links">
-                    <h3>Links:</h3>
-                    {treatment.links.map((l) => {
-                      return (
-                        <div key={l.id} className="treatment__links__link">
-                          <a target="_blank" href={l.linkurl}>
-                            {l.linktext}
-                          </a>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <h3>Tagged Hurts</h3>
-                  <BadgeField selected={treatment.hurts} badgeText="name" />
+    <BasicPage>
+      <div className="basicwrapper">
+        <DetailPageLayout
+          onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
+          onDelete={() => handleDeleteTreatment(treatment.id)}
+        >
+          <main className="treatmentdetail">
+            <div className="treatment">
+              <h2>Treatment: {treatment.name}</h2>
+              <h3>Bodypart: {treatment.bodypart.name}</h3>
+              <h3>Type: {treatment.treatmenttype.name}</h3>
+              <div className="treatment__notes">
+                <h3>Notes:</h3>
+                <p>{treatment.notes}</p>
+                <div className="treatment__links">
+                  <h3>Links:</h3>
+                  {treatment.links.map((l) => {
+                    return (
+                      <div key={l.id} className="treatment__links__link">
+                        <a target="_blank" href={l.linkurl}>
+                          {l.linktext}
+                        </a>
+                      </div>
+                    );
+                  })}
                 </div>
+                <h3>Tagged Hurts</h3>
+                <BadgeField selected={treatment.hurts} badgeText="name" />
               </div>
-            </main>
-          </DetailPageLayout>
-        </div>
+            </div>
+          </main>
+        </DetailPageLayout>
+      </div>
     </BasicPage>
   );
 };
