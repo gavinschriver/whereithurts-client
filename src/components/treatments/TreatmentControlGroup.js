@@ -25,7 +25,7 @@ const TreatmentControlGroup = ({
           <input
             type="radio"
             id="owner"
-            name="collection"
+            name="owner"
             value={1}
             checked={isOwner == 1}
             onChange={selectRadioButton}
@@ -34,7 +34,7 @@ const TreatmentControlGroup = ({
           <input
             type="radio"
             id="all"
-            name="collection"
+            name="owner"
             value={0}
             checked={isOwner == 0}
             onChange={selectRadioButton}
@@ -44,12 +44,14 @@ const TreatmentControlGroup = ({
             defaultoptiontext="No filter chosen"
             onChange={selectBodypart}
             value={bodypartId}
+            name="bodypart_id"
           />
           <TreatmentTypeSelectBar
             label="Filter by Treatment Type: "
             defaultoptiontext="No filter chosen"
             onChange={selectTreatmentType}
             value={treatmentTypeId}
+            name="treatmenttype_id"
           />
           <SearchBar
             label="Search all treatments:"
@@ -57,6 +59,7 @@ const TreatmentControlGroup = ({
             onChange={changeSearchTerms}
             onSearch={submitSearchTerms}
             onClear={clearSearchTerms}
+            name="search_terms"
           />
         </div>
       </ControlGroup>

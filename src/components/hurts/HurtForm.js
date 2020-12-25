@@ -30,7 +30,7 @@ const HurtForm = () => {
   const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
 
   const handleChangeTreatmentSearchTerms = (e) => {
-    setTreatmentSearchTerms(treatmentSearchTerms);
+    setTreatmentSearchTerms(e.target.value);
   };
   const handleSubmitSearchTerms = () => {
     getTreatmentsBySearchTerms(treatmentSearchTerms);
@@ -187,14 +187,15 @@ const HurtForm = () => {
             >
               <TreatmentControlGroup
                 isOwner={isTreatmentOwner}
+                selectRadioButton={handleSelectTreatmentCollection}
+                searchTerms={treatmentSearchTerms}
                 changeSearchTerms={handleChangeTreatmentSearchTerms}
                 clearSearchTerms={handleClearSearchTerms}
-                selectRadioButton={handleSelectTreatmentCollection}
                 submitSearchTerms={handleSubmitSearchTerms}
-                selectTreatmentType={handleSelectTreatmentType}
-                selectBodypart={handleSelectBodypart}
-                bodypartId={bodypartId}
                 treatmentTypeId={treatmentTypeId}
+                selectTreatmentType={handleSelectTreatmentType}
+                bodypartId={bodypartId}
+                selectBodypart={handleSelectBodypart}
               />
             </TreatmentToggleGroup>
             <fieldset className="hurtstatustoggle">
