@@ -47,6 +47,7 @@ const TreatmentDetail = () => {
         <DetailPageLayout
           onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
           onDelete={() => handleDeleteTreatment(treatment.id)}
+          isOwner={treatment.owner}
         >
           <main className="treatmentdetail">
             <div className="treatment">
@@ -68,8 +69,8 @@ const TreatmentDetail = () => {
                     );
                   })}
                 </div>
-                <h3>Tagged Hurts</h3>
-                <BadgeField selected={treatment.hurts} badgeText="name" />
+                <h3>Your Tagged Hurts</h3>
+                <BadgeField selected={treatment.hurts.filter((h) => h.patient.id === parseInt(localStorage.getItem("patient_id")))} badgeText="name" />
               </div>
             </div>
           </main>
