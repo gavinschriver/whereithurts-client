@@ -8,6 +8,7 @@ import TreatmentControlGroup from "../treatments/TreatmentControlGroup";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 import PainLevelSelectBar from "../ui/PainLevelSelectBar";
+import SearchBar from "../ui/SearchBar";
 import TextArea from "../ui/TextArea";
 import TextInput from "../ui/TextInput";
 import { HurtContext } from "./HurtProvider";
@@ -22,18 +23,6 @@ const HurtForm = () => {
   const { hurtId } = useParams();
   const editMode = location.pathname.includes("edit");
 
-  //filters and actions for treatments
-  const [treatmentFilters, setTreatmentFilters] = useState({ owner: 1 });
-  const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target
-    setTreatmentFilters({...setTreatmentFilters, [name]: parseInt(value)})
-  }
-
-  useEffect(() => {
-    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
-  }, [treatmentFilters]);
-
   // search terms
   const handleChangeTreatmentSearchTerms = (e) => {
     setTreatmentSearchTerms(e.target.value);
@@ -46,7 +35,6 @@ const HurtForm = () => {
     setTreatmentSearchTerms("");
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
   };
-
 
   //hurt
   const { createHurt, getHurtById, updateHurt } = useContext(HurtContext);
@@ -69,7 +57,6 @@ const HurtForm = () => {
   //treatments
   const {
     treatments,
-    getTreatmentsByPatientId,
     getTreatmentsBySearchTerms,
     getTreatmentsByQuerystring,
   } = useContext(TreatmentContext);
@@ -85,13 +72,23 @@ const HurtForm = () => {
     setSelectedTreatments
   );
 
+  //filters treamtents
+  const [treatmentFilters, setTreatmentFilters] = useState({ owner: 1 });
+  const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setTreatmentFilters({ ...setTreatmentFilters, [name]: parseInt(value) });
+  };
+
+  useEffect(() => {
+    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
+  }, [treatmentFilters]);
+
   //initializer effect to bring in treatments added_by this patient **
   useEffect(() => {
-    getTreatmentsByPatientId(current_patient_id).then(() => {
-      if (editMode && hurtId) {
-        getInitialValues();
-      }
-    });
+    if (editMode && hurtId) {
+      getInitialValues();
+    }
   }, []);
 
   const getInitialValues = async () => {
@@ -171,12 +168,16 @@ const HurtForm = () => {
               <TreatmentControlGroup
                 handleFilterChange={handleFilterChange}
                 isOwner={treatmentFilters.owner}
-                searchTerms={treatmentSearchTerms}
-                changeSearchTerms={handleChangeTreatmentSearchTerms}
-                clearSearchTerms={handleClearSearchTerms}
-                submitSearchTerms={handleSubmitSearchTerms}
                 treatmentTypeId={treatmentFilters.treatmenttype_id}
                 bodypartId={treatmentFilters.bodypart_id}
+              />
+              <SearchBar
+                label="Search all:"
+                name="treatment_search_terms"
+                value={treatmentSearchTerms}
+                onChange={handleChangeTreatmentSearchTerms}
+                onSearch={handleSubmitSearchTerms}
+                onClear={handleClearSearchTerms}
               />
             </TreatmentToggleGroup>
             <fieldset className="hurtstatustoggle">

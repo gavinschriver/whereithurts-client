@@ -8,14 +8,27 @@ import ShowHideControls from "../ui/ShowHideControls";
 import { TreatmentContext } from "./TreatmentProvider";
 import "./Treatments.css";
 import { buildQueryString } from "../../utils/helpers";
+import SearchBar from "../ui/SearchBar";
 
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(false);
+
+  //fitler
   const [filters, setFilters] = useState({ owner: 1 });
   const [searchTerms, setSearchTerms] = useState("");
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: parseInt(value) });
+  };
+
+  // search
+
+  const handleChangeSearchTerms = (e) => {
+    setSearchTerms(e.target.value);
+  };
+
+  const handleSubmitSearchTerms = () => {
+    getTreatmentsBySearchTerms(searchTerms);
   };
 
   const handleClearSearchTerms = () => {
@@ -60,9 +73,13 @@ const TreatmentList = () => {
               isOwner={filters.owner}
               bodypartId={filters.bodypart_id}
               treatmentTypeId={filters.treatmenttype_id}
-              changeSearchTerms={(e) => setSearchTerms(e.target.value)}
-              submitSearchTerms={() => getTreatmentsBySearchTerms(searchTerms)}
-              clearSearchTerms={handleClearSearchTerms}
+            />
+            <SearchBar
+              label="Search all:"
+              value={searchTerms}
+              onChange={handleChangeSearchTerms}
+              onSearch={handleSubmitSearchTerms}
+              onClear={handleClearSearchTerms}
             />
           </ShowHideControls>
           <div className="treatmentlist">
@@ -80,8 +97,8 @@ const TreatmentList = () => {
                       <h3>Name: {t.name}</h3>
                       <h3>Bodypart: {t.bodypart.name}</h3>
                     </div>
-                    <div className="col" style={{textAlign: `right`}}>
-                    <h3>{t.treatmenttype.name}</h3>
+                    <div className="col" style={{ textAlign: `right` }}>
+                      <h3>{t.treatmenttype.name}</h3>
 
                       <div className="listitem__subcollection">
                         {t.hurts.map((h) => {

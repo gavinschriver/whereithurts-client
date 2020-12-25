@@ -6,21 +6,16 @@ import SearchBar from "../ui/SearchBar";
 
 /**
  * 
- * @param {Boolean} isOwner 
  * @param {Function} handleFilterChange handler to control values of filter object defined in parent component
+ * @param {Integer} isOwner 0 designates radio button for "All Users", 1 for current patient; Could add additional int values for other options in button set
  * @param {Function} changeSearchTerms handler to control value of SearchBar's rendered input of type "text"
  * 
  */
 const TreatmentControlGroup = ({
   handleFilterChange,
   isOwner,
-  changeSearchTerms,
-  clearSearchTerms,
-  submitSearchTerms,
-  searchTerms,
   bodypartId,
   treatmentTypeId,
-  ...props
 }) => {
   return (
     <div className="treatmentcontrolgroup">
@@ -57,14 +52,6 @@ const TreatmentControlGroup = ({
             onChange={handleFilterChange}
             value={treatmentTypeId}
             name="treatmenttype_id"
-          />
-          <SearchBar
-            label="Search all treatments:"
-            value={searchTerms}
-            onChange={changeSearchTerms}
-            onSearch={submitSearchTerms}
-            onClear={clearSearchTerms}
-            name="search_terms"
           />
         </div>
       </ControlGroup>
