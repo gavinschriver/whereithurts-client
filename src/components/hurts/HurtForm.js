@@ -23,12 +23,18 @@ const HurtForm = () => {
   const editMode = location.pathname.includes("edit");
 
   //filters and actions for treatments
-  const [bodypartId, setBodypartId] = useState(0);
-  const [treatmentTypeId, setTreatmentTypeId] = useState(0);
-  const [isTreatmentOwner, setIsTreatmentOwner] = useState(1);
   const [treatmentFilters, setTreatmentFilters] = useState({ owner: 1 });
   const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target
+    setTreatmentFilters({...setTreatmentFilters, [name]: parseInt(value)})
+  }
 
+  useEffect(() => {
+    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
+  }, [treatmentFilters]);
+
+  // search terms
   const handleChangeTreatmentSearchTerms = (e) => {
     setTreatmentSearchTerms(e.target.value);
   };
@@ -36,34 +42,11 @@ const HurtForm = () => {
     getTreatmentsBySearchTerms(treatmentSearchTerms);
   };
 
-  const handleSelectBodypart = (e) => {
-    setBodypartId(e.target.value);
-  };
-
-  const handleSelectTreatmentType = (e) => {
-    setTreatmentTypeId(e.target.value);
-  };
-
-  const handleSelectTreatmentCollection = (e) => {
-    setIsTreatmentOwner(e.target.value);
-  };
-
   const handleClearSearchTerms = () => {
     setTreatmentSearchTerms("");
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
   };
 
-  useEffect(() => {
-    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
-  }, [treatmentFilters]);
-
-  useEffect(() => {
-    setTreatmentFilters({
-      bodypart_id: parseInt(bodypartId),
-      treatmenttype_id: parseInt(treatmentTypeId),
-      owner: parseInt(isTreatmentOwner),
-    });
-  }, [bodypartId, treatmentTypeId, isTreatmentOwner]);
 
   //hurt
   const { createHurt, getHurtById, updateHurt } = useContext(HurtContext);
@@ -186,16 +169,14 @@ const HurtForm = () => {
               onRemove={deselectTreatmentById}
             >
               <TreatmentControlGroup
-                isOwner={isTreatmentOwner}
-                selectRadioButton={handleSelectTreatmentCollection}
+                handleFilterChange={handleFilterChange}
+                isOwner={treatmentFilters.owner}
                 searchTerms={treatmentSearchTerms}
                 changeSearchTerms={handleChangeTreatmentSearchTerms}
                 clearSearchTerms={handleClearSearchTerms}
                 submitSearchTerms={handleSubmitSearchTerms}
-                treatmentTypeId={treatmentTypeId}
-                selectTreatmentType={handleSelectTreatmentType}
-                bodypartId={bodypartId}
-                selectBodypart={handleSelectBodypart}
+                treatmentTypeId={treatmentFilters.treatmenttype_id}
+                bodypartId={treatmentFilters.bodypart_id}
               />
             </TreatmentToggleGroup>
             <fieldset className="hurtstatustoggle">

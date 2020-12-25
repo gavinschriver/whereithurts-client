@@ -7,17 +7,16 @@ import SearchBar from "../ui/SearchBar";
 /**
  * 
  * @param {Boolean} isOwner 
+ * @param {Function} handleFilterChange handler to control values of filter object defined in parent component
  * @param {Function} changeSearchTerms handler to control value of SearchBar's rendered input of type "text"
  * 
  */
 const TreatmentControlGroup = ({
+  handleFilterChange,
   isOwner,
   changeSearchTerms,
   clearSearchTerms,
-  selectRadioButton,
   submitSearchTerms,
-  selectTreatmentType,
-  selectBodypart,
   searchTerms,
   bodypartId,
   treatmentTypeId,
@@ -34,7 +33,7 @@ const TreatmentControlGroup = ({
             name="owner"
             value={1}
             checked={isOwner == 1}
-            onChange={selectRadioButton}
+            onChange={handleFilterChange}
           />
           <label htmlFor="owner">From all users</label>
           <input
@@ -43,19 +42,19 @@ const TreatmentControlGroup = ({
             name="owner"
             value={0}
             checked={isOwner == 0}
-            onChange={selectRadioButton}
+            onChange={handleFilterChange}
           />
           <BodypartSelectBar
             label="Filter by Bodypart: "
             defaultoptiontext="No filter chosen"
-            onChange={selectBodypart}
+            onChange={handleFilterChange}
             value={bodypartId}
             name="bodypart_id"
           />
           <TreatmentTypeSelectBar
             label="Filter by Treatment Type: "
             defaultoptiontext="No filter chosen"
-            onChange={selectTreatmentType}
+            onChange={handleFilterChange}
             value={treatmentTypeId}
             name="treatmenttype_id"
           />
