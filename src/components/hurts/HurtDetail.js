@@ -45,6 +45,7 @@ const HurtDetail = () => {
         <DetailPageLayout
           onEdit={() => history.push(`/hurts/edit/${hurtId}`)}
           onDelete={() => handleDeleteHurt(hurtId)}
+          isOwner={hurt.owner}
         >
           <main className="hurtdetail">
             <h2>Hurt: {hurt.name}</h2>

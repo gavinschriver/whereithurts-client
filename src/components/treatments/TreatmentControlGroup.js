@@ -4,6 +4,12 @@ import TreatmentTypeSelectBar from "../treatmenttypes/TreatmentTypeSelectBar";
 import ControlGroup from "../ui/ControlGroup";
 import SearchBar from "../ui/SearchBar";
 
+/**
+ * 
+ * @param {Boolean} isOwner 
+ * @param {Function} changeSearchTerms handler to control value of SearchBar's rendered input of type "text"
+ * 
+ */
 const TreatmentControlGroup = ({
   isOwner,
   changeSearchTerms,

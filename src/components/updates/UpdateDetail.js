@@ -37,6 +37,7 @@ const UpdateDetail = () => {
         <DetailPageLayout
           onEdit={() => history.push(`/updates/edit/${updateId}`)}
           onDelete={() => handleDeleteUpdate(updateId)}
+          isOwner={true}
         >
           <main className="updatedetail">
             <h2 className="name updatedetail__name">Update for: {update.hurt.name}</h2>
