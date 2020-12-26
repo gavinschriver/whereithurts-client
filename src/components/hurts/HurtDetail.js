@@ -14,6 +14,7 @@ const HurtDetail = () => {
   const { getHurtById, deleteHurt, sortHurtHistory } = useContext(HurtContext);
 
   const [hurt, setHurt] = useState(null);
+  const [sortValue, setSortValue] = useState('')
 
   const _getHurtById = async (hurtId) => {
     const _hurt = await getHurtById(hurtId);
@@ -30,6 +31,10 @@ const HurtDetail = () => {
     await deleteHurt(hurtId);
     history.push(`/hurts`);
   };
+
+  useEffect(() => {
+    _sortHurtHistory(hurtId, `order_history=${sortValue}`)
+  }, [sortValue])
 
   useEffect(() => {
     _getHurtById(hurtId);
@@ -60,6 +65,8 @@ const HurtDetail = () => {
         <HurtHistory
           history={hurt.history}
           hurtId={hurtId}
+          sortValue={sortValue}
+          onChange={(e) => setSortValue(e.target.value)}
         />
       </div>
     </BasicPage>
