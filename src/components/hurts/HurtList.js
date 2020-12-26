@@ -13,14 +13,13 @@ import { buildQueryString } from "../../utils/helpers";
 const SORT_OPTIONS = [
   { id: 1, name: "Oldest", value: "added_on-asc" },
   { id: 2, name: "Most Recently Updated", value: "recently_updated-desc" },
+  { id: 3, name: "Least Recently Updated", value: "recently_updated-asc" },
 ];
 
 const HurtList = () => {
   // setup
   const current_user_id = parseInt(localStorage.getItem("patient_id"));
-  const { hurts, getHurtsByQuerystring } = useContext(
-    HurtContext
-  );
+  const { hurts, getHurtsByQuerystring } = useContext(HurtContext);
   const history = useHistory();
 
   //showhide controls
