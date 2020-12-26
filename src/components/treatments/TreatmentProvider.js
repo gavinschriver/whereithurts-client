@@ -9,10 +9,10 @@ export const TreatmentProvider = (props) => {
   const [treatments, setTreatments] = useState([]);
 
   const getTreatments = async () => {
-    const response = await request(`${resourceURL}`)
-    const treatments = await response.json()
-    setTreatments(treatments)
-  }
+    const response = await request(`${resourceURL}`);
+    const treatments = await response.json();
+    setTreatments(treatments);
+  };
 
   const getTreatmentsByPatientId = async (patientId) => {
     const response = await request(`${resourceURL}?patient_id=${patientId}`);
@@ -21,16 +21,19 @@ export const TreatmentProvider = (props) => {
   };
 
   const getTreatmentsByQuerystring = async (querystring) => {
-    const response = await request(`${resourceURL}${querystring}`)
-    const treatments = await response.json()
-    setTreatments(treatments)
-  }
+    const response = await request(`${resourceURL}${querystring}`);
+    const treatments = await response.json();
+    setTreatments(treatments);
+  };
 
+  //trim whitespace to make sure a search is not made for an empty string, which will return all items
   const getTreatmentsBySearchTerms = async (searchTerms) => {
-    const response = await request(`${resourceURL}?q=${searchTerms}`)
-    const treatments = await response.json()
-    setTreatments(treatments)
-  }
+    if (searchTerms.trim() !== "") {
+      const response = await request(`${resourceURL}?q=${searchTerms}`);
+      const treatments = await response.json();
+      setTreatments(treatments);
+    }
+  };
 
   const createTreatment = async (newTreatment) => {
     const response = await request(`${resourceURL}`, "POST", newTreatment);
@@ -67,7 +70,7 @@ export const TreatmentProvider = (props) => {
         getTreatmentsBySearchTerms,
         getTreatmentById,
         updateTreatment,
-        deleteTreatment
+        deleteTreatment,
       }}
     >
       {props.children}

@@ -8,14 +8,33 @@ import ShowHideControls from "../ui/ShowHideControls";
 import { TreatmentContext } from "./TreatmentProvider";
 import "./Treatments.css";
 import { buildQueryString } from "../../utils/helpers";
+import SearchBar from "../ui/SearchBar";
+import HurtSelectBar from "../hurts/HurtSelectBar";
 
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(false);
+
+  //fitler
   const [filters, setFilters] = useState({ owner: 1 });
   const [searchTerms, setSearchTerms] = useState("");
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: parseInt(value) });
+  };
+
+  // search
+
+  const handleChangeSearchTerms = (e) => {
+    setSearchTerms(e.target.value);
+  };
+
+  const handleSubmitSearchTerms = () => {
+    getTreatmentsBySearchTerms(searchTerms);
+  };
+
+  const handleClearSearchTerms = () => {
+    setSearchTerms("");
+    _getTreatmentsByQuerystring();
   };
 
   const {
@@ -51,18 +70,19 @@ const TreatmentList = () => {
             }
           >
             <TreatmentControlGroup
+              handleFilterChange={handleFilterChange}
               isOwner={filters.owner}
-              selectRadioButton={handleFilterChange}
-              selectBodypart={handleFilterChange}
-              selectTreatmentType={handleFilterChange}
               bodypartId={filters.bodypart_id}
-              treatmentTypeId={filters.treatmentTypeId}
-              changeSearchTerms={(e) => setSearchTerms(e.target.value)}
-              submitSearchTerms={() => getTreatmentsBySearchTerms(searchTerms)}
-              clearSearchTerms={() => {
-                setSearchTerms("");
-                _getTreatmentsByQuerystring();
-              }}
+              treatmentTypeId={filters.treatmenttype_id}
+            >
+              <HurtSelectBar label="Filter by Hurt:" name="hurt_id" onChange={handleFilterChange} value={filters.hurt_id}/>
+              </TreatmentControlGroup>
+            <SearchBar
+              label="Search all:"
+              value={searchTerms}
+              onChange={handleChangeSearchTerms}
+              onSearch={handleSubmitSearchTerms}
+              onClear={handleClearSearchTerms}
             />
           </ShowHideControls>
           <div className="treatmentlist">
@@ -80,22 +100,26 @@ const TreatmentList = () => {
                       <h3>Name: {t.name}</h3>
                       <h3>Bodypart: {t.bodypart.name}</h3>
                     </div>
-                    <div className="listitem__subcollection">
-                      {t.hurts.map((h) => {
-                        if (
-                          h.patient.id ===
-                          parseInt(localStorage.getItem("patient_id"))
-                        ) {
-                          return (
-                            <span
-                              key={h.id}
-                              className="listitem__subcollection__item"
-                            >
-                              {h.name}
-                            </span>
-                          );
-                        }
-                      })}
+                    <div className="col" style={{ textAlign: `right` }}>
+                      <h3>{t.treatmenttype.name}</h3>
+
+                      <div className="listitem__subcollection">
+                        {t.hurts.map((h) => {
+                          if (
+                            h.patient.id ===
+                            parseInt(localStorage.getItem("patient_id"))
+                          ) {
+                            return (
+                              <span
+                                key={h.id}
+                                className="listitem__subcollection__item"
+                              >
+                                {h.name}
+                              </span>
+                            );
+                          }
+                        })}
+                      </div>
                     </div>
                   </Button>
                 </div>
