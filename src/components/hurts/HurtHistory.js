@@ -6,7 +6,7 @@ import SortHurtHistory from "./SortHurtHistory";
 const HurtHistory = (props) => {
   const routeHistory = useHistory();
 
-  const { history, sortValue, handleHistoryItemClick } = props;
+  const { history, sortValue, onChange } = props;
 
   return (
     <div className="history">
@@ -15,7 +15,7 @@ const HurtHistory = (props) => {
           <h2>History</h2>
         </div>
       </div>
-      <SortHurtHistory value={sortValue} />
+      <SortHurtHistory value={sortValue} onChange={onChange} />
       <div className="list history--list">
         {history.map((i) => {
           const type = i.history_type;

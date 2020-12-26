@@ -11,29 +11,27 @@ const HurtDetail = () => {
 
   const { hurtId } = useParams();
 
-  const { getHurtById, deleteHurt, sortHurtHistory } = useContext(HurtContext);
+  const { deleteHurt, sortHurtHistory } = useContext(HurtContext);
 
   const [hurt, setHurt] = useState(null);
 
-  const _getHurtById = async (hurtId) => {
-    const _hurt = await getHurtById(hurtId);
-
-    setHurt(_hurt);
-  };
+  // history sort value; initialized with 'newest' first 
+  const [sortValue, setSortValue] = useState('newest')
 
   const _sortHurtHistory = async (hurtId, queryString) => {
     const _hurt = await sortHurtHistory(hurtId, queryString);
     setHurt(_hurt);
   };
 
+  useEffect(() => {
+    _sortHurtHistory(hurtId, `order_history=${sortValue}`)
+  }, [sortValue])
+
+  // delete function
   const handleDeleteHurt = async (hurtId) => {
     await deleteHurt(hurtId);
     history.push(`/hurts`);
   };
-
-  useEffect(() => {
-    _getHurtById(hurtId);
-  }, []);
 
   if (hurt === null) {
     return <div>Still loading...</div>;
@@ -60,6 +58,8 @@ const HurtDetail = () => {
         <HurtHistory
           history={hurt.history}
           hurtId={hurtId}
+          sortValue={sortValue}
+          onChange={(e) => setSortValue(e.target.value)}
         />
       </div>
     </BasicPage>
