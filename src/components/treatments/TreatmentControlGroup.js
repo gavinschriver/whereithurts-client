@@ -16,6 +16,7 @@ const TreatmentControlGroup = ({
   isOwner,
   bodypartId,
   treatmentTypeId,
+  ...props
 }) => {
   return (
     <div className="treatmentcontrolgroup">
@@ -53,6 +54,7 @@ const TreatmentControlGroup = ({
             value={treatmentTypeId}
             name="treatmenttype_id"
           />
+          {props.children}
         </div>
       </ControlGroup>
     </div>

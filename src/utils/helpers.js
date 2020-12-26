@@ -73,7 +73,7 @@ export const convertTimeStringToSeconds = timeString => {
 };
 
 /** return a string built from passing an object
- * @param {Object} filters Object with k/v pairs of a relevant querystring param name and matching value
+ * @param {Object} filters Object with k/v pairs of a relevant querystring param name and matching value; will only add the pair if the 'value' is not 0
  */
 export const buildQueryString = (filters) => {
   const filtersArray = Object.entries(filters);

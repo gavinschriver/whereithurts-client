@@ -9,6 +9,7 @@ import { TreatmentContext } from "./TreatmentProvider";
 import "./Treatments.css";
 import { buildQueryString } from "../../utils/helpers";
 import SearchBar from "../ui/SearchBar";
+import HurtSelectBar from "../hurts/HurtSelectBar";
 
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(false);
@@ -73,7 +74,9 @@ const TreatmentList = () => {
               isOwner={filters.owner}
               bodypartId={filters.bodypart_id}
               treatmentTypeId={filters.treatmenttype_id}
-            />
+            >
+              <HurtSelectBar label="Filter by Hurt:" name="hurt_id" onChange={handleFilterChange} value={filters.hurt_id}/>
+              </TreatmentControlGroup>
             <SearchBar
               label="Search all:"
               value={searchTerms}

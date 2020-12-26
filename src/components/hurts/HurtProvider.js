@@ -40,6 +40,12 @@ export const HurtProvider = (props) => {
     return hurt;
   };
 
+  const getHurtsByQuerystring = async (queryString) => {
+    const response = await request(`${resourceURL}${queryString}`)
+    const hurts = await response.json()
+    setHurts(hurts)
+  }
+
   return (
     <HurtContext.Provider
       value={{
@@ -49,7 +55,8 @@ export const HurtProvider = (props) => {
         getHurtById,
         updateHurt,
         deleteHurt,
-        sortHurtHistory
+        sortHurtHistory,
+        getHurtsByQuerystring
       }}
     >
       {props.children}

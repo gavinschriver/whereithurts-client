@@ -23,19 +23,6 @@ const HurtForm = () => {
   const { hurtId } = useParams();
   const editMode = location.pathname.includes("edit");
 
-  // search terms
-  const handleChangeTreatmentSearchTerms = (e) => {
-    setTreatmentSearchTerms(e.target.value);
-  };
-  const handleSubmitSearchTerms = () => {
-    getTreatmentsBySearchTerms(treatmentSearchTerms);
-  };
-
-  const handleClearSearchTerms = () => {
-    setTreatmentSearchTerms("");
-    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
-  };
-
   //hurt
   const { createHurt, getHurtById, updateHurt } = useContext(HurtContext);
   const [basicFormValues, setBasicFormValues] = useState({
@@ -80,11 +67,25 @@ const HurtForm = () => {
     setTreatmentFilters({ ...setTreatmentFilters, [name]: parseInt(value) });
   };
 
+  // treatment search terms
+  const handleChangeTreatmentSearchTerms = (e) => {
+    setTreatmentSearchTerms(e.target.value);
+  };
+  const handleSubmitSearchTerms = () => {
+    getTreatmentsBySearchTerms(treatmentSearchTerms);
+  };
+
+  const handleClearSearchTerms = () => {
+    setTreatmentSearchTerms("");
+    getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
+  };
+
+  // query treatments by filters on filter change; this will also initialize by whatever the filters are first set to
   useEffect(() => {
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
   }, [treatmentFilters]);
 
-  //initializer effect to bring in treatments added_by this patient **
+  //initializer effect to bring in relevant resource if in edit mode **
   useEffect(() => {
     if (editMode && hurtId) {
       getInitialValues();
