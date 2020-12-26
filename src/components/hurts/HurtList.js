@@ -18,7 +18,7 @@ const SORT_OPTIONS = [
 const HurtList = () => {
   // setup
   const current_user_id = parseInt(localStorage.getItem("patient_id"));
-  const { hurts, getHurtsByPatientId, getHurtsByQuerystring } = useContext(
+  const { hurts, getHurtsByQuerystring } = useContext(
     HurtContext
   );
   const history = useHistory();
@@ -30,6 +30,7 @@ const HurtList = () => {
   const [filters, setFilters] = useState({
     show_inactive: true,
     patient_id: current_user_id,
+    order_by: "added_on-desc",
   });
   const handleFilterChange = (e) => {
     let { name, value } = e.target;
@@ -46,10 +47,6 @@ const HurtList = () => {
   useEffect(() => {
     _getHurtsByQuerystring();
   }, [filters]);
-
-  useEffect(() => {
-    getHurtsByPatientId(current_user_id);
-  }, []);
 
   return (
     <BasicPage>
