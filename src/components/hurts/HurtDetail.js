@@ -11,34 +11,27 @@ const HurtDetail = () => {
 
   const { hurtId } = useParams();
 
-  const { getHurtById, deleteHurt, sortHurtHistory } = useContext(HurtContext);
+  const { deleteHurt, sortHurtHistory } = useContext(HurtContext);
 
   const [hurt, setHurt] = useState(null);
-  const [sortValue, setSortValue] = useState('')
 
-  const _getHurtById = async (hurtId) => {
-    const _hurt = await getHurtById(hurtId);
-
-    setHurt(_hurt);
-  };
+  // history sort value; initialized with 'newest' first 
+  const [sortValue, setSortValue] = useState('newest')
 
   const _sortHurtHistory = async (hurtId, queryString) => {
     const _hurt = await sortHurtHistory(hurtId, queryString);
     setHurt(_hurt);
   };
 
-  const handleDeleteHurt = async (hurtId) => {
-    await deleteHurt(hurtId);
-    history.push(`/hurts`);
-  };
-
   useEffect(() => {
     _sortHurtHistory(hurtId, `order_history=${sortValue}`)
   }, [sortValue])
 
-  useEffect(() => {
-    _getHurtById(hurtId);
-  }, []);
+  // delete function
+  const handleDeleteHurt = async (hurtId) => {
+    await deleteHurt(hurtId);
+    history.push(`/hurts`);
+  };
 
   if (hurt === null) {
     return <div>Still loading...</div>;

@@ -39,9 +39,15 @@ export const UpdateProvider = (props) => {
     );
   };
 
+  const getUpdatesByQuerystring = async (querystring) => {
+    const response = await request(`${resourceURL}${querystring}`)
+    const updates = await response.json()
+    setUpdates(updates)
+  }
+
   const deleteUpdate = async (updateId) => {
     await request(`${resourceURL}/${updateId}`, "DELETE");
   };
 
-  return <UpdateContext.Provider value={{createUpdate, getUpdateById, updateUpdate, getUpdates, deleteUpdate, getUpdatesByPatientId, updates}}>{props.children}</UpdateContext.Provider>;
+  return <UpdateContext.Provider value={{createUpdate, getUpdateById, updateUpdate, getUpdates, deleteUpdate, getUpdatesByPatientId, updates, getUpdatesByQuerystring}}>{props.children}</UpdateContext.Provider>;
 };
