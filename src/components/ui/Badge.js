@@ -37,7 +37,7 @@ const Badge = ({
       <Button
         className={direction ? `toggle--badge--button--left` : `badge--button`}
         {...props}
-        onClick={showModal}
+        onClick={props.detailconfig ? showModal : () => {}}
       />
       {direction && (
         <Button

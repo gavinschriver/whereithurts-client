@@ -237,3 +237,29 @@ textarea {
   background-color: rgba(0,0,0, .7);
   z-index: 1000;
 }
+
+/* BADGE DETAIL */
+
+.badgedetail {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.badgedetail__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.badgedetail__closebutton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.badgedetail__item h3 {
+  margin: .25rem 0;
+}
+
+.badgedetail .button {
+  box-shadow: none;
+}
