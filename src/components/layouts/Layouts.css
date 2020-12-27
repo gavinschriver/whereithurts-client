@@ -145,6 +145,7 @@
 
 .listpage__header {
   justify-content: space-between;
+  align-items: center;
 }
 .listitem .button, .listitem--inactive .button {
   align-items: flex-start;

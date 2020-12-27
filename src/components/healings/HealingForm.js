@@ -38,7 +38,7 @@ const HealingForm = () => {
   const [bodypartId, setBodypartId] = useState(0);
   const [treatmentTypeId, setTreatmentTypeId] = useState(0);
   const [isOwner, setIsOwner] = useState(1);
-  const [filters, setFilters] = useState({owner: 1});
+  const [filters, setFilters] = useState({ owner: 1 });
   const [searchTerms, setSearchTerms] = useState("");
 
   const handleChangeSearchTerms = (e) => {
@@ -171,18 +171,14 @@ const HealingForm = () => {
     }
   };
 
-  // need to getTreatmentsByQueryString with hardcoded value for owner, to override default response of a fetch to treatments? when 'fiters' state changes
+  // initializer effect brings in only this patient's hurts (new OR edit); treatment filter useEffect brings in relevant treatments
   useEffect(() => {
-    getHurtsByPatientId(localStorage.getItem("patient_id"))
-      .then(() => {
-        getTreatmentsByQuerystring("?owner=1");
-      })
-      .then(() => {
-        if (editMode && healingId) {
-          _getInitialValues();
-        }
-        setIsLoaded(true);
-      });
+    getHurtsByPatientId(localStorage.getItem("patient_id")).then(() => {
+      if (editMode && healingId) {
+        _getInitialValues();
+      }
+      setIsLoaded(true);
+    });
   }, []);
 
   //loading state/permissions/404s

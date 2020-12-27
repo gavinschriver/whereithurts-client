@@ -161,8 +161,8 @@ const HurtForm = () => {
             <TreatmentToggleGroup
               collection={treatments}
               showing={showAddTreatments}
-              setShowing={setShowAddTreatments}
               selected={selectedTreatments}
+              setShowing={setShowAddTreatments}
               onAdd={handleSelectTreatment}
               onRemove={deselectTreatmentById}
             >
