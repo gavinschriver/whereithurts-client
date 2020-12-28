@@ -59,6 +59,14 @@ export const TreatmentProvider = (props) => {
     await request(`${resourceURL}/${treatmentId}`, "DELETE");
   };
 
+  const tagTreatmentWithHurt = async (treatmentId, requestBody) => {
+    await request(
+      `${resourceURL}/${treatmentId}/tag_hurt`,
+      "POST",
+      requestBody
+    );
+  };
+
   return (
     <TreatmentContext.Provider
       value={{
@@ -71,6 +79,7 @@ export const TreatmentProvider = (props) => {
         getTreatmentById,
         updateTreatment,
         deleteTreatment,
+        tagTreatmentWithHurt
       }}
     >
       {props.children}

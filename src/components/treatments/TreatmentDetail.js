@@ -5,6 +5,7 @@ import FourOhFourPage from "../auth/404Page";
 import DetailPageLayout from "../layouts/DetailPageLayout";
 import { TreatmentContext } from "./TreatmentProvider";
 import BadgeField from "../ui/BadgeField";
+import { HurtContext } from "../hurts/HurtProvider";
 
 const TreatmentDetail = () => {
   //Router Hooks
@@ -12,7 +13,8 @@ const TreatmentDetail = () => {
   const { treatmentId } = useParams();
 
   //access 'treatment by id' method and set return value in state
-  const { getTreatmentById, deleteTreatment } = useContext(TreatmentContext);
+  const { getTreatmentById, deleteTreatment, tagTreatmentWithHurt } = useContext(TreatmentContext);
+  const { hurts, getHurtsByPatientId } = useContext(HurtContext);
   const [treatment, setTreatment] = useState({
     added_by: {},
     hurts: [],
@@ -21,15 +23,20 @@ const TreatmentDetail = () => {
     links: [],
   });
 
+  const selectedHurts = treatment.hurts.filter(
+    (h) =>
+      h.patient.id ===
+      parseInt(localStorage.getItem("patient_id"))
+  )
+
   //delete handler
   const handleDeleteTreatment = async (treatmentId) => {
     await deleteTreatment(treatmentId);
     history.push(`/treatments`);
   };
 
-  //check for ID in response (treatment was successfully found)
   useEffect(() => {
-      _getTreatmentById();
+    _getTreatmentById();
   }, []);
 
   const _getTreatmentById = async () => {
@@ -37,7 +44,15 @@ const TreatmentDetail = () => {
     if ("id" in treatment) {
       setTreatment(treatment);
     }
-    setIsLoaded(true)
+    getHurtsByPatientId(parseInt(localStorage.getItem("patient_id")));
+    setIsLoaded(true);
+  };
+
+  // handle tagging hurts
+  const handleAddHurt = (item) => {
+    const req_body = ({ hurt_id: item.id })
+    tagTreatmentWithHurt(treatmentId, req_body)
+    _getTreatmentById()
   }
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -74,15 +89,18 @@ const TreatmentDetail = () => {
                   })}
                 </div>
                 <h3>Your Tagged Hurts</h3>
-                <BadgeField/>
+                <BadgeField
+                  collection={hurts}
+                  selected={selectedHurts}
+                  badgeText="name"
+                  direction="add"
+                  onAdd={handleAddHurt}
+                />
                 <BadgeField
                   detailconfig={{ configkeys: ["date_added", "notes"] }}
-                  selected={treatment.hurts.filter(
-                    (h) =>
-                      h.patient.id ===
-                      parseInt(localStorage.getItem("patient_id"))
-                  )}
+                  selected={selectedHurts}
                   badgeText="name"
+                  direction="remove"
                 />
               </div>
             </div>

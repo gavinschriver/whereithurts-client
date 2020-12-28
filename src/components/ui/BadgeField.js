@@ -5,7 +5,7 @@ const BadgeField = ({
   selected = [],
   collection = [],
   badgeText,
-  onAdd,
+  onAdd = () => {},
   onRemove,
   ...props
 }) => {
@@ -14,6 +14,7 @@ const BadgeField = ({
   switch (props.direction) {
     case "add":
       //badges are addable
+      // make sure 
       badges = collection
         .filter((i) => !selected.some((s) => s.id === i.id))
         .map((i) => {
