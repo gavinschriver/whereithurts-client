@@ -28,13 +28,17 @@ const TreatmentDetail = () => {
   };
 
   //check for ID in response (treatment was successfully found)
-  useEffect(async () => {
+  useEffect(() => {
+      _getTreatmentById();
+  }, []);
+
+  const _getTreatmentById = async () => {
     const treatment = await getTreatmentById(treatmentId);
     if ("id" in treatment) {
       setTreatment(treatment);
     }
-    setIsLoaded(true);
-  }, []);
+    setIsLoaded(true)
+  }
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -70,7 +74,15 @@ const TreatmentDetail = () => {
                   })}
                 </div>
                 <h3>Your Tagged Hurts</h3>
-                <BadgeField selected={treatment.hurts.filter((h) => h.patient.id === parseInt(localStorage.getItem("patient_id")))} badgeText="name" />
+                <BadgeField
+                  detailconfig={{ configkeys: ["date_added", "notes"] }}
+                  selected={treatment.hurts.filter(
+                    (h) =>
+                      h.patient.id ===
+                      parseInt(localStorage.getItem("patient_id"))
+                  )}
+                  badgeText="name"
+                />
               </div>
             </div>
           </main>

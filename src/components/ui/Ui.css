@@ -36,9 +36,13 @@ fieldset {
 .addnew--button {
   background-color: white;
   display: flex;
-  height: auto;
+  height: fit-content;
   color: black;
   padding: 0;
+}
+
+.addnew--button .button > * {
+  padding: 0 .25rem 0 .25rem;
 }
 
 .addnew--button .button {
@@ -211,4 +215,51 @@ textarea {
 .controlgroup, .controlgroup > * {
   font-size: smaller;
   margin: 0.5rem 0 0.5rem 0;
+}
+
+/* MODAL / OVERLAY */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFF;
+  z-index: 1000;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0, .7);
+  z-index: 1000;
+}
+
+/* BADGE DETAIL */
+
+.badgedetail {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.badgedetail__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.badgedetail__closebutton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.badgedetail__item h3 {
+  margin: .25rem 0;
+}
+
+.badgedetail .button {
+  box-shadow: none;
 }

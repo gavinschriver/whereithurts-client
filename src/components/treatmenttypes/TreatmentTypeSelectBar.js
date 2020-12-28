@@ -11,9 +11,13 @@ const TreatmentTypeSelectBar = ({
     TreatmentTypeContext
   );
 
-  useEffect(async () => {
-    await getTreatmentTypes();
+  useEffect(() => {
+    _getTreatmentTypes()
   }, []);
+
+  const _getTreatmentTypes = async () => {
+    await getTreatmentTypes();
+  };
 
   return (
     <SelectBar
