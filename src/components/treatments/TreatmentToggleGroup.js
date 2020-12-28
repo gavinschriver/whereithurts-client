@@ -8,7 +8,7 @@ const TreatmentToggleGroup = (props) => {
         resource="treatment"
         showhidetext="Treatments"
         badgeText="name"
-        detailconfig={["notes", "links"]}
+        detailconfig={{configkeys: ["notes", "links"]}}
         {...props}
       >
         {props.children}

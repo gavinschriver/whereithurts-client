@@ -3,18 +3,18 @@ import Button from "./Button";
 
 /**
  *
- * @param {Array} detailconfig array of key names corresponding to the item object that specifies which values from that object to map over and present as a detail
+ * @param {Object} detailconfig object with key names corresponding to info about the detail to be rendered; configkeys is an array of key names on the {item} to map over
  * @param {Function} onClose function to pass to the Button component that toggles the state of the modal rendering the BadgeDetail to closed
  * @param {Object} item object that is having its values inspected
  */
 
-const BadgeDetail = ({ detailconfig = [], onClose, item }) => {
+const BadgeDetail = ({ detailconfig = {}, onClose, item }) => {
   return (
     <div className="badgedetail">
       <div className="badgedetail__closebutton">
         <Button onClick={onClose}>x</Button>
       </div>
-      {detailconfig.map((configkey) => {
+      {detailconfig.configkeys.map((configkey) => {
         const title =
           configkey === "bodypart"
             ? "Bodypart: "
@@ -26,6 +26,8 @@ const BadgeDetail = ({ detailconfig = [], onClose, item }) => {
             ? "Name: "
             : configkey === "notes"
             ? "Notes: "
+            : configkey === "date_added"
+            ? "Date Added: "
             : "";
 
         //make sure a property actually exists on the item with that name before trying to access it
@@ -49,11 +51,17 @@ const BadgeDetail = ({ detailconfig = [], onClose, item }) => {
         // treatment resources have a [links] attribute, so we need to map those
         if (configkey === "links")
           return (
-            <div className="badgedetail__item badgedetail__item--links">
+            <div
+              key={item[configkey]}
+              className="badgedetail__item badgedetail__item--links"
+            >
               <h3 className="badgedetail__item__title">{title}</h3>
               {item[configkey].map((link) => {
                 return (
-                  <div className="badgedetail__item__info" key={link.id}>
+                  <div
+                    className="badgedetail__item__info badge__item__info--link"
+                    key={link.id}
+                  >
                     <a target="_blank" href={link.linkurl}>
                       {link.linktext}
                     </a>
@@ -65,7 +73,10 @@ const BadgeDetail = ({ detailconfig = [], onClose, item }) => {
 
         //default (configkey value is a string)
         return (
-          <div key={`${item["id"]}`} className="badgedetail__item">
+          <div
+            key={`${item["id"]}-${item[configkey]}`}
+            className="badgedetail__item"
+          >
             <h3 className="badgedetail__item__title">{title}</h3>
             <div className="badgedetail__item__info">{item[configkey]}</div>
           </div>

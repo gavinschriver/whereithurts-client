@@ -61,10 +61,10 @@ const HealingDetail = () => {
               </div>
               <div className="healing__treatments">
                 <h3>Tagged Treatments:</h3>
-                <BadgeField selected={healing.treatments} badgeText="name" />
+                <BadgeField selected={healing.treatments} badgeText="name" detailconfig={{configkeys: ["notes", "links"]}} />
               </div>
               <h3>Tagged Hurts:</h3>
-              <BadgeField selected={healing.hurts} badgeText="name" />
+              <BadgeField selected={healing.hurts} badgeText="name" detailconfig={{configkeys: ["date_added", "notes"]}} />
             </div>
           </main>
         </DetailPageLayout>
