@@ -74,6 +74,7 @@ const TreatmentDetail = () => {
                   })}
                 </div>
                 <h3>Your Tagged Hurts</h3>
+                <BadgeField/>
                 <BadgeField
                   detailconfig={{ configkeys: ["date_added", "notes"] }}
                   selected={treatment.hurts.filter(
