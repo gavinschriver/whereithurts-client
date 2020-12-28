@@ -13,7 +13,12 @@ const TreatmentDetail = () => {
   const { treatmentId } = useParams();
 
   //access 'treatment by id' method and set return value in state
-  const { getTreatmentById, deleteTreatment, tagTreatmentWithHurt } = useContext(TreatmentContext);
+  const {
+    getTreatmentById,
+    deleteTreatment,
+    tagTreatmentWithHurt,
+    untagHurtFromTreatment
+  } = useContext(TreatmentContext);
   const { hurts, getHurtsByPatientId } = useContext(HurtContext);
   const [treatment, setTreatment] = useState({
     added_by: {},
@@ -23,11 +28,10 @@ const TreatmentDetail = () => {
     links: [],
   });
 
+  // make sure the "selected hurts" displayed are only those belonging to this user
   const selectedHurts = treatment.hurts.filter(
-    (h) =>
-      h.patient.id ===
-      parseInt(localStorage.getItem("patient_id"))
-  )
+    (h) => h.patient.id === parseInt(localStorage.getItem("patient_id"))
+  );
 
   //delete handler
   const handleDeleteTreatment = async (treatmentId) => {
@@ -37,21 +41,34 @@ const TreatmentDetail = () => {
 
   useEffect(() => {
     _getTreatmentById();
+    _getHurtsByPatientId();
   }, []);
+
+  const _getHurtsByPatientId = () => {
+    getHurtsByPatientId(parseInt(localStorage.getItem("patient_id")));
+  };
 
   const _getTreatmentById = async () => {
     const treatment = await getTreatmentById(treatmentId);
     if ("id" in treatment) {
       setTreatment(treatment);
     }
-    getHurtsByPatientId(parseInt(localStorage.getItem("patient_id")));
     setIsLoaded(true);
   };
 
-  // handle tagging hurts
+  // handle tagging /untagging hurts; re-fetch patient's hurts first, then this treatment, so the treatment's "selected" is accurate
   const handleAddHurt = (item) => {
-    const req_body = ({ hurt_id: item.id })
-    tagTreatmentWithHurt(treatmentId, req_body)
+    const req_body = { hurt_id: item.id };
+    tagTreatmentWithHurt(treatmentId, req_body);
+    _getHurtsByPatientId();
+    _getTreatmentById();
+  };
+
+  const handleRemoveHurt = (e) => {
+    const itemId = parseInt(e.target.parentNode.id.split("-")[4])
+    const req_body = {hurt_id: itemId}
+    untagHurtFromTreatment(treatmentId, req_body)
+    _getHurtsByPatientId()
     _getTreatmentById()
   }
 
@@ -101,6 +118,7 @@ const TreatmentDetail = () => {
                   selected={selectedHurts}
                   badgeText="name"
                   direction="remove"
+                  onRemove={handleRemoveHurt}
                 />
               </div>
             </div>
