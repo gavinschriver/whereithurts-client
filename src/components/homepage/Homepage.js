@@ -8,9 +8,13 @@ import "./Homepage.css";
 const HomePage = () => {
   const { patient, getPatientById } = useContext(PatientContext);
 
-  useEffect(async () => {
-    await getPatientById(parseInt(localStorage.getItem("patient_id")));
+  useEffect(() => {
+    _getPatientById();
   }, []);
+
+  const _getPatientById = async () => {
+    await getPatientById(parseInt(localStorage.getItem("patient_id")));
+  };
 
   return (
     <BasicPage>

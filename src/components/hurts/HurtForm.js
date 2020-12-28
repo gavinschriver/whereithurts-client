@@ -16,8 +16,6 @@ import "./Hurts.css";
 
 const HurtForm = () => {
   //initial info
-  const current_patient_id = parseInt(localStorage.getItem("patient_id"));
-
   const location = useLocation();
   const history = useHistory();
   const { hurtId } = useParams();

@@ -27,13 +27,17 @@ const HealingDetail = () => {
   };
 
   // pull in healing on page load when healingId is detected from params
-  useEffect(async () => {
+  useEffect(() => {
+    _getHealingById();
+  }, []);
+
+  const _getHealingById = async () => {
     const healing = await getHealingById(healingId);
     if ("id" in healing) {
       setHealing(healing);
     }
     setIsLoaded(true);
-  }, []);
+  }
 
   const [isLoaded, setIsLoaded] = useState(false);
 
