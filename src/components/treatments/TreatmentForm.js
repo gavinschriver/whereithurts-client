@@ -56,7 +56,7 @@ const TreatmentForm = () => {
       bodypart_id: parseInt(basicFormValues.bodypart_id),
       hurt_ids: selectedHurts.map((h) => h.id),
       treatment_links: selectedLinks,
-      public: isPublic
+      public: isPublic,
     };
     if (editMode) {
       await updateTreatment(treatmentId, newTreatment);
@@ -103,13 +103,17 @@ const TreatmentForm = () => {
     setIsPublic((isPublic) => !isPublic);
   };
 
-  // initial hooks
+  // initial hooks; filter the tagged hurts for only this user
   const _getInitialValues = async () => {
     const treatment = await getTreatmentById(treatmentId);
     if ("id" in treatment) {
-      setSelectedHurts(treatment.hurts);
+      setSelectedHurts(
+        treatment.hurts.filter(
+          (h) => h.patient.id === parseInt(localStorage.getItem("patient_id"))
+        )
+      );
       setSelectedLinks(treatment.links);
-      setIsPublic(treatment.public)
+      setIsPublic(treatment.public);
       setBasicFormValues({
         name: treatment.name,
         notes: treatment.notes,
@@ -209,9 +213,23 @@ const TreatmentForm = () => {
               />
               <div className="public_private_select">
                 <label htmlFor="is_private">Private</label>
-                <input name="public_private" id="is_private" value={false} checked={!isPublic} type="radio" onChange={handlePublicPrivateToggle}/>
+                <input
+                  name="public_private"
+                  id="is_private"
+                  value={false}
+                  checked={!isPublic}
+                  type="radio"
+                  onChange={handlePublicPrivateToggle}
+                />
                 <label htmlFor="is_public">Public</label>
-                <input name="public_private"  id="is_public" value={true} checked={isPublic} type="radio" onChange={handlePublicPrivateToggle} />
+                <input
+                  name="public_private"
+                  id="is_public"
+                  value={true}
+                  checked={isPublic}
+                  type="radio"
+                  onChange={handlePublicPrivateToggle}
+                />
               </div>
             </main>
           </FormPageLayout>

@@ -10,7 +10,7 @@ export const request = async (location, method = 'GET', body) => {
       'Authorization': `Token ${localStorage.getItem('patient_token')}`
     };
   
-    if(method === 'POST' || method === 'PUT') {
+    if(method === 'POST' || method === 'PUT' || method === 'DELETE') {
       headers['Content-Type'] = 'application/json';
     }
   

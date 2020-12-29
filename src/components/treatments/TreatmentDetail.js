@@ -5,6 +5,8 @@ import FourOhFourPage from "../auth/404Page";
 import DetailPageLayout from "../layouts/DetailPageLayout";
 import { TreatmentContext } from "./TreatmentProvider";
 import BadgeField from "../ui/BadgeField";
+import { HurtContext } from "../hurts/HurtProvider";
+import ShowHideSection from "../ui/ShowHideSection";
 
 const TreatmentDetail = () => {
   //Router Hooks
@@ -12,7 +14,13 @@ const TreatmentDetail = () => {
   const { treatmentId } = useParams();
 
   //access 'treatment by id' method and set return value in state
-  const { getTreatmentById, deleteTreatment } = useContext(TreatmentContext);
+  const {
+    getTreatmentById,
+    deleteTreatment,
+    tagTreatmentWithHurt,
+    untagHurtFromTreatment,
+  } = useContext(TreatmentContext);
+  const { hurts, getHurtsByPatientId } = useContext(HurtContext);
   const [treatment, setTreatment] = useState({
     added_by: {},
     hurts: [],
@@ -21,24 +29,53 @@ const TreatmentDetail = () => {
     links: [],
   });
 
+  // make sure the "selected hurts" displayed are only those belonging to this user
+  const selectedHurts = treatment.hurts.filter(
+    (h) => h.patient.id === parseInt(localStorage.getItem("patient_id"))
+  );
+
   //delete handler
   const handleDeleteTreatment = async (treatmentId) => {
     await deleteTreatment(treatmentId);
     history.push(`/treatments`);
   };
 
-  //check for ID in response (treatment was successfully found)
-  useEffect(() => {
-      _getTreatmentById();
-  }, []);
+  const _getHurtsByPatientId = () => {
+    getHurtsByPatientId(parseInt(localStorage.getItem("patient_id")));
+  };
 
   const _getTreatmentById = async () => {
     const treatment = await getTreatmentById(treatmentId);
     if ("id" in treatment) {
       setTreatment(treatment);
     }
-    setIsLoaded(true)
-  }
+    setIsLoaded(true);
+  };
+
+  // handle tagging /untagging hurts; re-fetch patient's hurts first, then this treatment, so the treatment's "selected" is accurate
+  const handleAddHurt = (item) => {
+    const req_body = { hurt_id: item.id };
+    tagTreatmentWithHurt(treatmentId, req_body);
+    _getHurtsByPatientId();
+    _getTreatmentById();
+  };
+
+  const handleRemoveHurt = (e) => {
+    const itemId = parseInt(e.target.parentNode.id.split("-")[4]);
+    const req_body = { hurt_id: itemId };
+    untagHurtFromTreatment(treatmentId, req_body);
+    _getHurtsByPatientId();
+    _getTreatmentById();
+  };
+
+  const [showAddHurts, setShowAddHurts] = useState(false);
+  const hanldeShowAddHurts = () => (prevstate) => !prevstate;
+
+  // initial effect on pageload
+  useEffect(() => {
+    _getTreatmentById();
+    _getHurtsByPatientId();
+  }, []);
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -73,15 +110,26 @@ const TreatmentDetail = () => {
                     );
                   })}
                 </div>
-                <h3>Your Tagged Hurts</h3>
+                <ShowHideSection
+                  showing={showAddHurts}
+                  setShowing={setShowAddHurts}
+                  showhidetext="Your Tagged Hurts"
+                >
+                  <BadgeField
+                    collection={hurts}
+                    selected={selectedHurts}
+                    badgeText="name"
+                    direction="add"
+                    onAdd={handleAddHurt}
+                    detailconfig={{ configkeys: ["date_added", "notes"] }}
+                  />
+                </ShowHideSection>
                 <BadgeField
                   detailconfig={{ configkeys: ["date_added", "notes"] }}
-                  selected={treatment.hurts.filter(
-                    (h) =>
-                      h.patient.id ===
-                      parseInt(localStorage.getItem("patient_id"))
-                  )}
+                  selected={selectedHurts}
                   badgeText="name"
+                  direction="remove"
+                  onRemove={handleRemoveHurt}
                 />
               </div>
             </div>
