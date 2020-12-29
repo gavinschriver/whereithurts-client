@@ -104,7 +104,7 @@ textarea {
   align-items: center;
 }
 
-.basicpage .showhidesection .button {
+.basicpage .showhidesection .button, .basicpage .showhidesection .badge {
   background-color: white;
   color: black;
   width: auto;
@@ -156,7 +156,6 @@ textarea {
 .detailpage_layout .badgefield .button {
   box-shadow: none;
   color: white;
-  font-size: larger;
 }
 
 .badge .button {
@@ -170,6 +169,7 @@ textarea {
 }
 
 .basicpage .showhidesection .badge .button {
+  color: black;
   padding: 2px;
 }
 
@@ -195,6 +195,7 @@ textarea {
 
 .toggle--badge--button--left {
   border-radius: 2rem 0 0 2rem !important;
+  color: black;
 }
 
 .toggle--badge--button--right {

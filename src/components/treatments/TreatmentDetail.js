@@ -6,6 +6,7 @@ import DetailPageLayout from "../layouts/DetailPageLayout";
 import { TreatmentContext } from "./TreatmentProvider";
 import BadgeField from "../ui/BadgeField";
 import { HurtContext } from "../hurts/HurtProvider";
+import ShowHideSection from "../ui/ShowHideSection";
 
 const TreatmentDetail = () => {
   //Router Hooks
@@ -17,7 +18,7 @@ const TreatmentDetail = () => {
     getTreatmentById,
     deleteTreatment,
     tagTreatmentWithHurt,
-    untagHurtFromTreatment
+    untagHurtFromTreatment,
   } = useContext(TreatmentContext);
   const { hurts, getHurtsByPatientId } = useContext(HurtContext);
   const [treatment, setTreatment] = useState({
@@ -38,11 +39,6 @@ const TreatmentDetail = () => {
     await deleteTreatment(treatmentId);
     history.push(`/treatments`);
   };
-
-  useEffect(() => {
-    _getTreatmentById();
-    _getHurtsByPatientId();
-  }, []);
 
   const _getHurtsByPatientId = () => {
     getHurtsByPatientId(parseInt(localStorage.getItem("patient_id")));
@@ -65,12 +61,21 @@ const TreatmentDetail = () => {
   };
 
   const handleRemoveHurt = (e) => {
-    const itemId = parseInt(e.target.parentNode.id.split("-")[4])
-    const req_body = {hurt_id: itemId}
-    untagHurtFromTreatment(treatmentId, req_body)
-    _getHurtsByPatientId()
-    _getTreatmentById()
-  }
+    const itemId = parseInt(e.target.parentNode.id.split("-")[4]);
+    const req_body = { hurt_id: itemId };
+    untagHurtFromTreatment(treatmentId, req_body);
+    _getHurtsByPatientId();
+    _getTreatmentById();
+  };
+
+  const [showAddHurts, setShowAddHurts] = useState(false);
+  const hanldeShowAddHurts = () => (prevstate) => !prevstate;
+
+  // initial effect on pageload
+  useEffect(() => {
+    _getTreatmentById();
+    _getHurtsByPatientId();
+  }, []);
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -105,14 +110,20 @@ const TreatmentDetail = () => {
                     );
                   })}
                 </div>
-                <h3>Your Tagged Hurts</h3>
-                <BadgeField
-                  collection={hurts}
-                  selected={selectedHurts}
-                  badgeText="name"
-                  direction="add"
-                  onAdd={handleAddHurt}
-                />
+                <ShowHideSection
+                  showing={showAddHurts}
+                  setShowing={setShowAddHurts}
+                  showhidetext="Your Tagged Hurts"
+                >
+                  <BadgeField
+                    collection={hurts}
+                    selected={selectedHurts}
+                    badgeText="name"
+                    direction="add"
+                    onAdd={handleAddHurt}
+                    detailconfig={{ configkeys: ["date_added", "notes"] }}
+                  />
+                </ShowHideSection>
                 <BadgeField
                   detailconfig={{ configkeys: ["date_added", "notes"] }}
                   selected={selectedHurts}

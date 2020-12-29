@@ -17,7 +17,7 @@ const UpdateList = () => {
   const history = useHistory();
 
   //filters
-  const [filters, setFilters] = useState({ patient_id: current_patient_id });
+  const [filters, setFilters] = useState({ patient_id: current_patient_id, order_by: 'added_on-desc' });
 
   const handleFilterChange = (e) => {
     let { name, value } = e.target;
