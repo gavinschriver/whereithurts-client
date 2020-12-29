@@ -62,7 +62,7 @@ const HurtForm = () => {
   const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setTreatmentFilters({ ...setTreatmentFilters, [name]: parseInt(value) });
+    setTreatmentFilters({ ...treatmentFilters, [name]: parseInt(value) });
   };
 
   // treatment search terms
