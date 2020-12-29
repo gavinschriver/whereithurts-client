@@ -69,7 +69,7 @@ const TreatmentDetail = () => {
   };
 
   const [showAddHurts, setShowAddHurts] = useState(false);
-  const hanldeShowAddHurts = () => (prevstate) => !prevstate;
+  const hanldeShowAddHurts = () => setShowAddHurts((prevstate) => !prevstate);
 
   // initial effect on pageload
   useEffect(() => {
@@ -112,7 +112,7 @@ const TreatmentDetail = () => {
                 </div>
                 <ShowHideSection
                   showing={showAddHurts}
-                  setShowing={setShowAddHurts}
+                  setShowing={hanldeShowAddHurts}
                   showhidetext="Your Tagged Hurts"
                 >
                   <BadgeField

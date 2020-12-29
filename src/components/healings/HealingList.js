@@ -17,6 +17,9 @@ const HealingList = () => {
 
   const history = useHistory();
 
+  // list data loading state
+  const [listDataLoaded, setListDataLoaded] = useState(false);
+
   // filters; intialized with patient ID of current patient so we don't bring in non-user-healings
   const [filters, setFilters] = useState({ patient_id: current_user_id });
   const [hurtId, setHurtId] = useState(0);
@@ -24,7 +27,10 @@ const HealingList = () => {
   const [direction, setDirection] = useState(0);
 
   useEffect(() => {
-    getHealingDataByQuerystring(buildQueryString(filters));
+    setListDataLoaded(false)
+    getHealingDataByQuerystring(buildQueryString(filters)).then(() => {
+      setListDataLoaded(true);
+    });
   }, [filters]);
 
   useEffect(() => {
@@ -41,6 +47,52 @@ const HealingList = () => {
   const toggleListControls = () =>
     setShowListControls((prevState) => !prevState);
 
+  const listData = () => {
+    if (listDataLoaded) {
+      return (
+        <div className="healinglist__list">
+        <div className="healinglist__header">
+          Total Healing Time:{" "}
+          {secondsToRoundedMinutes(healingData.total_healing_time)}{" "}
+          minutes
+        </div>
+        {healingData.healings.map((h) => {
+          return (
+            <div className="listitem" key={h.id}>
+              <Button onClick={() => history.push(`/healings/${h.id}`)}>
+                <div className="col">
+                  <h3>Date: {h.date_added}</h3>
+
+                  <h3>
+                    Time spent: {secondsToRoundedMinutes(h.duration)}{" "}
+                    minutes
+                  </h3>
+                </div>
+                <div className="listitem__subcollection">
+                  {h.treatments.map((t) => {
+                    return (
+                      <span
+                        key={t.id}
+                        className="listitem__subcollection__item"
+                      >
+                        {t.name}
+                      </span>
+                    );
+                  })}
+                </div>
+              </Button>
+            </div>
+          );
+        })}
+      </div> 
+    )
+    }
+    
+    return <div>LOADING</div>
+}
+
+  
+  // main return 
   return (
     <BasicPage>
       <div className="basicwrapper">
@@ -63,45 +115,14 @@ const HealingList = () => {
               />
               <HealingSortBar
                 onChange={(e) => {
-                  const orderBy = e.target.value.split('-')[0]
-                  const direction = e.target.value.split('-')[1]
+                  const orderBy = e.target.value.split("-")[0];
+                  const direction = e.target.value.split("-")[1];
                   setOrder(orderBy);
                   setDirection(direction);
                 }}
               />
             </ShowHideControls>
-            <div>
-              Total Healing Time:{" "}
-              {secondsToRoundedMinutes(healingData.total_healing_time)} minutes
-            </div>
-            {healingData.healings.map((h) => {
-              return (
-                <div className="listitem" key={h.id}>
-                  <Button onClick={() => history.push(`/healings/${h.id}`)}>
-                    <div className="col">
-                      <h3>Date: {h.date_added}</h3>
-
-                      <h3>
-                        Time spent: {secondsToRoundedMinutes(h.duration)}{" "}
-                        minutes
-                      </h3>
-                    </div>
-                    <div className="listitem__subcollection">
-                      {h.treatments.map((t) => {
-                        return (
-                          <span
-                            key={t.id}
-                            className="listitem__subcollection__item"
-                          >
-                            {t.name}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </Button>
-                </div>
-              );
-            })}
+            {listData()}
           </div>
         </ListPageLayout>
       </div>

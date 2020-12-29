@@ -8,7 +8,7 @@ import PainLevelSelectBar from "../ui/PainLevelSelectBar";
 import TextArea from "../ui/TextArea";
 
 const UpdateForm = () => {
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState({notes: ''});
 
   const history = useHistory();
   const location = useLocation();
@@ -69,7 +69,7 @@ const UpdateForm = () => {
               label="Notes"
               name="notes"
               onChange={handleChange}
-              value={formValues.notes}
+              value={formValues.notes || ''}
             />
             <PainLevelSelectBar
               name="pain_level"
