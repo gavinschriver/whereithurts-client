@@ -9,6 +9,7 @@ import HurtToggleGroup from "../hurts/HurtToggleGroup";
 import BasicPage from "../layouts/BasicPage";
 import FormPageLayout from "../layouts/FormPageLayout";
 import TreatmentTypeSelectBar from "../treatmenttypes/TreatmentTypeSelectBar";
+import Alert from "../ui/Alert";
 import BadgeField from "../ui/BadgeField";
 import Button from "../ui/Button";
 import ShowHideSection from "../ui/ShowHideSection";
@@ -45,24 +46,49 @@ const TreatmentForm = () => {
     setBasicFormValues({ ...basicFormValues, [name]: value });
   };
 
+  useEffect(() => {
+    console.log(basicFormValues);
+  }, [basicFormValues]);
+
   //handle treatment add or update
 
   const handleSubmitNew = async (e) => {
     e.preventDefault();
-    const newTreatment = {
-      name: basicFormValues.name,
-      notes: basicFormValues.notes,
-      treatmenttype_id: parseInt(basicFormValues.treatmenttype_id),
-      bodypart_id: parseInt(basicFormValues.bodypart_id),
-      hurt_ids: selectedHurts.map((h) => h.id),
-      treatment_links: selectedLinks,
-      public: isPublic,
-    };
-    if (editMode) {
-      await updateTreatment(treatmentId, newTreatment);
-    } else await createTreatment(newTreatment);
-    history.push("/treatments");
+    if (validate()) {
+      const newTreatment = {
+        name: basicFormValues.name,
+        notes: basicFormValues.notes,
+        treatmenttype_id: parseInt(basicFormValues.treatmenttype_id),
+        bodypart_id: parseInt(basicFormValues.bodypart_id),
+        hurt_ids: selectedHurts.map((h) => h.id),
+        treatment_links: selectedLinks,
+        public: isPublic,
+      };
+      if (editMode) {
+        await updateTreatment(treatmentId, newTreatment);
+      } else await createTreatment(newTreatment);
+      history.push("/treatments");
+    } else setShowAlert(true);
   };
+
+  // validation
+  const [showAlert, setShowAlert] = useState(false);
+
+  const validate = () => {
+    const treatmentName = basicFormValues.name.trim()
+    const bodypartId = parseInt(basicFormValues.bodypart_id);
+    const treatmenttypeId = parseInt(basicFormValues.treatmenttype_id);
+    if (bodypartId >= 1 && treatmenttypeId >= 1 && treatmentName != '') {
+      return true;
+    }
+    return false;
+  };
+
+  const alert = (
+    <Alert onClose={() => setShowAlert(false)}>
+      Please fill in all required fields
+    </Alert>
+  );
 
   //hurts
   const { hurts, getHurtsByPatientId } = useContext(HurtContext);
@@ -150,6 +176,8 @@ const TreatmentForm = () => {
             resource="Treatment"
             isEditMode={editMode}
             onClick={handleSubmitNew}
+            alert={alert}
+            showAlert={showAlert}
           >
             <main className="treatmentform">
               <TextInput
@@ -157,16 +185,31 @@ const TreatmentForm = () => {
                 label="Name"
                 onChange={handleBasicFormValueInputChange}
                 value={basicFormValues.name}
+                isrequired={
+                  showAlert && basicFormValues.name.trim() === ""
+                    ? "true"
+                    : "false"
+                }
               />
               <TreatmentTypeSelectBar
                 name="treatmenttype_id"
                 onChange={handleBasicFormValueInputChange}
                 value={basicFormValues.treatmenttype_id}
+                isrequired={
+                  showAlert && !(basicFormValues.treatmenttype_id >= 1)
+                    ? "true"
+                    : "false"
+                }
               />
               <BodypartSelectBar
                 name="bodypart_id"
                 onChange={handleBasicFormValueInputChange}
                 value={basicFormValues.bodypart_id}
+                isrequired={
+                  showAlert && !(basicFormValues.bodypart_id >= 1)
+                    ? "true"
+                    : "false"
+                }
               />
               <TextArea
                 name="notes"
@@ -232,6 +275,7 @@ const TreatmentForm = () => {
                 />
               </div>
             </main>
+            <div className="row align-right"></div>
           </FormPageLayout>
         </div>
       ) : (

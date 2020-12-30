@@ -11,11 +11,13 @@ const SelectBar = (props) => {
     defaultoptiontext,
     defaultoptionvalue = 0,
     label,
+    isrequired
   } = props;
+  const requiredClass = isrequired === 'true' ? 'required' : ''
   return (
     <fieldset className="selectbar">
       <label htmlFor={props.name}>{label}</label>
-      <select className="selectbar__dropdown" {...props}>
+      <select className={`selectbar__dropdown ${requiredClass}`} {...props}>
         <option
           className="selectbar__dropdown__option"
           value={defaultoptionvalue}
