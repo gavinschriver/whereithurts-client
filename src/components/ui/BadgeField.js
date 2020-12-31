@@ -32,6 +32,7 @@ const BadgeField = ({
         });
       break;
 
+    // badges are removeable
     case "remove":
       badges = selected.map((i) => {
         return (
@@ -52,7 +53,7 @@ const BadgeField = ({
         );
       });
   }
-  return <div className="badgefield">{badges}</div>;
+  return <div className={`badgefield ${props.direction && `badgefield--${props.direction}`}` }>{badges}</div>;
 };
 
 export default BadgeField;

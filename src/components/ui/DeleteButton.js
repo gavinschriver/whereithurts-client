@@ -10,13 +10,21 @@ const DeleteButton = (props) => {
   return (
     <div className="deletebutton">
       {!showAlert && (
-        <Button onClick={() => setShowAlert(!showAlert)}>Delete</Button>
+        <div className="deletebutton__delete button--delete">
+          <Button onClick={() => setShowAlert(!showAlert)}>Delete</Button>
+        </div>
       )}
       {showAlert && (
         <Alert>
           <div className="deletebutton__alert">
-            <Button onClick={() => setShowAlert(!showAlert)}>Cancel</Button>
-            <Button onClick={onDelete} style={{backgroundColor: `red`}}>Confirm Delete?</Button>
+            <div className="deletebutton__alert__cancel button--cancel">
+              <Button onClick={() => setShowAlert(!showAlert)}>Cancel</Button>
+            </div>
+            <div className="deletebutton__alert__confirm button--confirm">
+              <Button onClick={onDelete} style={{ backgroundColor: `red` }}>
+                Confirm Delete?
+              </Button>
+            </div>
           </div>
         </Alert>
       )}

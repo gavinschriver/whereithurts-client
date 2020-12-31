@@ -4,10 +4,10 @@ import AddIcon from "../../assets/images/black_plus_icon.png";
 
 const AddNewButton = (props) => {
   return (
-    <div className="addnew--button">
+    <div className="button--addnew">
       <Button onClick={props.onClick}>
-        <h3>Add New</h3>
-        <img src={AddIcon} />
+        <h3 className="addnew__button__text">Add New</h3>
+        <img className="addnew__button__image" src={AddIcon} />
         {props.children}
       </Button>
     </div>
