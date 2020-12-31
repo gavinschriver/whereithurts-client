@@ -72,7 +72,7 @@ const TreatmentList = () => {
                 {t.owner && <span className="yourtreatment">Added by you</span>}
                 <Button onClick={() => history.push(`/treatments/${t.id}`)}>
                   <div className="col">
-                    <h3 style={{fontWeight: 'bold'}}>{t.name}</h3>
+                    <h3 style={{ fontWeight: "bold" }}>{t.name}</h3>
                     <h3>{t.bodypart.name}</h3>
                   </div>
                   <div className="col" style={{ textAlign: `right` }}>

@@ -5,17 +5,18 @@ fieldset {
 }
 
 .required {
-  border: 2px solid goldenrod;
+  border: 2px solid #ff0f0f;
 }
 
 select {
   text-align-last: right;
-  border: none;
+  border: 0px transparent;
+  background-color: white;
 }
-
+/* 
 option {
   direction: rtl;
-}
+} */
 
 /* BUTTON */
 
@@ -203,6 +204,11 @@ textarea {
 
 .deletebutton__alert {
   display: flex;
+}
+
+.deletebutton .alert {
+  margin: 0;
+  padding: 0;
 }
 
 .alert .button {
