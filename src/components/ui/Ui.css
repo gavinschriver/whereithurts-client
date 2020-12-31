@@ -16,7 +16,7 @@ fieldset {
   background-color: #18a0fb;
   border: none;
   border-radius: 0.2rem;
-  box-shadow: 5px 5px 5px grey;
+  /* box-shadow: 5px 5px 5px grey; */
   display: flex;
   align-items: center;
 }

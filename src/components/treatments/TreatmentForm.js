@@ -85,9 +85,7 @@ const TreatmentForm = () => {
   };
 
   const alert = (
-    <Alert onClose={() => setShowAlert(false)}>
-      Please fill in all required fields
-    </Alert>
+    <Alert onClose={() => setShowAlert(false)}/>
   );
 
   //hurts

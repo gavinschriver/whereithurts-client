@@ -7,6 +7,7 @@ import FormPageLayout from "../layouts/FormPageLayout";
 import TreatmentControlGroup from "../treatments/TreatmentControlGroup";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
+import Alert from "../ui/Alert";
 import PainLevelSelectBar from "../ui/PainLevelSelectBar";
 import SearchBar from "../ui/SearchBar";
 import TextArea from "../ui/TextArea";
@@ -73,6 +74,7 @@ const HurtForm = () => {
     getTreatmentsBySearchTerms(treatmentSearchTerms);
   };
 
+  //search terms being cleared should trigger a reset to whatever the current state of the filters would return 
   const handleClearSearchTerms = () => {
     setTreatmentSearchTerms("");
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
@@ -90,6 +92,21 @@ const HurtForm = () => {
     }
   }, []);
 
+  //validation
+  const [showAlert, setShowAlert] = useState(false);
+
+  const validate = () => {
+    const hurtName = basicFormValues.name.trim();
+    const painLevel = parseInt(basicFormValues.pain_level);
+    const bodypartId = parseInt(basicFormValues.bodypart_id);
+    if (painLevel >= 1 && bodypartId >= 1 && hurtName != "") {
+      return true;
+    }
+    return false;
+  };
+
+  const alert = <Alert onClose={() => setShowAlert(false)} />;
+
   const getInitialValues = async () => {
     const hurt = await getHurtById(hurtId);
     setBasicFormValues({
@@ -105,24 +122,25 @@ const HurtForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (validate()) {
+      const hurtToSave = {
+        name: basicFormValues.name,
+        bodypart_id: parseInt(basicFormValues.bodypart_id),
+        pain_level: parseInt(basicFormValues.pain_level),
+        treatment_ids: selectedTreatments.map((st) => st.id),
+        notes: basicFormValues.notes,
+        is_active: checkBoxValue,
+        first_update_id: basicFormValues.first_update_id,
+      };
 
-    const hurtToSave = {
-      name: basicFormValues.name,
-      bodypart_id: parseInt(basicFormValues.bodypart_id),
-      pain_level: parseInt(basicFormValues.pain_level),
-      treatment_ids: selectedTreatments.map((st) => st.id),
-      notes: basicFormValues.notes,
-      is_active: checkBoxValue,
-      first_update_id: basicFormValues.first_update_id,
-    };
-
-    if (editMode && hurtId) {
-      await updateHurt(hurtId, hurtToSave);
-      history.push(`/hurts`);
-    } else {
-      await createHurt(hurtToSave);
-      history.push(`/hurts`);
-    }
+      if (editMode && hurtId) {
+        await updateHurt(hurtId, hurtToSave);
+        history.push(`/hurts`);
+      } else {
+        await createHurt(hurtToSave);
+        history.push(`/hurts`);
+      }
+    } else setShowAlert(true);
   };
 
   return (
@@ -132,6 +150,8 @@ const HurtForm = () => {
           resource="Hurt"
           onClick={handleSubmit}
           isEditMode={editMode}
+          alert={alert}
+          showAlert={showAlert}
         >
           <main className="hurtform">
             <TextInput
@@ -139,11 +159,21 @@ const HurtForm = () => {
               label="Name"
               value={basicFormValues.name}
               onChange={handleBasicFormValueChange}
+              isrequired={
+                showAlert && basicFormValues.name.trim() === ""
+                  ? "true"
+                  : "false"
+              }
             />
             <BodypartSelectBar
               name="bodypart_id"
               onChange={handleBasicFormValueChange}
               value={basicFormValues.bodypart_id}
+              isrequired={
+                showAlert && !(basicFormValues.bodypart_id >= 1)
+                  ? "true"
+                  : "false"
+              }
             />
             <TextArea
               name="notes"
@@ -155,6 +185,11 @@ const HurtForm = () => {
               name="pain_level"
               value={basicFormValues.pain_level}
               onChange={handleBasicFormValueChange}
+              isrequired={
+                showAlert && !(basicFormValues.pain_level >= 1)
+                  ? "true"
+                  : "false"
+              }
             />
             <TreatmentToggleGroup
               collection={treatments}
