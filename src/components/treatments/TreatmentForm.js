@@ -46,10 +46,6 @@ const TreatmentForm = () => {
     setBasicFormValues({ ...basicFormValues, [name]: value });
   };
 
-  useEffect(() => {
-    console.log(basicFormValues);
-  }, [basicFormValues]);
-
   //handle treatment add or update
 
   const handleSubmitNew = async (e) => {
@@ -222,6 +218,7 @@ const TreatmentForm = () => {
                 setShowing={setShowAddHurts}
                 onAdd={handleSelectHurt}
                 onRemove={deselectHurtById}
+                detailconfig={{configkeys: ["name", "bodypart", "notes"]}}
               />
               <ShowHideSection
                 showhidetext="Links"
@@ -251,6 +248,7 @@ const TreatmentForm = () => {
                 badgeText="linktext"
                 direction="remove"
                 onRemove={removeLinkById}
+                detailconfig={{configkeys: ["linktext"]}}
               />
               <div className="public_private_select">
                 <label htmlFor="is_private">Private</label>

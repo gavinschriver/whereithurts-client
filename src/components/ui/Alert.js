@@ -11,12 +11,14 @@ import Button from "./Button";
 const Alert = ({ onClose, children }) => {
   return (
     <div className="alert">
-      <div className="alert__closebutton">
-        {onClose && <Button onClick={onClose}>x</Button>}
-      </div>
       <div className="alert__content">
         {children ? children : "Please fill in all required fields"}
       </div>
+      {onClose && (
+        <div className="alert__closebutton">
+          <Button onClick={onClose}>x</Button>
+        </div>
+      )}
     </div>
   );
 };

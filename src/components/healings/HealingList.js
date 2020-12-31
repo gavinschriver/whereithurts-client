@@ -27,10 +27,12 @@ const HealingList = () => {
   const [direction, setDirection] = useState(0);
 
   useEffect(() => {
-    setListDataLoaded(false)
-    getHealingDataByQuerystring(buildQueryString(filters)).then(() => {
-      setListDataLoaded(true);
-    });
+    {
+      setListDataLoaded(false);
+      getHealingDataByQuerystring(buildQueryString(filters)).then(() => {
+        setListDataLoaded(true);
+      });
+    }
   }, [filters]);
 
   useEffect(() => {
@@ -51,48 +53,45 @@ const HealingList = () => {
     if (listDataLoaded) {
       return (
         <div className="healinglist__list">
-        <div className="healinglist__header">
-          Total Healing Time:{" "}
-          {secondsToRoundedMinutes(healingData.total_healing_time)}{" "}
-          minutes
+          <div className="healinglist__header">
+            Total Healing Time:{" "}
+            {secondsToRoundedMinutes(healingData.total_healing_time)} minutes
+          </div>
+          {healingData.healings.map((h) => {
+            return (
+              <div className="listitem" key={h.id}>
+                <Button onClick={() => history.push(`/healings/${h.id}`)}>
+                  <div className="col">
+                    <h3>Date: {h.date_added}</h3>
+
+                    <h3>
+                      Time spent: {secondsToRoundedMinutes(h.duration)} minutes
+                    </h3>
+                  </div>
+                  <div className="listitem__subcollection">
+                    {h.treatments.map((t) => {
+                      return (
+                        <span
+                          key={t.id}
+                          className="listitem__subcollection__item"
+                        >
+                          {t.name}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </Button>
+              </div>
+            );
+          })}
         </div>
-        {healingData.healings.map((h) => {
-          return (
-            <div className="listitem" key={h.id}>
-              <Button onClick={() => history.push(`/healings/${h.id}`)}>
-                <div className="col">
-                  <h3>Date: {h.date_added}</h3>
-
-                  <h3>
-                    Time spent: {secondsToRoundedMinutes(h.duration)}{" "}
-                    minutes
-                  </h3>
-                </div>
-                <div className="listitem__subcollection">
-                  {h.treatments.map((t) => {
-                    return (
-                      <span
-                        key={t.id}
-                        className="listitem__subcollection__item"
-                      >
-                        {t.name}
-                      </span>
-                    );
-                  })}
-                </div>
-              </Button>
-            </div>
-          );
-        })}
-      </div> 
-    )
+      );
     }
-    
-    return <div>LOADING</div>
-}
 
-  
-  // main return 
+    return <div>LOADING</div>;
+  };
+
+  // main return
   return (
     <BasicPage>
       <div className="basicwrapper">

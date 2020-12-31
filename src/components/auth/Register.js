@@ -78,7 +78,7 @@ const Register = (props) => {
       localStorage.setItem("patient_id", json.patient_id)
       history.push("/");
     } else {
-      alert("no bueno");
+      alert("Invalid Login");
     }
   }
 
