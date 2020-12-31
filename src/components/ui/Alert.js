@@ -1,11 +1,26 @@
-import React from "react"
+import React from "react";
+import Button from "./Button";
 
-const Alert = (props) => {
-    return (
-        <div className="alert">
-            {props.children}
+/**
+ *
+ * @param {function} onClose function to control the display state of the alert
+ *
+ * if children exist, use those contents as alert content value; default to the string below
+ */
+
+const Alert = ({ onClose, children }) => {
+  return (
+    <div className="alert">
+      <div className="alert__content">
+        {children ? children : "Please fill in all required fields"}
+      </div>
+      {onClose && (
+        <div className="alert__closebutton">
+          <Button onClick={onClose}>x</Button>
         </div>
-    )
-}
+      )}
+    </div>
+  );
+};
 
-export default Alert
+export default Alert;

@@ -14,6 +14,9 @@ import HurtSelectBar from "../hurts/HurtSelectBar";
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(false);
 
+  //list data loading state
+  const [listDataLoaded, setListDataLoaded] = useState(false);
+
   //fitler
   const [filters, setFilters] = useState({ owner: 1 });
   const [searchTerms, setSearchTerms] = useState("");
@@ -45,13 +48,64 @@ const TreatmentList = () => {
 
   const history = useHistory();
 
-  const _getTreatmentsByQuerystring = () => {
-    getTreatmentsByQuerystring(buildQueryString(filters));
+  const _getTreatmentsByQuerystring = async () => {
+    await getTreatmentsByQuerystring(buildQueryString(filters));
   };
 
   useEffect(() => {
-    _getTreatmentsByQuerystring();
+    setListDataLoaded(false);
+    _getTreatmentsByQuerystring().then(() => {
+      setListDataLoaded(true);
+    });
   }, [filters]);
+
+  const listData = () => {
+    if (listDataLoaded) {
+      return (
+        <div className="treatmentlist">
+          {treatments.map((t) => {
+            return (
+              <div
+                className={`listitem ${t.owner ? `owner--listitem` : ``}`}
+                key={t.id}
+              >
+                {t.owner && <span className="yourtreatment">Added by you</span>}
+                <Button onClick={() => history.push(`/treatments/${t.id}`)}>
+                  <div className="col">
+                    <h3 style={{ fontWeight: "bold" }}>{t.name}</h3>
+                    <h3>{t.bodypart.name}</h3>
+                  </div>
+                  <div className="col" style={{ textAlign: `right` }}>
+                    <h3>{t.treatmenttype.name}</h3>
+
+                    <div className="listitem__subcollection">
+                      {t.hurts.map((h) => {
+                        if (
+                          h.patient.id ===
+                          parseInt(localStorage.getItem("patient_id"))
+                        ) {
+                          return (
+                            <span
+                              key={h.id}
+                              className="listitem__subcollection__item"
+                            >
+                              {h.name}
+                            </span>
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    return <div>LOADING</div>;
+  };
 
   return (
     <BasicPage>
@@ -75,8 +129,13 @@ const TreatmentList = () => {
               bodypartId={filters.bodypart_id}
               treatmentTypeId={filters.treatmenttype_id}
             >
-              <HurtSelectBar label="Filter by Hurt:" name="hurt_id" onChange={handleFilterChange} value={filters.hurt_id}/>
-              </TreatmentControlGroup>
+              <HurtSelectBar
+                label="Filter by Hurt:"
+                name="hurt_id"
+                onChange={handleFilterChange}
+                value={filters.hurt_id}
+              />
+            </TreatmentControlGroup>
             <SearchBar
               label="Search all:"
               value={searchTerms}
@@ -85,47 +144,7 @@ const TreatmentList = () => {
               onClear={handleClearSearchTerms}
             />
           </ShowHideControls>
-          <div className="treatmentlist">
-            {treatments.map((t) => {
-              return (
-                <div
-                  className={`listitem ${t.owner ? `owner--listitem` : ``}`}
-                  key={t.id}
-                >
-                  {t.owner && (
-                    <span className="yourtreatment">Added by you</span>
-                  )}
-                  <Button onClick={() => history.push(`/treatments/${t.id}`)}>
-                    <div className="col">
-                      <h3>Name: {t.name}</h3>
-                      <h3>Bodypart: {t.bodypart.name}</h3>
-                    </div>
-                    <div className="col" style={{ textAlign: `right` }}>
-                      <h3>{t.treatmenttype.name}</h3>
-
-                      <div className="listitem__subcollection">
-                        {t.hurts.map((h) => {
-                          if (
-                            h.patient.id ===
-                            parseInt(localStorage.getItem("patient_id"))
-                          ) {
-                            return (
-                              <span
-                                key={h.id}
-                                className="listitem__subcollection__item"
-                              >
-                                {h.name}
-                              </span>
-                            );
-                          }
-                        })}
-                      </div>
-                    </div>
-                  </Button>
-                </div>
-              );
-            })}
-          </div>
+          {listData()}
         </ListPageLayout>
       </div>
     </BasicPage>

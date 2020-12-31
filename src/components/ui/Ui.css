@@ -4,13 +4,26 @@ fieldset {
   border: none;
 }
 
+.required {
+  border: 2px solid #ff0f0f;
+}
+
+select {
+  text-align-last: right;
+  border: 0px transparent;
+  background-color: white;
+}
+/* 
+option {
+  direction: rtl;
+} */
+
 /* BUTTON */
 
 .button {
   background-color: #18a0fb;
   border: none;
   border-radius: 0.2rem;
-  box-shadow: 5px 5px 5px grey;
   display: flex;
   align-items: center;
 }
@@ -42,7 +55,7 @@ fieldset {
 }
 
 .addnew--button .button > * {
-  padding: 0 .25rem 0 .25rem;
+  padding: 0 0.25rem 0 0.25rem;
 }
 
 .addnew--button .button {
@@ -86,7 +99,8 @@ textarea {
 
 /* SELECT BAR */
 
-.selectbar, .selectbar option {
+.selectbar,
+.selectbar option {
   padding: 0;
   margin: 0;
   text-align: right;
@@ -104,7 +118,8 @@ textarea {
   align-items: center;
 }
 
-.basicpage .showhidesection .button, .basicpage .showhidesection .badge {
+.basicpage .showhidesection .button,
+.basicpage .showhidesection .badge {
   background-color: white;
   color: black;
   width: auto;
@@ -124,7 +139,7 @@ textarea {
 
 .showhidecontrols {
   margin: 2rem 0 2rem 0;
-  display: flex; 
+  display: flex;
   flex-direction: column;
 }
 
@@ -177,10 +192,36 @@ textarea {
 
 .alert {
   display: flex;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid transparent;
 }
 
 .deletebutton__alert {
   display: flex;
+}
+
+.deletebutton .alert {
+  margin: 0;
+  padding: 0;
+}
+
+.alert .button {
+  background-color: transparent;
+  color: #721c24;
+}
+
+.alert .alert__closebutton .button {
+  font-size: large;
+}
+
+.alert .alert__closebutton .button:hover {
+  color: #969696;
 }
 
 /* LINK FORM */
@@ -213,8 +254,9 @@ textarea {
   display: flex;
 }
 
-.controlgroup, .controlgroup > * {
-  font-size: smaller;
+.controlgroup,
+.controlgroup > * {
+  font-size: 1rem;
   margin: 0.5rem 0 0.5rem 0;
 }
 
@@ -225,7 +267,7 @@ textarea {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #FFF;
+  background-color: #fff;
   z-index: 1000;
 }
 
@@ -235,7 +277,7 @@ textarea {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
 }
 
@@ -258,7 +300,7 @@ textarea {
 }
 
 .badgedetail__item h3 {
-  margin: .25rem 0;
+  margin: 0.25rem 0;
 }
 
 .badgedetail .button {
