@@ -41,7 +41,7 @@
 
 /* first div within page wrapper to control content area width and position */
 .basicwrapper {
-  width: 70vh;
+  width: 100vh;
 }
 
 /* AUTH PAGE */
@@ -92,14 +92,12 @@
   margin: 1em 0 1em 0;
   padding: 0.25rem;
   border-radius: 2.5px;
-  /* box-shadow: 5px 5px 5px grey; */
 }
 
 .listitem--inactive {
   margin: 1em 0 1em 0;
   padding: 0.25rem;
   border-radius: 2.5px;
-  /* box-shadow: 5px 5px 5px grey; */
 }
 
 .listitem .row {
@@ -132,6 +130,7 @@
   color: black;
 }
 
+
 .listitem__subcollection__item {
   background-color: white;
   font-size: small;
@@ -152,7 +151,9 @@
   align-items: flex-start;
 }
 
-.listitem
+.listitem__header {
+  
+}
 
 
 .listpage__header .button {
