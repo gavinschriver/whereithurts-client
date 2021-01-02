@@ -46,7 +46,7 @@ option {
   color: white;
 }
 
-.addnew--button {
+.button--addnew {
   background-color: white;
   display: flex;
   height: fit-content;
@@ -54,18 +54,18 @@ option {
   padding: 0;
 }
 
-.addnew--button .button > * {
+.button--addnew .button > * {
   padding: 0 0.25rem 0 0.25rem;
 }
 
-.addnew--button .button {
+.button--addnew .button {
   background-color: white;
 }
-.addnew--button .button img {
+.button--addnew .button img {
   max-height: 40px;
 }
 
-.addnew--button > * {
+.button--addnew > * {
   padding: 10px;
 }
 
@@ -103,7 +103,6 @@ textarea {
 .selectbar option {
   padding: 0;
   margin: 0;
-  text-align: right;
 }
 
 /* SHOWHIDE SECTION */
@@ -125,7 +124,6 @@ textarea {
   width: auto;
   height: auto;
   border-radius: 0 5px 5px 0;
-  padding: 10px;
   font-size: 1rem;
   display: flex;
   justify-content: space-between;
@@ -161,7 +159,6 @@ textarea {
 .badge {
   display: flex;
   margin: 0.5rem 1rem 0 0.5rem;
-  padding: 5px;
 }
 
 .badge img {
@@ -179,13 +176,35 @@ textarea {
   font-size: large;
 }
 
-.badge .toggle--button .button .toggle--button--add {
-  background-color: green;
-}
-
 .basicpage .showhidesection .badge .button {
   color: black;
-  padding: 2px;
+}
+
+.basicpage .badge .button {
+  border-radius: 0;
+}
+
+/* toggle badges */
+
+.toggle--badge--button--left {
+  border-radius: 2rem 0 0 2rem !important;
+  color: black;
+}
+
+.toggle--badge--button--right {
+  border-radius: 0 2rem 2rem 0 !important;
+}
+
+.showhidesection .toggle--badge--button--left {
+  border-color: black;
+  border-width: 1px 0 1px 1px;
+  border-style: solid;
+}
+
+.showhidesection .toggle--badge--button--right {
+  border-color: black;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
 }
 
 /* ALERT */
@@ -204,6 +223,11 @@ textarea {
 
 .deletebutton__alert {
   display: flex;
+  background-color: #18a0fb;
+}
+
+.deletebutton .button--confirm {
+  background-color: red;
 }
 
 .deletebutton .alert {
@@ -228,19 +252,6 @@ textarea {
 
 .linkform {
   margin: 0 0 1rem 0;
-}
-
-.basicpage .badge .button {
-  border-radius: 0;
-}
-
-.toggle--badge--button--left {
-  border-radius: 2rem 0 0 2rem !important;
-  color: black;
-}
-
-.toggle--badge--button--right {
-  border-radius: 0 2rem 2rem 0 !important;
 }
 
 /* SEARCHBAR */

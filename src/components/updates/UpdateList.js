@@ -17,7 +17,10 @@ const UpdateList = () => {
   const history = useHistory();
 
   //filters
-  const [filters, setFilters] = useState({ patient_id: current_patient_id, order_by: 'added_on-desc' });
+  const [filters, setFilters] = useState({
+    patient_id: current_patient_id,
+    order_by: "added_on-desc",
+  });
 
   const handleFilterChange = (e) => {
     let { name, value } = e.target;
@@ -27,13 +30,51 @@ const UpdateList = () => {
     setFilters({ ...filters, [name]: value });
   };
 
-  const _getUpdatesByQuerystring = () => {
-    getUpdatesByQuerystring(buildQueryString(filters));
+  const _getUpdatesByQuerystring = async () => {
+    await getUpdatesByQuerystring(buildQueryString(filters));
   };
 
   useEffect(() => {
-    _getUpdatesByQuerystring();
+    setListDataLoaded(false);
+    _getUpdatesByQuerystring().then(() => {
+      setListDataLoaded(true);
+    });
   }, [filters]);
+
+  //loading state
+  const [listDataLoaded, setListDataLoaded] = useState(false);
+
+  const listData = () => {
+    if (listDataLoaded) {
+      return (
+        <div className="updatelist">
+          {updates
+            .filter((u) => !u.is_first_update)
+            .map((u) => {
+              return (
+                <div
+                  className={
+                    u.hurt.is_active ? "listitem" : "listitem--inactive"
+                  }
+                  key={u.id}
+                >
+                  <Button onClick={() => history.push(`/updates/${u.id}`)}>
+                    <div className="col">
+                      <h3>Update for: {u.hurt.name}</h3>
+                      <h3>Pain Level: {u.pain_level}</h3>
+                    </div>
+                    <div className="align-right">
+                      <h3>Date: {u.date_added}</h3>
+                    </div>
+                  </Button>
+                </div>
+              );
+            })}
+        </div>
+      );
+    }
+    return <div>LOADING</div>;
+  };
 
   return (
     <BasicPage>
@@ -64,29 +105,7 @@ const UpdateList = () => {
                 onChange={handleFilterChange}
               />
             </ControlGroup>
-
-            {updates
-              .filter((u) => !u.is_first_update)
-              .map((u) => {
-                return (
-                  <div
-                    className={
-                      u.hurt.is_active ? "listitem" : "listitem--inactive"
-                    }
-                    key={u.id}
-                  >
-                    <Button onClick={() => history.push(`/updates/${u.id}`)}>
-                      <div className="col">
-                        <h3>Update for: {u.hurt.name}</h3>
-                        <h3>Pain Level: {u.pain_level}</h3>
-                      </div>
-                      <div className="align-right">
-                        <h3>Date: {u.date_added}</h3>
-                      </div>
-                    </Button>
-                  </div>
-                );
-              })}
+            {listData()}
           </main>
         </ListPage>
       </div>

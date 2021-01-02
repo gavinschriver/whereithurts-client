@@ -6,7 +6,7 @@ import Button from "../ui/Button";
 import { ProfileContext } from "./ProfileProvider";
 
 const Snapshot = () => {
-  const history = useHistory()
+  const history = useHistory();
   const { getSnapshotByPatientId } = useContext(ProfileContext);
   const current_patient_id = localStorage.getItem("patient_id");
 
@@ -29,16 +29,21 @@ const Snapshot = () => {
     <BasicPage>
       <div className="basicwrapper">
         <main className="snapshot">
-          <h1>Your Snapshot</h1>
-          <h3>for the last week</h3>
-          <h4 className="snapshot__healingtime">
-            Healing Time: {snapshot.recent_healing_time}
-          </h4>
+          <div className="snapshot__header">
+            <h1>Your Snapshot</h1>
+            <h3>for the last week</h3>
+          </div>
+          <div className="snapshot__healingtime">
+            <h4>
+              Healing Time: {snapshot.recent_healing_time}
+            </h4>
+          </div>
           <div className="snapshot__treatments">
             <h4>Treatments Used:</h4>
             <BadgeField
               selected={snapshot.recent_treatments}
               badgeText="name"
+              detailconfig={{configkeys: ["name", "notes"]}}
             />
             <div className="snapshot__hurts">
               <h4>Hurts Worked On:</h4>

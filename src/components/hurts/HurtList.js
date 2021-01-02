@@ -39,13 +39,48 @@ const HurtList = () => {
     setFilters({ ...filters, [name]: value });
   };
 
-  const _getHurtsByQuerystring = () => {
-    getHurtsByQuerystring(buildQueryString(filters));
+  const _getHurtsByQuerystring = async () => {
+    await getHurtsByQuerystring(buildQueryString(filters));
   };
 
   useEffect(() => {
-    _getHurtsByQuerystring();
+    setListDataLoaded(false);
+    _getHurtsByQuerystring().then(() => {
+      setListDataLoaded(true);
+    });
   }, [filters]);
+
+  //loading state
+  const [listDataLoaded, setListDataLoaded] = useState(false);
+
+  const listData = () => {
+    if (listDataLoaded) {
+      return (
+        <div className="list hurtlist">
+          {hurts.map((h) => {
+            return (
+              <div
+                className={h.is_active ? "listitem" : "listitem--inactive"}
+                key={h.id}
+              >
+                <Button onClick={() => history.push(`hurts/${h.id}`)}>
+                  <div className="col">
+                    <h3>Name: {h.name}</h3>
+                    <h3>Bodypart: {h.bodypart.name}</h3>
+                  </div>
+                  <div className="col align-text-right">
+                    <h3>Last update: {h.last_update}</h3>
+                    <h3>Healings: {h.healing_count}</h3>
+                  </div>
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    return <div>LOADING</div>
+  };
 
   return (
     <BasicPage>
@@ -57,7 +92,7 @@ const HurtList = () => {
             history.push(`hurts/new`);
           }}
         >
-          <div className="hurtlist">
+          <div className="hurtlist__controls">
             <ShowHideControls
               showing={showControls}
               setShowing={() => setShowControls((prevState) => !prevState)}
@@ -95,25 +130,7 @@ const HurtList = () => {
                 />
               </ControlGroup>
             </ShowHideControls>
-            {hurts.map((h) => {
-              return (
-                <div
-                  className={h.is_active ? "listitem" : "listitem--inactive"}
-                  key={h.id}
-                >
-                  <Button onClick={() => history.push(`hurts/${h.id}`)}>
-                    <div className="col">
-                      <h3>Name: {h.name}</h3>
-                      <h3>Bodypart: {h.bodypart.name}</h3>
-                    </div>
-                    <div className="col align-text-right">
-                      <h3>Last update: {h.last_update}</h3>
-                      <h3>Healings: {h.healing_count}</h3>
-                    </div>
-                  </Button>
-                </div>
-              );
-            })}
+            {listData()}
           </div>
         </ListPage>
       </div>

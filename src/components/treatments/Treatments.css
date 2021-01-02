@@ -1,3 +1,32 @@
+.treatment__name {
+    font-weight: bolder;
+}
+
 .yourtreatment{
     font-size: small;
+}
+
+.treatment .listitem__header .button {
+    color: white;
+}
+
+.treatment .listitem__header img {
+    filter: invert(100%);
+    max-height: 50px;
+}
+
+.treatment__type {
+    display: flex;
+}
+
+.header--treatment .button {
+    padding: 1rem;
+}
+
+.listitem .treatment__bodypart__name {
+    color: black;
+}
+
+.treatmentdetail__header .row {
+    justify-content: space-between;
 }

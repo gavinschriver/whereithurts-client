@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import BasicPage from "../layouts/BasicPage";
 import DetailPageLayout from "../layouts/DetailPageLayout";
 import { UpdateContext } from "./UpdateProvider";
+import "./Updates.css"
 
 const UpdateDetail = () => {
   const history = useHistory();
@@ -48,7 +49,7 @@ const UpdateDetail = () => {
           >
             <main className="updatedetail">
               <h2 className="name updatedetail__name">
-                Update for: {update.hurt.name}
+                Update for: <Link to={`/hurts/${update.hurt.id}`}>{update.hurt.name}</Link>
               </h2>
               <h3 className="date updatedetail__date">
                 Date: {update.date_added}

@@ -84,6 +84,7 @@ const TreatmentDetail = () => {
   }
   return (
     <BasicPage>
+      {isLoaded ?
       <div className="basicwrapper">
         <DetailPageLayout
           onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
@@ -91,51 +92,58 @@ const TreatmentDetail = () => {
           isOwner={treatment.owner}
         >
           <main className="treatmentdetail">
-            <div className="treatment">
-              <h2>Treatment: {treatment.name}</h2>
-              <h3>Bodypart: {treatment.bodypart.name}</h3>
-              <h3>Type: {treatment.treatmenttype.name}</h3>
-              <div className="treatment__notes">
-                <h3>Notes:</h3>
-                <p>{treatment.notes}</p>
-                <div className="treatment__links">
-                  <h3>Links:</h3>
-                  {treatment.links.map((l) => {
-                    return (
-                      <div key={l.id} className="treatment__links__link">
-                        <a target="_blank" href={l.linkurl}>
-                          {l.linktext}
-                        </a>
-                      </div>
-                    );
-                  })}
+            <div className="treatmentdetail__header header--detail">
+              {treatment.owner && (
+                <div className="row">
+                  <h3 className="treatmentdetail__owner">Your Treatment</h3>
+                  <h3 className="treatmentdetail__public_private">{treatment.public ? 'Public' : 'Private'}</h3>
                 </div>
-                <ShowHideSection
-                  showing={showAddHurts}
-                  setShowing={hanldeShowAddHurts}
-                  showhidetext="Your Tagged Hurts"
-                >
-                  <BadgeField
-                    collection={hurts}
-                    selected={selectedHurts}
-                    badgeText="name"
-                    direction="add"
-                    onAdd={handleAddHurt}
-                    detailconfig={{ configkeys: ["date_added", "notes"] }}
-                  />
-                </ShowHideSection>
+              )}
+            </div>
+            <h2>Treatment: {treatment.name}</h2>
+            <h3>Bodypart: {treatment.bodypart.name}</h3>
+            <h3>Type: {treatment.treatmenttype.name}</h3>
+            <div className="treatment__notes">
+              <h3>Notes:</h3>
+              <p>{treatment.notes}</p>
+              <div className="treatment__links">
+                <h3>Links:</h3>
+                {treatment.links.map((l) => {
+                  return (
+                    <div key={l.id} className="treatment__links__link">
+                      <a target="_blank" href={l.linkurl}>
+                        {l.linktext}
+                      </a>
+                    </div>
+                  );
+                })}
+              </div>
+              <ShowHideSection
+                showing={showAddHurts}
+                setShowing={hanldeShowAddHurts}
+                showhidetext="Your Tagged Hurts"
+              >
                 <BadgeField
-                  detailconfig={{ configkeys: ["date_added", "notes"] }}
+                  collection={hurts}
                   selected={selectedHurts}
                   badgeText="name"
-                  direction="remove"
-                  onRemove={handleRemoveHurt}
+                  direction="add"
+                  onAdd={handleAddHurt}
+                  detailconfig={{ configkeys: ["date_added", "notes"] }}
                 />
-              </div>
+              </ShowHideSection>
+              <BadgeField
+                detailconfig={{ configkeys: ["date_added", "notes"] }}
+                selected={selectedHurts}
+                badgeText="name"
+                direction="remove"
+                onRemove={handleRemoveHurt}
+              />
             </div>
           </main>
         </DetailPageLayout>
-      </div>
+        </div>
+         : <div>LOADING</div>}
     </BasicPage>
   );
 };

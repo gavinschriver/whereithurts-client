@@ -10,9 +10,10 @@ import "./Treatments.css";
 import { buildQueryString } from "../../utils/helpers";
 import SearchBar from "../ui/SearchBar";
 import HurtSelectBar from "../hurts/HurtSelectBar";
+import Treatment from "./Treatment";
 
 const TreatmentList = () => {
-  const [showControls, setShowControls] = useState(false);
+  const [showControls, setShowControls] = useState(true);
 
   //list data loading state
   const [listDataLoaded, setListDataLoaded] = useState(false);
@@ -64,41 +65,7 @@ const TreatmentList = () => {
       return (
         <div className="treatmentlist">
           {treatments.map((t) => {
-            return (
-              <div
-                className={`listitem ${t.owner ? `owner--listitem` : ``}`}
-                key={t.id}
-              >
-                {t.owner && <span className="yourtreatment">Added by you</span>}
-                <Button onClick={() => history.push(`/treatments/${t.id}`)}>
-                  <div className="col">
-                    <h3 style={{ fontWeight: "bold" }}>{t.name}</h3>
-                    <h3>{t.bodypart.name}</h3>
-                  </div>
-                  <div className="col" style={{ textAlign: `right` }}>
-                    <h3>{t.treatmenttype.name}</h3>
-
-                    <div className="listitem__subcollection">
-                      {t.hurts.map((h) => {
-                        if (
-                          h.patient.id ===
-                          parseInt(localStorage.getItem("patient_id"))
-                        ) {
-                          return (
-                            <span
-                              key={h.id}
-                              className="listitem__subcollection__item"
-                            >
-                              {h.name}
-                            </span>
-                          );
-                        }
-                      })}
-                    </div>
-                  </div>
-                </Button>
-              </div>
-            );
+            return <Treatment treatment={t} key={t.id}/>;
           })}
         </div>
       );
