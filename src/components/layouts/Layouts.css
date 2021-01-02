@@ -2,6 +2,11 @@
 
 /* general layout components */
 
+.page_title h1 {
+  margin-top: 0px;
+}
+
+
 .row {
   display: flex;
 }
@@ -30,18 +35,17 @@
 
 /* top-level div for all content outside of navbar */
 .basicpage {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   height: 100vh;
-  background-color: white;
-  text-align: left;
+  background-color: white; */
 }
 
 /* first div within page wrapper to control content area width and position */
 .basicwrapper {
-  width: 100vh;
+  /* width: 100vh; */
 }
 
 /* AUTH PAGE */
@@ -75,6 +79,7 @@
   border-radius: 2px;
   padding: 0.25rem;
   text-align: center;
+  margin-top: 0px;
 }
 
 .formpage_layout fieldset {
