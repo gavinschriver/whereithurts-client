@@ -45,7 +45,7 @@
 
 /* first div within page wrapper to control content area width and position */
 .basicwrapper {
-  /* width: 100vh; */
+  margin: 1rem;
 }
 
 /* AUTH PAGE */
@@ -80,6 +80,9 @@
   padding: 0.25rem;
   text-align: center;
   margin-top: 0px;
+}
+
+.formpage_layout .page_title {
 }
 
 .formpage_layout fieldset {
@@ -166,8 +169,14 @@
   display: flex;
 }
 
+.owner--listitem::before {
+  content: 'Added by you'
+}
+
 /* DETAIL PAGE  */
 
 .detailpage_layout > * {
   margin: 0 0 2rem 0;
 }
+
+

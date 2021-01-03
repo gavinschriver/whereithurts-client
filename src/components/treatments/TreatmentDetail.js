@@ -93,12 +93,10 @@ const TreatmentDetail = () => {
         >
           <main className="treatmentdetail">
             <div className="treatmentdetail__header header--detail">
-              {treatment.owner && (
                 <div className="row">
-                  <h3 className="treatmentdetail__owner">Your Treatment</h3>
-                  <h3 className="treatmentdetail__public_private">{treatment.public ? 'Public' : 'Private'}</h3>
+                  <h3 className="treatmentdetail__owner">{treatment.owner ? 'Your Treatment' : `Added by ${treatment.added_by.username}`  } </h3>
+                  {treatment.owner && <h3 className="treatmentdetail__public_private">{treatment.public ? 'Public' : 'Private'}</h3>}
                 </div>
-              )}
             </div>
             <h2>Treatment: {treatment.name}</h2>
             <h3>Bodypart: {treatment.bodypart.name}</h3>

@@ -26,25 +26,37 @@ const Treatment = ({ treatment }) => {
         </div>
 
         <div className="row listitem__content">
-          <div className="treatment__bodypart">
-            <h3 className="treatment__bodypart__name">
-              {treatment.bodypart.name}
-            </h3>
+          <div className="col">
+            <div className="treatment__bodypart">
+              <h4 className="treatment__bodypart__name">Bodypart:</h4>
+              <div className="treatment__bodypart__image">
+                <img src={treatment.bodypart.hurt_image} />
+              </div>
+              <h4> {treatment.bodypart.name}</h4>
+            </div>
           </div>
 
-          <div className="listitem__subcollection">
-            {treatment.hurts.map((h) => {
-              if (h.patient.id === current_user_id) {
-                return (
-                  <span key={h.id} className="listitem__subcollection__item">
-                    {h.name}
-                  </span>
-                );
-              }
-            })}
+          <div className="col">
+            <div className="listitem__subcollection">
+              <h4 className="listitem__subcollection__heading">
+                Your tagged hurts:
+              </h4>
+              <div className="listitem__subcollection__collection">
+                {treatment.hurts.map((h) => {
+                  if (h.patient.id === current_user_id) {
+                    return (
+                      <span
+                        key={h.id}
+                        className="listitem__subcollection__item"
+                      >
+                        {h.name}
+                      </span>
+                    );
+                  }
+                })}
+              </div>
+            </div>
           </div>
-
-          <div className="col align-right"></div>
         </div>
       </div>
     </div>

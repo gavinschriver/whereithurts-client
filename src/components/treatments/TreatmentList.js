@@ -63,7 +63,7 @@ const TreatmentList = () => {
   const listData = () => {
     if (listDataLoaded) {
       return (
-        <div className="treatmentlist">
+        <div className="list treatmentlist">
           {treatments.map((t) => {
             return <Treatment treatment={t} key={t.id}/>;
           })}

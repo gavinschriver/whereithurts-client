@@ -8,7 +8,7 @@ export const NavBar = () => {
 
   const [showing, setShowing] = useState(false);
   const toggleMenu = () => setShowing(!showing);
-  const closeMobileMenu = () => setShowing(false)
+  const closeMobileMenu = () => setShowing(false);
 
   return (
     <>
@@ -19,36 +19,60 @@ export const NavBar = () => {
         <div className="menu-icon" onClick={toggleMenu}>
           <i className={showing ? "fas fa-times" : "fas fa-bars"} />
         </div>
-        <ul className={showing ? 'nav-menu active' : 'nav-menu'}>
-          <li className='nav-item'>
-            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+        <ul className={showing ? "nav-menu active" : "nav-menu"}>
+          <li className="nav-item">
+            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
               Home
             </Link>
           </li>
-          <li className='nav-item'>
-            <Link to='/hurts' className='nav-links' onClick={closeMobileMenu}>
+          <li className="nav-item">
+            <Link to="/hurts" className="nav-links" onClick={closeMobileMenu}>
               Hurts
             </Link>
           </li>
-          <li className='nav-item'>
-            <Link to='/healings' className='nav-links' onClick={closeMobileMenu}>
+          <li className="nav-item">
+            <Link
+              to="/healings"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
               Healings
             </Link>
           </li>
-          <li className='nav-item'>
-            <Link to='/treatments' className='nav-links' onClick={closeMobileMenu}>
+          <li className="nav-item">
+            <Link
+              to="/treatments"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
               Treatments
             </Link>
           </li>
-          <li className='nav-item'>
-            <Link to='/updates' className='nav-links' onClick={closeMobileMenu}>
+          <li className="nav-item">
+            <Link to="/updates" className="nav-links" onClick={closeMobileMenu}>
               Updates
             </Link>
           </li>
-          <li className='nav-item'>
-            <Link to='/snapshot' className='nav-links' onClick={closeMobileMenu}>
+          <li className="nav-item">
+            <Link
+              to="/snapshot"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
               Snapshot
             </Link>
+          </li>
+          <li className="nav-item">
+            <Button
+              className="nav-links"
+              onClick={() => {
+                localStorage.removeItem("patient_id");
+                localStorage.removeItem("patient_token");
+                history.push("/login");
+              }}
+            >
+              Logout
+            </Button>
           </li>
         </ul>
       </nav>
