@@ -13,12 +13,17 @@ export const NavBar = () => {
   return (
     <>
       <nav className="navbar">
-        <Link to="/" className="navbar-link">
-          WhereItHurts
-        </Link>
-        <div className="menu-icon" onClick={toggleMenu}>
-          <i className={showing ? "fas fa-times" : "fas fa-bars"} />
+        <div
+          className="navbar-bar"
+        >
+          <div className="menu-icon" onClick={toggleMenu}>
+            <i className={showing ? "fas fa-times" : "fas fa-bars"} />
+          </div>
+          <Link to="/" className="navbar-link">
+            WhereItHurts
+          </Link>
         </div>
+
         <ul className={showing ? "nav-menu active" : "nav-menu"}>
           <li className="nav-item">
             <Link to="/" className="nav-links" onClick={closeMobileMenu}>

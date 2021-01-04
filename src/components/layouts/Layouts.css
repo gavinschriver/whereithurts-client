@@ -6,7 +6,6 @@
   margin-top: 0px;
 }
 
-
 .row {
   display: flex;
 }
@@ -136,6 +135,16 @@
 .listitem__subcollection {
   display: flex;
   color: black;
+  flex-direction: column;
+}
+
+.listitem__subcollection__collection {
+  display: flex;
+}
+
+.listitem__content {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 
