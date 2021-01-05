@@ -52,6 +52,8 @@
 
   .navbar-link {
     color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
   }
   
   .navbar-logo {
@@ -68,6 +70,8 @@
     font-size: 1.6rem;
   }
   
+  /* these base styles for .nav-menu change when break point is reached */
+
   .nav-menu {
     display: flex;
     list-style: none;
@@ -81,6 +85,7 @@
     display: flex;
     align-items: center;
     height: 80px;
+    justify-content: center;
   }
   
   .nav-links {
@@ -110,6 +115,7 @@
   .button.nav-links{
     cursor: pointer;
     font-size: 1.3rem;
+    width: auto;
   }
 
   .button.nav-links:hover {
@@ -118,7 +124,10 @@
   }
   
 
-   /* COLLAPSED */
+   /* COLLAPSED
+   
+   
+   */
 
   @media screen and (max-width: 960px) {
     .NavbarItems {
@@ -132,7 +141,7 @@
       height: 90vh;
       position: absolute;
       top: 80px;
-      left: -100%;
+      left: -110%;
       opacity: 1;
       transition: all 0.5s ease;
       margin-top: 0px;

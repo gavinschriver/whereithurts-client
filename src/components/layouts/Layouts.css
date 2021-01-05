@@ -2,6 +2,7 @@
 
 /* general layout components */
 
+
 .page_title h1 {
   margin-top: 0px;
 }
@@ -34,17 +35,15 @@
 
 /* top-level div for all content outside of navbar */
 .basicpage {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex;
   justify-content: center;
-  height: 100vh;
-  background-color: white; */
 }
 
 /* first div within page wrapper to control content area width and position */
 .basicwrapper {
   margin: 1rem;
+  width: 100%;
+  max-width: 860px;
 }
 
 /* AUTH PAGE */
@@ -81,7 +80,9 @@
   margin-top: 0px;
 }
 
-.formpage_layout .page_title {
+.formpage_layout {
+  width: 100%;
+  max-width: 860px;
 }
 
 .formpage_layout fieldset {
@@ -109,7 +110,7 @@
 
 .listitem .row {
   justify-content: space-between;
-  width: 100%
+  width: 100%;
 }
 
 .listitem .button {
@@ -147,7 +148,6 @@
   flex-wrap: wrap;
 }
 
-
 .listitem__subcollection__item {
   background-color: white;
   font-size: small;
@@ -157,21 +157,19 @@
   height: fit-content;
   color: #18a0fb;
   text-align: center;
-
 }
 
 .listpage__header {
   justify-content: space-between;
   align-items: center;
 }
-.listitem .button, .listitem--inactive .button {
+.listitem .button,
+.listitem--inactive .button {
   align-items: flex-start;
 }
 
 .listitem__header {
-  
 }
-
 
 .listpage__header .button {
   background-color: white;
@@ -179,7 +177,7 @@
 }
 
 .owner--listitem::before {
-  content: 'Added by you'
+  content: "Added by you";
 }
 
 /* DETAIL PAGE  */
@@ -187,5 +185,3 @@
 .detailpage_layout > * {
   margin: 0 0 2rem 0;
 }
-
-
