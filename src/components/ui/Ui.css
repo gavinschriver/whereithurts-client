@@ -283,7 +283,7 @@ textarea {
   background-color: #fff;
   z-index: 1000;
   opacity: 1;
-  transition: all 0.65s ease-in;
+  transition: all 0.75s ease-in;
 }
 
 .overlay {
@@ -298,13 +298,13 @@ textarea {
 
 .hidden-overlay {
   opacity: 0;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.4s ease-in-out;
   transform: translate(-100%);
 }
 
 .hidden-modal {
   opacity: 0;
-  transition: 1s all 0.5s ease-in-out;
+  transition: 1s all 0.4s ease-in-out;
   scale: 0;
 }
 
