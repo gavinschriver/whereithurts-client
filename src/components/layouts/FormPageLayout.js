@@ -19,7 +19,7 @@ const FormPageLayout = ({
 }) => {
   return (
     <div className="formpage_layout">
-      <h1>
+      <h1 className="formpage__layout__page_title page_title">
         {isEditMode ? `Edit` : `New`} {resource}
       </h1>
       {props.children}

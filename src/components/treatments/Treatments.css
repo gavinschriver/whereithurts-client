@@ -30,3 +30,12 @@
 .treatmentdetail__header .row {
     justify-content: space-between;
 }
+
+.treatment .listitem__subcollection__item {
+    background-color: #18a0fb;
+    color: white;
+}
+
+.treatment__treatmenttype__name {
+    display:none;
+}

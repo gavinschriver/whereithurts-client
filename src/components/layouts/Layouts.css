@@ -2,6 +2,11 @@
 
 /* general layout components */
 
+
+.page_title h1 {
+  margin-top: 0px;
+}
+
 .row {
   display: flex;
 }
@@ -31,17 +36,14 @@
 /* top-level div for all content outside of navbar */
 .basicpage {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  background-color: white;
-  text-align: left;
+  justify-content: center;
 }
 
 /* first div within page wrapper to control content area width and position */
 .basicwrapper {
-  width: 100vh;
+  margin: 1rem;
+  width: 100%;
+  max-width: 860px;
 }
 
 /* AUTH PAGE */
@@ -75,6 +77,12 @@
   border-radius: 2px;
   padding: 0.25rem;
   text-align: center;
+  margin-top: 0px;
+}
+
+.formpage_layout {
+  width: 100%;
+  max-width: 860px;
 }
 
 .formpage_layout fieldset {
@@ -102,7 +110,7 @@
 
 .listitem .row {
   justify-content: space-between;
-  width: 100%
+  width: 100%;
 }
 
 .listitem .button {
@@ -128,8 +136,17 @@
 .listitem__subcollection {
   display: flex;
   color: black;
+  flex-direction: column;
 }
 
+.listitem__subcollection__collection {
+  display: flex;
+}
+
+.listitem__content {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .listitem__subcollection__item {
   background-color: white;
@@ -140,25 +157,27 @@
   height: fit-content;
   color: #18a0fb;
   text-align: center;
-
 }
 
 .listpage__header {
   justify-content: space-between;
   align-items: center;
 }
-.listitem .button, .listitem--inactive .button {
+.listitem .button,
+.listitem--inactive .button {
   align-items: flex-start;
 }
 
 .listitem__header {
-  
 }
-
 
 .listpage__header .button {
   background-color: white;
   display: flex;
+}
+
+.owner--listitem::before {
+  content: "Added by you";
 }
 
 /* DETAIL PAGE  */

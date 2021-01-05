@@ -6,7 +6,7 @@ const ListPageLayout = (props) => {
   return (
     <div className="listpage_layout">
       <div className="row listpage__header">
-        <h1>{resource}</h1>
+        <h1 className="page_title">{resource}</h1>
         <AddNewButton onClick={props.onClick}/>
       </div>
       {props.children}
