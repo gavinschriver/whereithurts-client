@@ -27,14 +27,15 @@ option {
   display: flex;
   align-items: center;
   cursor: pointer;
-}
-
-.button:active {
-  box-shadow: 0 !important;
+  transition: all 0.2s linear;
 }
 
 .button:disabled {
   background-color: #bebebe;
+}
+
+.button:hover {
+  opacity: 0.75;
 }
 
 .detailpage_layout .row .button {
@@ -281,6 +282,8 @@ textarea {
   transform: translate(-50%, -50%);
   background-color: #fff;
   z-index: 1000;
+  opacity: 1;
+  transition: all 0.65s ease-in;
 }
 
 .overlay {
@@ -291,6 +294,22 @@ textarea {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
+}
+
+.hidden-overlay {
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  transform: translate(-100%);
+}
+
+.hidden-modal {
+  opacity: 0;
+  transition: 1s all 0.5s ease-in-out;
+  scale: 0;
+}
+
+.showing {
+  transition: all 0.5s ease-in-out;
 }
 
 /* BADGE DETAIL */

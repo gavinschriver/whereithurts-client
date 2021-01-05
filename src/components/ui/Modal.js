@@ -3,13 +3,11 @@ import React from "react";
  * 
  * @param {Function} onClose function to toggle the diplay state of the Modal to "false" 
  */
-const Modal = ({ children, onClose }) => {
+const Modal = ({ children, className}) => {
   return (
-    <div className="overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div className={className} onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
-    </div>
   );
 };
 

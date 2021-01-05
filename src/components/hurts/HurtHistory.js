@@ -17,7 +17,7 @@ const HurtHistory = (props) => {
       </div>
       <SortHurtHistory value={sortValue} onChange={onChange} />
       <div className="list history--list">
-        {history.map((i) => {
+        {history.map((i, index) => {
           const type = i.history_type;
 
           const classType = type === "Created on" ? "created" : "entry";
@@ -27,7 +27,7 @@ const HurtHistory = (props) => {
 
           return (
             <div
-              className={`row listitem history--listitem history--${classType}`} key={`${i.history_type}-${i.id}`}
+              className={`row listitem history--listitem history--${classType}`} key={index}
             >
               <div className="col">
                 <div className="history__heaing">

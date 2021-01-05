@@ -4,6 +4,7 @@ import BlackCirclePlus from "../../assets/images/icons/black_circle_plus.png";
 import WhiteCircleX from "../../assets/images/icons/white_x_icon_4.png";
 import BadgeDetail from "./BadgeDetail";
 import Modal from "./Modal";
+import "../../";
 
 const Badge = ({
   direction,
@@ -17,8 +18,8 @@ const Badge = ({
   const [showDetail, setShowDetail] = useState(false);
 
   const showModal = () => {
-    setShowDetail(true)
-  }
+    setShowDetail(true);
+  };
 
   const closeModal = () => {
     setShowDetail(false);
@@ -48,11 +49,16 @@ const Badge = ({
           {addOrRemoveIcon}
         </Button>
       )}
-      {showDetail && (
-        <Modal onClose={closeModal}>
-          <BadgeDetail onClose={closeModal} {...props} />
-        </Modal>
-      )}
+      <div>
+        <div
+          className={showDetail ? "overlay showing" : "overlay hidden-overlay"}
+          onClick={closeModal}
+        >
+          <Modal onClose={closeModal} className={showDetail ? "modal" : "modal hidden-modal"}>
+            <BadgeDetail onClose={closeModal} {...props} />
+          </Modal>
+        </div>
+      </div>
     </span>
   );
 };

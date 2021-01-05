@@ -57,7 +57,7 @@ const HealingDetail = () => {
             <div className="healing">
               <h1>Healing on {healing.date_added}</h1>
               <h3>
-                Time Spent: {secondsToRoundedMinutes(healing.duration)} minutes
+                Time Spent: {healing.duration && `${secondsToRoundedMinutes(healing.duration)} minutes`}
               </h3>
               <div className="healing__notes">
                 <h3>Notes:</h3>

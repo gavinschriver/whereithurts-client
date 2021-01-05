@@ -41,9 +41,13 @@
 
 /* first div within page wrapper to control content area width and position */
 .basicwrapper {
-  margin: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
   width: 100%;
   max-width: 860px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
 }
 
 /* AUTH PAGE */

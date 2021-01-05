@@ -68,4 +68,12 @@ select {
 }
 
 
+/* TRANSITION CLASSES */
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: linear;
+  transition-duration: .25s;
+}
+
 
