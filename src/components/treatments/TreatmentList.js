@@ -45,7 +45,7 @@ const TreatmentList = () => {
   const {
     getTreatmentsByQuerystring,
     getTreatmentsBySearchTerms,
-    treatments,
+    treatmentData,
   } = useContext(TreatmentContext);
 
   const history = useHistory();
@@ -65,7 +65,7 @@ const TreatmentList = () => {
     if (listDataLoaded) {
       return (
         <div className="list treatmentlist__list">
-          {treatments.map((t) => {
+          {treatmentData.treatments.map((t) => {
             return <Treatment treatment={t} key={t.id} />;
           })}
         </div>
