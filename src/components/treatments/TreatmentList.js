@@ -63,9 +63,9 @@ const TreatmentList = () => {
   const listData = () => {
     if (listDataLoaded) {
       return (
-        <div className="list treatmentlist">
+        <div className="list treatmentlist__list">
           {treatments.map((t) => {
-            return <Treatment treatment={t} key={t.id}/>;
+            return <Treatment treatment={t} key={t.id} />;
           })}
         </div>
       );
@@ -84,33 +84,35 @@ const TreatmentList = () => {
             history.push("/treatments/new");
           }}
         >
-          <ShowHideControls
-            showing={showControls}
-            setShowing={() =>
-              setShowControls((previousState) => !previousState)
-            }
-          >
-            <TreatmentControlGroup
-              handleFilterChange={handleFilterChange}
-              isOwner={filters.owner}
-              bodypartId={filters.bodypart_id}
-              treatmentTypeId={filters.treatmenttype_id}
+          <div className="treatmentlist__controls">
+            <ShowHideControls
+              showing={showControls}
+              setShowing={() =>
+                setShowControls((previousState) => !previousState)
+              }
             >
-              <HurtSelectBar
-                label="Filter by Hurt:"
-                name="hurt_id"
-                onChange={handleFilterChange}
-                value={filters.hurt_id}
+              <TreatmentControlGroup
+                handleFilterChange={handleFilterChange}
+                isOwner={filters.owner}
+                bodypartId={filters.bodypart_id}
+                treatmentTypeId={filters.treatmenttype_id}
+              >
+                <HurtSelectBar
+                  label="Filter by Hurt:"
+                  name="hurt_id"
+                  onChange={handleFilterChange}
+                  value={filters.hurt_id}
+                />
+              </TreatmentControlGroup>
+              <SearchBar
+                label="Search all:"
+                value={searchTerms}
+                onChange={handleChangeSearchTerms}
+                onSearch={handleSubmitSearchTerms}
+                onClear={handleClearSearchTerms}
               />
-            </TreatmentControlGroup>
-            <SearchBar
-              label="Search all:"
-              value={searchTerms}
-              onChange={handleChangeSearchTerms}
-              onSearch={handleSubmitSearchTerms}
-              onClear={handleClearSearchTerms}
-            />
-          </ShowHideControls>
+            </ShowHideControls>
+          </div>
           {listData()}
         </ListPageLayout>
       </div>

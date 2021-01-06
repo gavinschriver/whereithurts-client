@@ -2,10 +2,12 @@ fieldset {
   display: flex;
   justify-content: space-between;
   border: none;
+  margin: .5em 0; 
 }
 
 .required {
   border: 2px solid #ff0f0f;
+  border-radius: 4px;
 }
 
 select {
@@ -23,11 +25,11 @@ option {
 .button {
   background-color: #18a0fb;
   border: none;
-  border-radius: 0.2rem;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: all 0.2s linear;
+  transition: all 0.1s linear;
 }
 
 .button:disabled {
@@ -35,7 +37,7 @@ option {
 }
 
 .button:hover {
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 .detailpage_layout .row .button {
@@ -48,21 +50,31 @@ option {
   color: white;
 }
 
-.button--addnew {
-  background-color: white;
+/* rgba(191, 191, 191, 0.2); */
+
+.button--addnew .button {
+  /* background-color: #F0F0F5; */
   display: flex;
-  height: fit-content;
-  color: black;
+  color: grey;
   padding: 0;
+  border: 1px solid #bebebe;
+  border-radius: 4px;
+}
+
+.addnew__button__text {
+  margin-left: 1rem;
 }
 
 .button--addnew .button > * {
   padding: 0 0.25rem 0 0.25rem;
 }
 
-.button--addnew .button {
+.button--addnew .button:hover {
   background-color: white;
+  color: black;
+  border: 1px solid black;
 }
+
 .button--addnew .button img {
   max-height: 40px;
 }
@@ -283,7 +295,7 @@ textarea {
   background-color: #fff;
   z-index: 1000;
   opacity: 1;
-  transition: all 0.75s ease-in;
+  transition: all 0.7s ease-in;
 }
 
 .overlay {
@@ -299,13 +311,14 @@ textarea {
 .hidden-overlay {
   opacity: 0;
   transition: all 0.4s ease-in-out;
-  transform: translate(-100%);
+  transform: translateX(-100%);
 }
 
 .hidden-modal {
   opacity: 0;
-  transition: 1s all 0.4s ease-in-out;
+  transition: all 0.5s ease-in-out;
   scale: 0;
+  transform: translate(-100%, -50%);
 }
 
 .showing {

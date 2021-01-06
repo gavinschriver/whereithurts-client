@@ -1,9 +1,23 @@
+.treatment {
+    border: 1px solid whitesmoke;
+    margin: 1rem 0;
+}
+
+.treatment__bodypart__image img {
+    max-width: 100px;
+}
+
+
 .treatment__name {
     font-weight: bolder;
 }
 
 .yourtreatment{
     font-size: small;
+}
+
+.treatment .owner--listitem::before {
+    color: #969696;
 }
 
 .treatment .listitem__header .button {
@@ -19,6 +33,8 @@
     display: flex;
 }
 
+
+
 .header--treatment .button {
     padding: 1rem;
 }
@@ -28,7 +44,8 @@
 }
 
 .treatmentdetail__header .row {
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .treatment .listitem__subcollection__item {
@@ -38,4 +55,38 @@
 
 .treatment__treatmenttype__name {
     display:none;
+}
+
+.treatmentdetail__public_private {
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 0.25rem;
+}
+
+.treatmentdetail__public_private {
+    margin-left: 1rem;
+    background-color: white;
+}
+
+.treatmentlist__list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.treatmentlist__list > *  {
+    flex: 1;
+}
+
+.treatmentlist__controls fieldset {
+    margin: 0.5rem 0;
+}
+
+@media screen and (max-width: 960px) {
+
+.treatmentlist__list {
+    display: flex;
+    flex-direction:column;
+}
+
+
 }

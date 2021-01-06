@@ -11,10 +11,10 @@ const resourceConfig = {
 const RecentActivity = ({ activities }) => {
   return (
     <div className="recentactivity">
-      <div className="recentactivity__header">
-        <h3>Your recent activity</h3>
-      </div>
       <div className="recentactivity__list list">
+        <div className="recentactivity__header">
+          <h3>Your recent activity</h3>
+        </div>
         {activities.map((activity, index) => {
           return (
             <div className="listitem activity" key={index}>

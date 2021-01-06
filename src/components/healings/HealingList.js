@@ -52,7 +52,7 @@ const HealingList = () => {
   const listData = () => {
     if (listDataLoaded) {
       return (
-        <div className="healinglist__list">
+        <div className="list healinglist__list">
           <div className="healinglist__header">
             Total Healing Time:{" "}
             {secondsToRoundedMinutes(healingData.total_healing_time)} minutes

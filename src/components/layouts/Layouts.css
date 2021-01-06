@@ -9,6 +9,7 @@
 
 .row {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .align-right {
@@ -37,6 +38,8 @@
 .basicpage {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  height: 100%;
 }
 
 /* first div within page wrapper to control content area width and position */
@@ -45,7 +48,6 @@
   padding: 1rem;
   width: 100%;
   max-width: 860px;
-  background-color: #ffffff;
   display: flex;
   flex-direction: column;
 }
@@ -92,6 +94,7 @@
 .formpage_layout fieldset {
   justify-content: space-between;
   width: 100%;
+  margin: 0.5rem 0;
 }
 
 .formpage_layout .row {

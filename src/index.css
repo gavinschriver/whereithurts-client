@@ -1,6 +1,8 @@
 
 @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
 
+
+
 body {
   margin: 0;
   font-family: 'Rubik', 'PT Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,7 +11,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font: 400 13.333px;
+  background-color: rgba(249,250,251);
   /* font-size: calc(5px + 2vmin); */
+}
+
+#root {
+  /* height: 100vh; */
 }
 
 code {
