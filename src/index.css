@@ -12,11 +12,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font: 400 13.333px;
   background-color: rgba(249,250,251);
-  /* font-size: calc(5px + 2vmin); */
-}
-
-#root {
-  /* height: 100vh; */
 }
 
 code {

@@ -8,6 +8,7 @@ import ControlGroup from "../ui/ControlGroup";
 import SortByBar from "../ui/SortByBar";
 import HurtSelectBar from "../hurts/HurtSelectBar";
 import { buildQueryString } from "../../utils/helpers";
+import Loader from "../ui/Loader";
 
 const SORT_OPTIONS = [{ id: 1, name: "Oldest", value: "added_on-asc" }];
 
@@ -73,7 +74,7 @@ const UpdateList = () => {
         </div>
       );
     }
-    return <div>LOADING</div>;
+    return <Loader/>;
   };
 
   return (

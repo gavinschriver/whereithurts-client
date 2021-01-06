@@ -8,6 +8,7 @@ import HurtSelectBar from "../hurts/HurtSelectBar";
 import ShowHideControls from "../ui/ShowHideControls";
 import { HealingContext } from "./HealingProvider";
 import HealingSortBar from "./HealingSortBar";
+import Loader from "../ui/Loader";
 
 const HealingList = () => {
   const current_user_id = parseInt(localStorage.getItem("patient_id"));
@@ -88,7 +89,7 @@ const HealingList = () => {
       );
     }
 
-    return <div>LOADING</div>;
+    return <Loader />;
   };
 
   // main return

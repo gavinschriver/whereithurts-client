@@ -11,6 +11,7 @@ import { buildQueryString } from "../../utils/helpers";
 import SearchBar from "../ui/SearchBar";
 import HurtSelectBar from "../hurts/HurtSelectBar";
 import Treatment from "./Treatment";
+import Loader from "../ui/Loader";
 
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(true);
@@ -71,7 +72,7 @@ const TreatmentList = () => {
       );
     }
 
-    return <div>LOADING</div>;
+    return <Loader />;
   };
 
   return (

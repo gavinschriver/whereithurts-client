@@ -1,3 +1,5 @@
+@import "./Animations.css";
+
 fieldset {
   display: flex;
   justify-content: space-between;
@@ -291,11 +293,11 @@ textarea {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
   background-color: #fff;
   z-index: 1000;
   opacity: 1;
-  transition: all 0.7s ease-in;
+  transition: all .2s ease-in-out .2s;
 }
 
 .overlay {
@@ -305,25 +307,22 @@ textarea {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
+  transition: all 0.4s ease-in-out;
   z-index: 1000;
+  opacity: 1;
 }
 
 .hidden-overlay {
   opacity: 0;
-  transition: all 0.4s ease-in-out;
   transform: translateX(-100%);
+  transition: all 0.15s ease-in-out;
 }
 
 .hidden-modal {
   opacity: 0;
-  transition: all 0.5s ease-in-out;
-  scale: 0;
-  transform: translate(-100%, -50%);
+  transform: translate(-50%, -50%);
 }
 
-.showing {
-  transition: all 0.5s ease-in-out;
-}
 
 /* BADGE DETAIL */
 
@@ -349,4 +348,19 @@ textarea {
 
 .badgedetail .button {
   box-shadow: none;
+}
+
+
+/* LOADER  */
+
+.loader {
+  height: 50px;
+  width: 50px;
+  border-top: 10px solid green;
+  border-bottom: 10px solid blue;
+  border-right: 10px solid #bebebe;
+  border-left: 10px solid #bebebe;
+  border-radius: 100%;
+  animation: loading 1.3s infinite linear;
+  margin: auto;
 }

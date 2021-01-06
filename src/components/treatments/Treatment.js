@@ -49,7 +49,7 @@ const Treatment = ({ treatment }) => {
                         key={h.id}
                         className="listitem__subcollection__item"
                       >
-                        {h.name}
+                        <Button onClick={() => history.push(`/hurts/${h.id}`)}>{h.name}</Button>
                       </span>
                     );
                   }

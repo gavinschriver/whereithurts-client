@@ -49,16 +49,14 @@ const Badge = ({
           {addOrRemoveIcon}
         </Button>
       )}
-      <div>
-        <div
-          className={showDetail ? "overlay showing" : "overlay hidden-overlay"}
-          onClick={closeModal}
-        >
-          <Modal onClose={closeModal} className={showDetail ? "modal" : "modal hidden-modal"}>
-            <BadgeDetail onClose={closeModal} {...props} />
-          </Modal>
-        </div>
-      </div>
+
+      <Modal
+        onClose={closeModal}
+        className={showDetail ? "modal" : "hidden-modal"}
+        showing={showDetail}
+      >
+        <BadgeDetail onClose={closeModal} showing={showDetail} {...props} />
+      </Modal>
     </span>
   );
 };
