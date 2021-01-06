@@ -23,27 +23,44 @@ const HealingList = () => {
 
   // filters; intialized with patient ID of current patient so we don't bring in non-user-healings
   const [filters, setFilters] = useState({ patient_id: current_user_id });
-  const [hurtId, setHurtId] = useState(0);
-  const [order, setOrder] = useState(0);
-  const [direction, setDirection] = useState(0);
+
+  
+  const _getHealingDataByQuerystring = async () => {
+    await getHealingDataByQuerystring(buildQueryString(filters));
+  };
 
   useEffect(() => {
     {
       setListDataLoaded(false);
-      getHealingDataByQuerystring(buildQueryString(filters)).then(() => {
+      _getHealingDataByQuerystring().then(() => {
         setListDataLoaded(true);
       });
     }
   }, [filters]);
 
-  useEffect(() => {
-    setFilters({
-      patient_id: current_user_id,
-      hurt_id: parseInt(hurtId),
-      order_by: order,
-      direction: direction,
-    });
-  }, [hurtId, order, direction]);
+  // one filter change handler to rule them all
+
+  const handleFilterChange = e => {
+    let { name, value } = e.target;
+    if (name !== "healing_sort") {
+      value = parseInt(value);
+      setFilters({ ...filters, [name]: value })
+    }
+    if (name === "healing_sort") {
+      const orderBy = value.split("-")[0];
+      const direction = value.split("-")[1];
+      setFilters({...filters, order_by : orderBy, direction: direction})
+    }
+  }
+
+  // useEffect(() => {
+  //   setFilters({
+  //     ...filters,
+  //     hurt_id: parseInt(hurtId),
+  //     order_by: order,
+  //     direction: direction,
+  //   });
+  // }, [hurtId, order, direction]);
 
   //controls
   const [showListControls, setShowListControls] = useState(false);
@@ -111,15 +128,13 @@ const HealingList = () => {
               <HurtSelectBar
                 label="Filter by Hurt:"
                 defaultoptiontext="All"
-                onChange={(e) => setHurtId(e.target.value)}
+                name="hurt_id"
+                // onChange={(e) => setHurtId(e.target.value)}
+                onChange={handleFilterChange}
               />
               <HealingSortBar
-                onChange={(e) => {
-                  const orderBy = e.target.value.split("-")[0];
-                  const direction = e.target.value.split("-")[1];
-                  setOrder(orderBy);
-                  setDirection(direction);
-                }}
+                name="healing_sort"
+                onChange={handleFilterChange}
               />
             </ShowHideControls>
             {listData()}
