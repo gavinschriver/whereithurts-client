@@ -47,7 +47,7 @@ const UpdateList = () => {
   const listData = () => {
     if (listDataLoaded) {
       return (
-        <div className="updatelist">
+        <div className="list updatelist">
           {updates
             .filter((u) => !u.is_first_update)
             .map((u) => {

@@ -1,13 +1,15 @@
 import React from "react";
 import Button from "./Button";
-import AddIcon from "../../assets/images/black_plus_icon.png";
+import { MdAdd } from "react-icons/md";
 
 const AddNewButton = (props) => {
   return (
     <div className="button--addnew">
       <Button onClick={props.onClick}>
         <h3 className="addnew__button__text">Add New</h3>
-        <img className="addnew__button__image" src={AddIcon} />
+        <div className="addnew__button__icon">
+          <MdAdd size="5em" />
+        </div>
         {props.children}
       </Button>
     </div>

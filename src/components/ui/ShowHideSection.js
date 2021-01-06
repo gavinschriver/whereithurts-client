@@ -3,9 +3,10 @@ import Button from "./Button";
 import "./Ui.css";
 import AddIcon from "./../../assets/images/black_plus_icon.png";
 import RemoveIcon from "./../../assets/images/black_minus_icon.png";
+import { MdAdd, MdRemove } from "react-icons/md";
 
 /**
- * 
+ *
  * @param {string} showhidetext label for section
  * @param {string} buttontext label for button when section is hidden (defaults to "Add More")
  * @param {boolean} showing t/f value to control display of section contents (children)
@@ -13,7 +14,12 @@ import RemoveIcon from "./../../assets/images/black_minus_icon.png";
  */
 
 const ShowHideSection = (props) => {
-  const { showhidetext, buttontext = 'Add more', showing, setShowing = () => {} } = props;
+  const {
+    showhidetext,
+    buttontext = "Add more",
+    showing,
+    setShowing = () => {},
+  } = props;
 
   const src = showing ? RemoveIcon : AddIcon;
 
@@ -23,8 +29,10 @@ const ShowHideSection = (props) => {
         <h3 className="showhidesection__header__text">{showhidetext}</h3>
         <div className="showhidesection__header__button button--addclose">
           <Button onClick={() => setShowing(!showing)}>
-            <span className="showhide__section">{showing ? "Close" : buttontext}</span>
-            <img src={src} alt="show hide section button" />
+            <span className="showhide__section">
+              {showing ? "Close" : buttontext}
+            </span>
+            {showing ? <MdRemove size="2em" /> : <MdAdd size="2em"/>}
           </Button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../ui/Button";
 /**
- * 
+ *
  * @param {string} resource Name of resource, formatted for heading display
  * @param {boolean} isEditMode true/false value determined by calling parent Form component; used to determine first part of heading
  * @param {React component} alert React component acting as alert for form validation
