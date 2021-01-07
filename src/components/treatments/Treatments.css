@@ -81,6 +81,10 @@
     margin: 0.5rem 0;
 }
 
+.treatment .listitem button {
+    color: white;
+}
+
 @media screen and (max-width: 960px) {
 
 .treatmentlist__list {

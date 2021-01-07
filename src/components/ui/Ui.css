@@ -1,3 +1,5 @@
+@import "./Animations.css";
+
 fieldset {
   display: flex;
   justify-content: space-between;
@@ -7,6 +9,11 @@ fieldset {
 
 .required {
   border: 2px solid #ff0f0f;
+  border-radius: 4px;
+}
+
+.activefield {
+  border: 2px solid #18a0fb;
   border-radius: 4px;
 }
 
@@ -34,6 +41,10 @@ option {
 
 .button:disabled {
   background-color: #bebebe;
+}
+
+.button:disabled:hover {
+  opacity: 1;
 }
 
 .button:hover {
@@ -273,16 +284,35 @@ textarea {
 .searchbar {
   display: flex;
   justify-content: space-between;
+  padding: .4rem;
+  align-items: center;
+  margin: 0.5rem 0;
 }
 
 .searchbar__control {
   display: flex;
 }
 
+/* CONTROL GROUPS */
+
+.controlgroup {
+  background-color: white;
+  padding: .4rem;
+  margin: .5rem 0;
+  border: 1px solid #bebebe
+}
+
+/* TREATMENT CONTROLGROUP */
+
+.treatments_collection_select {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+
 .controlgroup,
 .controlgroup > * {
   font-size: 1rem;
-  margin: 0.5rem 0 0.5rem 0;
 }
 
 /* MODAL / OVERLAY */
@@ -291,11 +321,11 @@ textarea {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
   background-color: #fff;
   z-index: 1000;
   opacity: 1;
-  transition: all 0.7s ease-in;
+  transition: all .2s ease-in-out .2s;
 }
 
 .overlay {
@@ -305,25 +335,22 @@ textarea {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
+  transition: all 0.4s ease-in-out;
   z-index: 1000;
+  opacity: 1;
 }
 
 .hidden-overlay {
   opacity: 0;
-  transition: all 0.4s ease-in-out;
   transform: translateX(-100%);
+  transition: all 0.15s ease-in-out;
 }
 
 .hidden-modal {
   opacity: 0;
-  transition: all 0.5s ease-in-out;
-  scale: 0;
-  transform: translate(-100%, -50%);
+  transform: translate(-50%, -50%);
 }
 
-.showing {
-  transition: all 0.5s ease-in-out;
-}
 
 /* BADGE DETAIL */
 
@@ -349,4 +376,30 @@ textarea {
 
 .badgedetail .button {
   box-shadow: none;
+}
+
+
+/* PAGINATION  */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+}
+.pagination__controls {
+  display: flex;
+
+}
+
+
+/* LOADER  */
+
+.loader {
+  height: 50px;
+  width: 50px;
+  border-top: 10px solid #18a0fb;
+  border-bottom: 10px solid #18a0fb;
+  border-right: 10px solid #bebebe;
+  border-left: 10px solid #bebebe;
+  border-radius: 100%;
+  animation: loading 1.3s infinite linear;
+  margin: auto;
 }

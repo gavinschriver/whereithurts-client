@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
 import { convertSecondsToTimeString } from "../../utils/helpers";
 import Button from "../ui/Button";
-import bell from "../../assets/sounds/ship_bell.wav"
-import beeper from "../../assets/sounds/beeper.wav"
+import bell from "../../assets/sounds/ship_bell.wav";
+import beeper from "../../assets/sounds/beeper.wav";
 import "./Timer.css";
 
 const Timer = ({ timer, setTimer }) => {
   const { isActive, timeTotal, timerVal, remaining } = timer;
 
-
   //add chime for timer
-  const chime = new Audio(bell)
-  const beep = new Audio(beeper)
+  const chime = new Audio(bell);
+  const beep = new Audio(beeper);
 
-  const playsound = sound => {
-    sound.play()
-  }
+  const playsound = (sound) => {
+    sound.play();
+  };
 
   //switch Timer on or Off
   const toggle = () => {
@@ -45,7 +44,11 @@ const Timer = ({ timer, setTimer }) => {
             timeTotal: timeTotal + 1,
           }));
         }, 1000);
-      } else toggle();
+      } else {
+        toggle();
+        //added this to clear interval when timer ends
+        clearInterval(interval);
+      }
     } else if (!isActive && remaining !== 0) {
       clearInterval(interval);
     }
@@ -62,8 +65,8 @@ const Timer = ({ timer, setTimer }) => {
         playsound(beep);
       }, 500);
       setTimeout(() => {
-        alert('TImes Up')
-      }, 700)
+        alert("TImes Up");
+      }, 700);
     }
   }, [isActive]);
 

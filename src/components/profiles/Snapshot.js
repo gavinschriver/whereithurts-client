@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import BasicPage from "../layouts/BasicPage";
 import BadgeField from "../ui/BadgeField";
 import Button from "../ui/Button";
+import Loader from "../ui/Loader";
 import { ProfileContext } from "./ProfileProvider";
 
 const Snapshot = () => {
@@ -22,7 +23,7 @@ const Snapshot = () => {
   }, []);
 
   if (snapshot === null) {
-    return <div>Still Loading...</div>;
+    return <div style={{margin: '2rem', display:'flex', flexDirection: 'column', alignItems: 'center', color: '#969696'}}><Loader /><span style={{margin: '2rem'}}>Please wait...</span></div>;
   }
 
   return (

@@ -24,6 +24,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import "./Healings.css";
 import ControlGroup from "../ui/ControlGroup";
 import SearchBar from "../ui/SearchBar";
+import Pagination from "../ui/Pagination";
 
 const HealingForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
@@ -38,23 +39,26 @@ const HealingForm = () => {
   const [bodypartId, setBodypartId] = useState(0);
   const [treatmentTypeId, setTreatmentTypeId] = useState(0);
   const [isOwner, setIsOwner] = useState(1);
-  const [filters, setFilters] = useState({ owner: 1 });
-  const [searchTerms, setSearchTerms] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState({ owner: 1, page: 1 });
 
-  const handleChangeSearchTerms = (e) => {
-    setSearchTerms(e.target.value);
-  };
+  // TREATMENT SEARCH TERMS CURRENTLY NOT OEPRATIONAL IN THIS FORM
+  // const [searchTerms, setSearchTerms] = useState("");
 
-  const handleSubmitSearchTerms = () => {
-    getTreatmentsBySearchTerms(searchTerms);
-  };
+  // const handleChangeSearchTerms = (e) => {
+  //   setSearchTerms(e.target.value);
+  // };
 
-  const handleClearSearchTerms = () => {
-    setSearchTerms("");
-    getTreatmentsByQuerystring(buildQueryString(filters));
-  };
+  // const handleSubmitSearchTerms = () => {
+  //   getTreatmentsBySearchTerms(searchTerms);
+  // };
 
-  // effect to bring in treatments on page load, intially with only current user's added_by treatments
+  // const handleClearSearchTerms = () => {
+  //   setSearchTerms("");
+  //   getTreatmentsByQuerystring(buildQueryString(filters));
+  // };
+
+  // effect to bring in treatments on page load, intially with only current user's added_by treatments, and then whenever a filter changes
   useEffect(() => {
     getTreatmentsByQuerystring(buildQueryString(filters));
   }, [filters]);
@@ -64,8 +68,9 @@ const HealingForm = () => {
       bodypart_id: parseInt(bodypartId),
       treatmenttype_id: parseInt(treatmentTypeId),
       owner: parseInt(isOwner),
+      page: currentPage,
     });
-  }, [bodypartId, treatmentTypeId, isOwner]);
+  }, [bodypartId, treatmentTypeId, isOwner, currentPage]);
 
   const handleRadioButtonChange = (e) => {
     setIsOwner(e.target.value);
@@ -92,7 +97,7 @@ const HealingForm = () => {
 
   //treatments
   const {
-    treatments,
+    treatmentData,
     getTreatmentsByQuerystring,
     getTreatmentsBySearchTerms,
   } = useContext(TreatmentContext);
@@ -195,7 +200,7 @@ const HealingForm = () => {
           >
             <main className="healingform">
               <TreatmentToggleGroup
-                collection={treatments}
+                collection={treatmentData.treatments}
                 showing={showAddTreatments}
                 selected={selectedTreatments}
                 setShowing={setShowAddTreatments}
@@ -235,14 +240,22 @@ const HealingForm = () => {
                     onChange={(e) => setTreatmentTypeId(e.target.value)}
                     value={treatmentTypeId}
                   />
+                  {/*
+                  THISSSAA NO GOOD-A RIGHT NOW
                   <SearchBar
                     label="Search all treatments:"
                     value={searchTerms}
                     onChange={handleChangeSearchTerms}
                     onSearch={handleSubmitSearchTerms}
                     onClear={handleClearSearchTerms}
-                  />
+                  /> */}
                 </ControlGroup>
+                <Pagination
+                  page={currentPage}
+                  totalCount={treatmentData.count}
+                  pageBack={() => setCurrentPage(currentPage - 1)}
+                  pageForward={() => setCurrentPage(currentPage + 1)}
+                />
               </TreatmentToggleGroup>
               <HurtToggleGroup
                 collection={hurts}

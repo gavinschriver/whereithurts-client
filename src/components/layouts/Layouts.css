@@ -178,14 +178,20 @@
 .listitem__header {
 }
 
+.listitem__preheader {
+  display: flex;
+  justify-content: space-between;
+  color: #969696
+}
+
 .listpage__header .button {
   background-color: white;
   display: flex;
 }
 
-.owner--listitem::before {
+/* .owner--listitem::before {
   content: "Added by you";
-}
+} */
 
 /* DETAIL PAGE  */
 

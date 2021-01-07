@@ -10,6 +10,16 @@ const Treatment = ({ treatment }) => {
   return (
     <div className="treatment">
       <div className={`listitem ${treatment.owner && `owner--listitem`}`}>
+        <div className={`listitem__preheader`}>
+          {treatment.owner ? (
+            <>
+              <span>Added by You</span>
+              <span>{treatment.public ? "Public" : "Private"}</span>
+            </>
+          ) : (
+              <span>Added by {treatment.added_by.username}</span>
+          )}
+        </div>
         <div className="row listitem__header header--treatment">
           <Button onClick={() => history.push(`/treatments/${treatment.id}`)}>
             <h3 className="treatment__name">{treatment.name}</h3>
@@ -49,7 +59,9 @@ const Treatment = ({ treatment }) => {
                         key={h.id}
                         className="listitem__subcollection__item"
                       >
-                        {h.name}
+                        <Button onClick={() => history.push(`/hurts/${h.id}`)}>
+                          {h.name}
+                        </Button>
                       </span>
                     );
                   }

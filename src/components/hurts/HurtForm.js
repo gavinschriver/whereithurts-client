@@ -8,6 +8,7 @@ import TreatmentControlGroup from "../treatments/TreatmentControlGroup";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 import Alert from "../ui/Alert";
+import Pagination from "../ui/Pagination";
 import PainLevelSelectBar from "../ui/PainLevelSelectBar";
 import SearchBar from "../ui/SearchBar";
 import TextArea from "../ui/TextArea";
@@ -42,7 +43,7 @@ const HurtForm = () => {
 
   //treatments
   const {
-    treatments,
+    treatmentData,
     getTreatmentsBySearchTerms,
     getTreatmentsByQuerystring,
   } = useContext(TreatmentContext);
@@ -59,7 +60,10 @@ const HurtForm = () => {
   );
 
   //filters treamtents
-  const [treatmentFilters, setTreatmentFilters] = useState({ owner: 1 });
+  const [treatmentFilters, setTreatmentFilters] = useState({
+    owner: 1,
+    page: 1,
+  });
   const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -74,7 +78,7 @@ const HurtForm = () => {
     getTreatmentsBySearchTerms(treatmentSearchTerms);
   };
 
-  //search terms being cleared should trigger a reset to whatever the current state of the filters would return 
+  //search terms being cleared should trigger a reset to whatever the current state of the filters would return
   const handleClearSearchTerms = () => {
     setTreatmentSearchTerms("");
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
@@ -192,7 +196,7 @@ const HurtForm = () => {
               }
             />
             <TreatmentToggleGroup
-              collection={treatments}
+              collection={treatmentData.treatments}
               showing={showAddTreatments}
               selected={selectedTreatments}
               setShowing={setShowAddTreatments}
@@ -204,7 +208,28 @@ const HurtForm = () => {
                 isOwner={treatmentFilters.owner}
                 treatmentTypeId={treatmentFilters.treatmenttype_id}
                 bodypartId={treatmentFilters.bodypart_id}
-              />
+              >
+                <Pagination
+                  page={treatmentFilters.page}
+                  totalCount={treatmentData.count}
+                  pageBack={() =>
+                    setTreatmentFilters({
+                      ...treatmentFilters,
+                      page: treatmentFilters.page - 1,
+                    })
+                  }
+                  pageForward={() =>
+                    setTreatmentFilters({
+                      ...treatmentFilters,
+                      page: treatmentFilters.page + 1,
+                    })
+                  }
+                />
+              </TreatmentControlGroup>
+              {/* 
+              
+              THIS NO GOOD RIGHT NOW. need to implement Pagination 
+              first...
               <SearchBar
                 label="Search all:"
                 name="treatment_search_terms"
@@ -212,7 +237,7 @@ const HurtForm = () => {
                 onChange={handleChangeTreatmentSearchTerms}
                 onSearch={handleSubmitSearchTerms}
                 onClear={handleClearSearchTerms}
-              />
+              /> */}
             </TreatmentToggleGroup>
             <fieldset className="hurtstatustoggle">
               <label htmlFor="active">Active?</label>

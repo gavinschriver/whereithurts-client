@@ -11,6 +11,8 @@ import { buildQueryString } from "../../utils/helpers";
 import SearchBar from "../ui/SearchBar";
 import HurtSelectBar from "../hurts/HurtSelectBar";
 import Treatment from "./Treatment";
+import Loader from "../ui/Loader";
+import Pagination from "../ui/Pagination";
 
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(true);
@@ -18,9 +20,14 @@ const TreatmentList = () => {
   //list data loading state
   const [listDataLoaded, setListDataLoaded] = useState(false);
 
-  //fitler
-  const [filters, setFilters] = useState({ owner: 1 });
-  const [searchTerms, setSearchTerms] = useState("");
+  //filter
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [filters, setFilters] = useState({ owner: 0, page: currentPage });
+  const [searchTerms, setSearchTerms] = useState({
+    search_terms: "",
+  });
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: parseInt(value) });
@@ -28,50 +35,89 @@ const TreatmentList = () => {
 
   // search
 
+  const [isSearchMode, setIsSearchMode] = useState(false);
+
+  useEffect(() => {
+    console.log(isSearchMode);
+  }, [isSearchMode]);
+
   const handleChangeSearchTerms = (e) => {
-    setSearchTerms(e.target.value);
+    setSearchTerms({ ...searchTerms, search_terms: e.target.value });
   };
 
   const handleSubmitSearchTerms = () => {
-    getTreatmentsBySearchTerms(searchTerms);
+    setListDataLoaded(false);
+    setIsSearchMode(true);
+    getTreatmentsBySearchTerms({ ...searchTerms, page: 1 }).then(() => {
+      setListDataLoaded(true);
+    });
   };
 
+  //when the user clears search terms, toggle search mode to OFF and re-initialized the searchTerms object
+  // then grab treatments by querystring from current filters, making sure we set the "page=" value to 1
+  // AND the curretPage state value back to 1 as well
   const handleClearSearchTerms = () => {
-    setSearchTerms("");
-    _getTreatmentsByQuerystring();
+    setIsSearchMode(false);
+    setSearchTerms({ search_terms: "", page: 1 });
+    getTreatmentsByQuerystring(buildQueryString({ ...filters, page: 1 }));
+    setCurrentPage(1);
   };
 
   const {
     getTreatmentsByQuerystring,
     getTreatmentsBySearchTerms,
-    treatments,
+    treatmentData,
   } = useContext(TreatmentContext);
 
   const history = useHistory();
 
+  // call our async function
+  // if searchMode is a thing, this is only happening if we're paginating
+  // otherwise, we're in "filter mode", so check
   const _getTreatmentsByQuerystring = async () => {
-    await getTreatmentsByQuerystring(buildQueryString(filters));
+    if (isSearchMode) {
+      await getTreatmentsBySearchTerms({ ...searchTerms, page: currentPage });
+    } else
+      await getTreatmentsByQuerystring(
+        buildQueryString({ ...filters, page: currentPage })
+      );
   };
 
+  //when page first loads, the filters change, OR the current page changes, set listDataLoaded to false, complete our
+  //call to get _getTreatments, and set list data loaded to true when that resolves
   useEffect(() => {
     setListDataLoaded(false);
     _getTreatmentsByQuerystring().then(() => {
       setListDataLoaded(true);
     });
+    console.log("usereffect1 ran");
+  }, [filters, currentPage]);
+
+  // IF we're in search mode, but user changes a filter, turn search mode OFF,
+  // then invoke handleClearSearchTerms
+  useEffect(() => {
+    if (isSearchMode) {
+      handleClearSearchTerms();
+      console.log("useffect2 ran");
+    }
   }, [filters]);
+
+  useEffect(() => {
+    console.log(`current page is ${currentPage}`);
+  }, [currentPage]);
 
   const listData = () => {
     if (listDataLoaded) {
       return (
         <div className="list treatmentlist__list">
-          {treatments.map((t) => {
+          {treatmentData.treatments.map((t) => {
             return <Treatment treatment={t} key={t.id} />;
           })}
         </div>
       );
     }
 
-    return <div>LOADING</div>;
+    return <Loader />;
   };
 
   return (
@@ -106,10 +152,17 @@ const TreatmentList = () => {
               </TreatmentControlGroup>
               <SearchBar
                 label="Search all:"
-                value={searchTerms}
+                value={searchTerms.search_terms}
                 onChange={handleChangeSearchTerms}
                 onSearch={handleSubmitSearchTerms}
                 onClear={handleClearSearchTerms}
+                active={isSearchMode}
+              />
+              <Pagination
+                page={currentPage}
+                totalCount={treatmentData.count}
+                pageBack={() => setCurrentPage(currentPage - 1)}
+                pageForward={() => setCurrentPage(currentPage + 1)}
               />
             </ShowHideControls>
           </div>
