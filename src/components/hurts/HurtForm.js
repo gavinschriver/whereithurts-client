@@ -60,7 +60,10 @@ const HurtForm = () => {
   );
 
   //filters treamtents
-  const [treatmentFilters, setTreatmentFilters] = useState({ owner: 1, page: 1 });
+  const [treatmentFilters, setTreatmentFilters] = useState({
+    owner: 1,
+    page: 1,
+  });
   const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -206,7 +209,22 @@ const HurtForm = () => {
                 treatmentTypeId={treatmentFilters.treatmenttype_id}
                 bodypartId={treatmentFilters.bodypart_id}
               >
-                <Pagination page={treatmentFilters.page} totalCount={treatmentData.count} />
+                <Pagination
+                  page={treatmentFilters.page}
+                  totalCount={treatmentData.count}
+                  pageBack={() =>
+                    setTreatmentFilters({
+                      ...treatmentFilters,
+                      page: treatmentFilters.page - 1,
+                    })
+                  }
+                  pageForward={() =>
+                    setTreatmentFilters({
+                      ...treatmentFilters,
+                      page: treatmentFilters.page + 1,
+                    })
+                  }
+                />
               </TreatmentControlGroup>
               {/* 
               

@@ -178,6 +178,12 @@
 .listitem__header {
 }
 
+.listitem__preheader {
+  display: flex;
+  justify-content: space-between;
+  color: #969696
+}
+
 .listpage__header .button {
   background-color: white;
   display: flex;
