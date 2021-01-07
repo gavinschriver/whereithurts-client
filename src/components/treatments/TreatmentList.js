@@ -46,8 +46,11 @@ const TreatmentList = () => {
   };
 
   const handleSubmitSearchTerms = () => {
+    setListDataLoaded(false);
     setIsSearchMode(true);
-    getTreatmentsBySearchTerms({ ...searchTerms, page: 1 });
+    getTreatmentsBySearchTerms({ ...searchTerms, page: 1 }).then(() => {
+      setListDataLoaded(true);
+    });
   };
 
   //when the user clears search terms, toggle search mode to OFF and re-initialized the searchTerms object
@@ -99,10 +102,9 @@ const TreatmentList = () => {
     }
   }, [filters]);
 
-
   useEffect(() => {
-    console.log(`current page is ${currentPage}`)
-  }, [currentPage])
+    console.log(`current page is ${currentPage}`);
+  }, [currentPage]);
 
   const listData = () => {
     if (listDataLoaded) {
