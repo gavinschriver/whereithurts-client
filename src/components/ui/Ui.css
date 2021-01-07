@@ -38,6 +38,10 @@ option {
   background-color: #bebebe;
 }
 
+.button:disabled:hover {
+  opacity: 1;
+}
+
 .button:hover {
   opacity: 0.85;
 }

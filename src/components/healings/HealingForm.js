@@ -92,7 +92,7 @@ const HealingForm = () => {
 
   //treatments
   const {
-    treatments,
+    treatmentData,
     getTreatmentsByQuerystring,
     getTreatmentsBySearchTerms,
   } = useContext(TreatmentContext);
@@ -195,7 +195,7 @@ const HealingForm = () => {
           >
             <main className="healingform">
               <TreatmentToggleGroup
-                collection={treatments}
+                collection={treatmentData.treatments}
                 showing={showAddTreatments}
                 selected={selectedTreatments}
                 setShowing={setShowAddTreatments}

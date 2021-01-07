@@ -12,6 +12,7 @@ import SearchBar from "../ui/SearchBar";
 import HurtSelectBar from "../hurts/HurtSelectBar";
 import Treatment from "./Treatment";
 import Loader from "../ui/Loader";
+import Pagination from "../ui/Pagination";
 
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(true);
@@ -19,9 +20,12 @@ const TreatmentList = () => {
   //list data loading state
   const [listDataLoaded, setListDataLoaded] = useState(false);
 
-  //fitler
-  const [filters, setFilters] = useState({ owner: 1 });
-  const [searchTerms, setSearchTerms] = useState("");
+  //filter
+
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const [filters, setFilters] = useState({ owner: 1, page: currentPage });
+  const [searchTerms, setSearchTerms] = useState({search_terms: '', page: currentPage});
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: parseInt(value) });
@@ -30,7 +34,7 @@ const TreatmentList = () => {
   // search
 
   const handleChangeSearchTerms = (e) => {
-    setSearchTerms(e.target.value);
+    setSearchTerms({search_terms: e.target.value, page: currentPage });
   };
 
   const handleSubmitSearchTerms = () => {
@@ -107,11 +111,12 @@ const TreatmentList = () => {
               </TreatmentControlGroup>
               <SearchBar
                 label="Search all:"
-                value={searchTerms}
+                value={searchTerms.search_terms}
                 onChange={handleChangeSearchTerms}
                 onSearch={handleSubmitSearchTerms}
                 onClear={handleClearSearchTerms}
               />
+              <Pagination/>
             </ShowHideControls>
           </div>
           {listData()}

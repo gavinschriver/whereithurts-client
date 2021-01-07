@@ -42,7 +42,7 @@ const HurtForm = () => {
 
   //treatments
   const {
-    treatments,
+    treatmentData,
     getTreatmentsBySearchTerms,
     getTreatmentsByQuerystring,
   } = useContext(TreatmentContext);
@@ -192,7 +192,7 @@ const HurtForm = () => {
               }
             />
             <TreatmentToggleGroup
-              collection={treatments}
+              collection={treatmentData.treatments}
               showing={showAddTreatments}
               selected={selectedTreatments}
               setShowing={setShowAddTreatments}
