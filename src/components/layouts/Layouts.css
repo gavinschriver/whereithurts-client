@@ -183,9 +183,9 @@
   display: flex;
 }
 
-.owner--listitem::before {
+/* .owner--listitem::before {
   content: "Added by you";
-}
+} */
 
 /* DETAIL PAGE  */
 
