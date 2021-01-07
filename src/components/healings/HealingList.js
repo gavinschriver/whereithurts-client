@@ -9,6 +9,7 @@ import ShowHideControls from "../ui/ShowHideControls";
 import { HealingContext } from "./HealingProvider";
 import HealingSortBar from "./HealingSortBar";
 import Loader from "../ui/Loader";
+import Pagination from "../ui/Pagination";
 
 const HealingList = () => {
   const current_user_id = parseInt(localStorage.getItem("patient_id"));
@@ -22,9 +23,11 @@ const HealingList = () => {
   const [listDataLoaded, setListDataLoaded] = useState(false);
 
   // filters; intialized with patient ID of current patient so we don't bring in non-user-healings
-  const [filters, setFilters] = useState({ patient_id: current_user_id });
+  const [filters, setFilters] = useState({
+    patient_id: current_user_id,
+    page: 1,
+  });
 
-  
   const _getHealingDataByQuerystring = async () => {
     await getHealingDataByQuerystring(buildQueryString(filters));
   };
@@ -40,27 +43,18 @@ const HealingList = () => {
 
   // one filter change handler to rule them all
 
-  const handleFilterChange = e => {
+  const handleFilterChange = (e) => {
     let { name, value } = e.target;
     if (name !== "healing_sort") {
       value = parseInt(value);
-      setFilters({ ...filters, [name]: value })
+      setFilters({ ...filters, [name]: value });
     }
     if (name === "healing_sort") {
       const orderBy = value.split("-")[0];
       const direction = value.split("-")[1];
-      setFilters({...filters, order_by : orderBy, direction: direction})
+      setFilters({ ...filters, order_by: orderBy, direction: direction });
     }
-  }
-
-  // useEffect(() => {
-  //   setFilters({
-  //     ...filters,
-  //     hurt_id: parseInt(hurtId),
-  //     order_by: order,
-  //     direction: direction,
-  //   });
-  // }, [hurtId, order, direction]);
+  };
 
   //controls
   const [showListControls, setShowListControls] = useState(false);
@@ -135,6 +129,12 @@ const HealingList = () => {
               <HealingSortBar
                 name="healing_sort"
                 onChange={handleFilterChange}
+              />
+              <Pagination
+                page={filters.page}
+                totalCount={healingData.count}
+                pageBack={() => setFilters({ ...filters, page: filters.page - 1 })}
+                pageForward={() => setFilters({ ...filters, page: filters.page + 1 })}
               />
             </ShowHideControls>
             {listData()}

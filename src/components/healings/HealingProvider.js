@@ -6,7 +6,7 @@ const resourceURL = `${BASE_URL}healings`
 export const HealingContext  = createContext()
 
 export const HealingProvider = (props) => {
-    const [healingData, setHealingData] = useState({ healings: [], total_healing_time:'' })
+    const [healingData, setHealingData] = useState({ healings: [], total_healing_time:'', count: '' })
     
     const getHealingData = async () => {
         const response = await request(`${resourceURL}`)

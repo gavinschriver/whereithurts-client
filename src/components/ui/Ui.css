@@ -351,6 +351,17 @@ textarea {
 }
 
 
+/* PAGINATION  */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+}
+.pagination__controls {
+  display: flex;
+
+}
+
+
 /* LOADER  */
 
 .loader {
