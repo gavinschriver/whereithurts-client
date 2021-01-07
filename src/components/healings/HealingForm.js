@@ -39,20 +39,23 @@ const HealingForm = () => {
   const [treatmentTypeId, setTreatmentTypeId] = useState(0);
   const [isOwner, setIsOwner] = useState(1);
   const [filters, setFilters] = useState({ owner: 1 });
-  const [searchTerms, setSearchTerms] = useState("");
 
-  const handleChangeSearchTerms = (e) => {
-    setSearchTerms(e.target.value);
-  };
 
-  const handleSubmitSearchTerms = () => {
-    getTreatmentsBySearchTerms(searchTerms);
-  };
+  // TREATMENT SEARCH TERMS CURRENTLY NOT OEPRATIONAL IN THIS FORM
+  // const [searchTerms, setSearchTerms] = useState("");
 
-  const handleClearSearchTerms = () => {
-    setSearchTerms("");
-    getTreatmentsByQuerystring(buildQueryString(filters));
-  };
+  // const handleChangeSearchTerms = (e) => {
+  //   setSearchTerms(e.target.value);
+  // };
+
+  // const handleSubmitSearchTerms = () => {
+  //   getTreatmentsBySearchTerms(searchTerms);
+  // };
+
+  // const handleClearSearchTerms = () => {
+  //   setSearchTerms("");
+  //   getTreatmentsByQuerystring(buildQueryString(filters));
+  // };
 
   // effect to bring in treatments on page load, intially with only current user's added_by treatments
   useEffect(() => {
