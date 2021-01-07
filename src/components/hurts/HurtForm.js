@@ -205,6 +205,10 @@ const HurtForm = () => {
                 treatmentTypeId={treatmentFilters.treatmenttype_id}
                 bodypartId={treatmentFilters.bodypart_id}
               />
+              {/* 
+              
+              THIS NO GOOD RIGHT NOW. need to implement Pagination 
+              first...
               <SearchBar
                 label="Search all:"
                 name="treatment_search_terms"
@@ -212,7 +216,7 @@ const HurtForm = () => {
                 onChange={handleChangeTreatmentSearchTerms}
                 onSearch={handleSubmitSearchTerms}
                 onClear={handleClearSearchTerms}
-              />
+              /> */}
             </TreatmentToggleGroup>
             <fieldset className="hurtstatustoggle">
               <label htmlFor="active">Active?</label>

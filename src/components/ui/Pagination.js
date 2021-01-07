@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
@@ -24,20 +24,29 @@ const Pagination = (props) => {
   const last_page = lastPage(totalCount);
   const [startNumber, endNumber] = currentlyViewingItems(page);
 
+  useEffect(() => {
+    console.log(`last page is ${last_page}`);
+  }, [last_page]);
+
   return (
     <div className="pagination">
       <div className="pationation__label">
-        Showing: {startNumber} - {endNumber}
+        Showing: {startNumber} - {endNumber > totalCount ? totalCount : endNumber} of {totalCount}
       </div>
       <div className="pagination__controls">
         <div className="pagination__controls__backward">
           <Button disabled={page === 1} onClick={pageBack}>
-            <MdNavigateBefore size="2em" />
+            {page !== 1 && <MdNavigateBefore size="2em" />}
           </Button>
         </div>
         <div className="pagination__controls__forward">
-          <Button disabled={page === last_page} onClick={pageForward}>
-            <MdNavigateNext size="2em" />
+          <Button
+            disabled={page === last_page || last_page === 0}
+            onClick={pageForward}
+          >
+            {(page !== last_page && last_page !== 0) && (
+              <MdNavigateNext size="2em" />
+            )}
           </Button>
         </div>
       </div>

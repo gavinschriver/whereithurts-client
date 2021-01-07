@@ -235,13 +235,15 @@ const HealingForm = () => {
                     onChange={(e) => setTreatmentTypeId(e.target.value)}
                     value={treatmentTypeId}
                   />
+                  {/*
+                  THISSSAA NO GOOD-A RIGHT NOW
                   <SearchBar
                     label="Search all treatments:"
                     value={searchTerms}
                     onChange={handleChangeSearchTerms}
                     onSearch={handleSubmitSearchTerms}
                     onClear={handleClearSearchTerms}
-                  />
+                  /> */}
                 </ControlGroup>
               </TreatmentToggleGroup>
               <HurtToggleGroup

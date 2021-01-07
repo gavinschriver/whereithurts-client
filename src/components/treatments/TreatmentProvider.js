@@ -26,10 +26,14 @@ export const TreatmentProvider = (props) => {
     setTreatmentData(treatmentData);
   };
 
-  //trim whitespace to make sure a search is not made for an empty string, which will return all items
+  /**
+   * 
+   * @param {object} searchTerms kv pairs of search_terms: <string>
+   * and page: <int> (default of 1)
+   */
   const getTreatmentsBySearchTerms = async (searchTerms) => {
-    if (searchTerms.trim() !== "") {
-      const response = await request(`${resourceURL}?q=${searchTerms}`);
+    if (searchTerms.search_terms.trim() !== "") {
+      const response = await request(`${resourceURL}?q=${searchTerms.search_terms}&page=${searchTerms.page}`);
       const treatmentData = await response.json();
       setTreatmentData(treatmentData);
     }
