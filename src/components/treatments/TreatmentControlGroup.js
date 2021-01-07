@@ -40,22 +40,23 @@ const TreatmentControlGroup = ({
             checked={isOwner == 1}
             onChange={handleFilterChange}
           />
-          <BodypartSelectBar
-            label="Filter by Bodypart: "
-            defaultoptiontext="No filter chosen"
-            onChange={handleFilterChange}
-            value={bodypartId}
-            name="bodypart_id"
-          />
-          <TreatmentTypeSelectBar
-            label="Filter by Treatment Type: "
-            defaultoptiontext="No filter chosen"
-            onChange={handleFilterChange}
-            value={treatmentTypeId}
-            name="treatmenttype_id"
-          />
-          {props.children}
         </div>
+
+        <BodypartSelectBar
+          label="Filter by Bodypart: "
+          defaultoptiontext="No filter chosen"
+          onChange={handleFilterChange}
+          value={bodypartId}
+          name="bodypart_id"
+        />
+        <TreatmentTypeSelectBar
+          label="Filter by Treatment Type: "
+          defaultoptiontext="No filter chosen"
+          onChange={handleFilterChange}
+          value={treatmentTypeId}
+          name="treatmenttype_id"
+        />
+        {props.children}
       </ControlGroup>
     </div>
   );

@@ -12,6 +12,11 @@ fieldset {
   border-radius: 4px;
 }
 
+.activefield {
+  border: 2px solid #18a0fb;
+  border-radius: 4px;
+}
+
 select {
   text-align-last: right;
   border: 0px transparent;
@@ -279,16 +284,35 @@ textarea {
 .searchbar {
   display: flex;
   justify-content: space-between;
+  padding: .4rem;
+  align-items: center;
+  margin: 0.5rem 0;
 }
 
 .searchbar__control {
   display: flex;
 }
 
+/* CONTROL GROUPS */
+
+.controlgroup {
+  background-color: white;
+  padding: .4rem;
+  margin: .5rem 0;
+  border: 1px solid #bebebe
+}
+
+/* TREATMENT CONTROLGROUP */
+
+.treatments_collection_select {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+
 .controlgroup,
 .controlgroup > * {
   font-size: 1rem;
-  margin: 0.5rem 0 0.5rem 0;
 }
 
 /* MODAL / OVERLAY */
@@ -371,8 +395,8 @@ textarea {
 .loader {
   height: 50px;
   width: 50px;
-  border-top: 10px solid green;
-  border-bottom: 10px solid blue;
+  border-top: 10px solid #18a0fb;
+  border-bottom: 10px solid #18a0fb;
   border-right: 10px solid #bebebe;
   border-left: 10px solid #bebebe;
   border-radius: 100%;

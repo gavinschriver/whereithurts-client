@@ -156,6 +156,7 @@ const TreatmentList = () => {
                 onChange={handleChangeSearchTerms}
                 onSearch={handleSubmitSearchTerms}
                 onClear={handleClearSearchTerms}
+                active={isSearchMode}
               />
               <Pagination
                 page={currentPage}
