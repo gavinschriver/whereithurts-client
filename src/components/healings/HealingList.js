@@ -81,11 +81,12 @@ const HealingList = () => {
                     </h3>
                   </div>
                   <div className="listitem__subcollection">
+                      <span className="listitem__subcollection__heading">Treatments Used:</span>
                     {h.treatments.map((t) => {
                       return (
                         <span
                           key={t.id}
-                          className="listitem__subcollection__item"
+                          className="listitem__subcollection__item" 
                         >
                           {t.name}
                         </span>
@@ -133,8 +134,12 @@ const HealingList = () => {
               <Pagination
                 page={filters.page}
                 totalCount={healingData.count}
-                pageBack={() => setFilters({ ...filters, page: filters.page - 1 })}
-                pageForward={() => setFilters({ ...filters, page: filters.page + 1 })}
+                pageBack={() =>
+                  setFilters({ ...filters, page: filters.page - 1 })
+                }
+                pageForward={() =>
+                  setFilters({ ...filters, page: filters.page + 1 })
+                }
               />
             </ShowHideControls>
             {listData()}

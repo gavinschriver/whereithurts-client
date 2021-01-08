@@ -37,15 +37,13 @@ const TreatmentList = () => {
 
   const [isSearchMode, setIsSearchMode] = useState(false);
 
-  useEffect(() => {
-    console.log(isSearchMode);
-  }, [isSearchMode]);
 
   const handleChangeSearchTerms = (e) => {
     setSearchTerms({ ...searchTerms, search_terms: e.target.value });
   };
 
   const handleSubmitSearchTerms = () => {
+    setCurrentPage(1)
     setListDataLoaded(false);
     setIsSearchMode(true);
     getTreatmentsBySearchTerms({ ...searchTerms, page: 1 }).then(() => {
@@ -99,10 +97,6 @@ const TreatmentList = () => {
       handleClearSearchTerms();
     }
   }, [filters]);
-
-  useEffect(() => {
-    console.log(`current page is ${currentPage}`);
-  }, [currentPage]);
 
   const listData = () => {
     if (listDataLoaded) {
