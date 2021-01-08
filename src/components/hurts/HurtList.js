@@ -10,6 +10,7 @@ import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import SortByBar from "../ui/SortByBar";
 import { buildQueryString } from "../../utils/helpers";
 import Loader from "../ui/Loader";
+import BadgeField from "../ui/BadgeField";
 
 const SORT_OPTIONS = [
   { id: 1, name: "Oldest", value: "added_on-asc" },
@@ -62,7 +63,9 @@ const HurtList = () => {
             return (
               <div
                 className={
-                  h.is_active ? "row listitem" : " row listitem listitem--inactive"
+                  h.is_active
+                    ? "row listitem"
+                    : " row listitem listitem--inactive"
                 }
                 key={h.id}
               >

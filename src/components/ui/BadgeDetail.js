@@ -9,7 +9,7 @@ import Button from "./Button";
  * @param {Object} item object that is having its values inspected
  */
 
-const BadgeDetail = ({ detailconfig = {}, onClose, item }) => {
+const BadgeDetail = ({ detailconfig = {configkeys:[]}, onClose, item }) => {
   return (
     <div className="badgedetail">
       <div className="badgedetail__closebutton">
