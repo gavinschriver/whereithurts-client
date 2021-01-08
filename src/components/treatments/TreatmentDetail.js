@@ -7,6 +7,9 @@ import { TreatmentContext } from "./TreatmentProvider";
 import BadgeField from "../ui/BadgeField";
 import { HurtContext } from "../hurts/HurtProvider";
 import ShowHideSection from "../ui/ShowHideSection";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
+import LoadingWrapper from "../ui/LoadingWrapper";
+import Loader from "../ui/Loader"
 
 const TreatmentDetail = () => {
   //Router Hooks
@@ -77,73 +80,91 @@ const TreatmentDetail = () => {
     _getHurtsByPatientId();
   }, []);
 
-  const visibility = treatment.public ? 'Public' : 'Private'
+  const visibility = treatment.public ? "Public" : "Private";
 
   const [isLoaded, setIsLoaded] = useState(false);
+
+  if (isLoaded && treatment.owner === false && treatment.public === false) {
+    return <UnauthorizedPage />;
+  }
 
   if (isLoaded && !treatment.id) {
     return <FourOhFourPage />;
   }
   return (
     <BasicPage>
-      {isLoaded ?
-      <div className="basicwrapper">
-        <DetailPageLayout
-          onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
-          onDelete={() => handleDeleteTreatment(treatment.id)}
-          isOwner={treatment.owner}
-        >
-          <main className="treatmentdetail">
-            <div className="treatmentdetail__header header--detail">
+      {isLoaded ? (
+        <div className="basicwrapper">
+          <DetailPageLayout
+            onEdit={() => history.push(`/treatments/edit/${treatmentId}`)}
+            onDelete={() => handleDeleteTreatment(treatment.id)}
+            isOwner={treatment.owner}
+          >
+            <main className="treatmentdetail">
+              <div className="treatmentdetail__header header--detail">
                 <div className="row">
-                  <h3 className="treatmentdetail__owner">{treatment.owner ? 'Your Treatment' : `Added by ${treatment.added_by.username}`  } </h3>
-                  {treatment.owner && <h3 className={ `treatmentdetail__public_private ${visibility}` }>{visibility}</h3>}
+                  <h3 className="treatmentdetail__owner">
+                    {treatment.owner
+                      ? "Your Treatment"
+                      : `Added by ${treatment.added_by.username}`}{" "}
+                  </h3>
+                  {treatment.owner && (
+                    <h3
+                      className={`treatmentdetail__public_private ${visibility}`}
+                    >
+                      {visibility}
+                    </h3>
+                  )}
                 </div>
-            </div>
-            <h2>Treatment: {treatment.name}</h2>
-            <h3>Bodypart: {treatment.bodypart.name}</h3>
-            <h3>Type: {treatment.treatmenttype.name}</h3>
-            <div className="treatment__notes">
-              <h3>Notes:</h3>
-              <p>{treatment.notes}</p>
-              <div className="treatment__links">
-                <h3>Links:</h3>
-                {treatment.links.map((l) => {
-                  return (
-                    <div key={l.id} className="treatment__links__link">
-                      <a target="_blank" href={l.linkurl}>
-                        {l.linktext}
-                      </a>
-                    </div>
-                  );
-                })}
               </div>
-              <ShowHideSection
-                showing={showAddHurts}
-                setShowing={hanldeShowAddHurts}
-                showhidetext="Your Tagged Hurts"
-              >
+              <h2>Treatment: {treatment.name}</h2>
+              <h3>Bodypart: {treatment.bodypart.name}</h3>
+              <h3>Type: {treatment.treatmenttype.name}</h3>
+              <div className="treatment__notes">
+                <h3>Notes:</h3>
+                <p>{treatment.notes}</p>
+                <div className="treatment__links">
+                  <h3>Links:</h3>
+                  {treatment.links.map((l) => {
+                    return (
+                      <div key={l.id} className="treatment__links__link">
+                        <a target="_blank" href={l.linkurl}>
+                          {l.linktext}
+                        </a>
+                      </div>
+                    );
+                  })}
+                </div>
+                <ShowHideSection
+                  showing={showAddHurts}
+                  setShowing={hanldeShowAddHurts}
+                  showhidetext="Your Tagged Hurts"
+                >
+                  <BadgeField
+                    collection={hurts}
+                    selected={selectedHurts}
+                    badgeText="name"
+                    direction="add"
+                    onAdd={handleAddHurt}
+                    detailconfig={{ configkeys: ["date_added", "notes"] }}
+                  />
+                </ShowHideSection>
                 <BadgeField
-                  collection={hurts}
+                  detailconfig={{ configkeys: ["date_added", "notes"] }}
                   selected={selectedHurts}
                   badgeText="name"
-                  direction="add"
-                  onAdd={handleAddHurt}
-                  detailconfig={{ configkeys: ["date_added", "notes"] }}
+                  direction="remove"
+                  onRemove={handleRemoveHurt}
                 />
-              </ShowHideSection>
-              <BadgeField
-                detailconfig={{ configkeys: ["date_added", "notes"] }}
-                selected={selectedHurts}
-                badgeText="name"
-                direction="remove"
-                onRemove={handleRemoveHurt}
-              />
-            </div>
-          </main>
-        </DetailPageLayout>
+              </div>
+            </main>
+          </DetailPageLayout>
         </div>
-         : <div>LOADING</div>}
+      ) : (
+        <LoadingWrapper>
+          <Loader/>
+        </LoadingWrapper>
+      )}
     </BasicPage>
   );
 };

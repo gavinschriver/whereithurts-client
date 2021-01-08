@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { secondsToRoundedMinutes } from "../../utils/helpers";
 import FourOhFourPage from "../auth/404Page";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
 import BasicPage from "../layouts/BasicPage";
 import DetailPageLayout from "../layouts/DetailPageLayout";
 import BadgeField from "../ui/BadgeField";
 import { HealingContext } from "./HealingProvider";
+
 
 const HealingDetail = () => {
   //Router Hooks
@@ -43,6 +45,10 @@ const HealingDetail = () => {
 
   if (isLoaded && !healing.id) {
     return <FourOhFourPage />;
+  }
+
+  if (isLoaded && healing.owner === false) {
+    return <UnauthorizedPage/>
   }
 
   return (

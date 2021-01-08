@@ -62,8 +62,11 @@ const TreatmentForm = () => {
       };
       if (editMode) {
         await updateTreatment(treatmentId, newTreatment);
-      } else await createTreatment(newTreatment);
-      history.push("/treatments");
+        history.push("/treatments");
+      } else {
+        const createdTreatment = await createTreatment(newTreatment);
+        history.push(`/treatments/${createdTreatment.id}`);
+      }
     } else setShowAlert(true);
   };
 
@@ -71,18 +74,16 @@ const TreatmentForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const validate = () => {
-    const treatmentName = basicFormValues.name.trim()
+    const treatmentName = basicFormValues.name.trim();
     const bodypartId = parseInt(basicFormValues.bodypart_id);
     const treatmenttypeId = parseInt(basicFormValues.treatmenttype_id);
-    if (bodypartId >= 1 && treatmenttypeId >= 1 && treatmentName != '') {
+    if (bodypartId >= 1 && treatmenttypeId >= 1 && treatmentName != "") {
       return true;
     }
     return false;
   };
 
-  const alert = (
-    <Alert onClose={() => setShowAlert(false)}/>
-  );
+  const alert = <Alert onClose={() => setShowAlert(false)} />;
 
   //hurts
   const { hurts, getHurtsByPatientId } = useContext(HurtContext);
@@ -218,7 +219,7 @@ const TreatmentForm = () => {
                 setShowing={setShowAddHurts}
                 onAdd={handleSelectHurt}
                 onRemove={deselectHurtById}
-                detailconfig={{configkeys: ["name", "bodypart", "notes"]}}
+                detailconfig={{ configkeys: ["name", "bodypart", "notes"] }}
               />
               <ShowHideSection
                 showhidetext="Links"
@@ -248,7 +249,7 @@ const TreatmentForm = () => {
                 badgeText="linktext"
                 direction="remove"
                 onRemove={removeLinkById}
-                detailconfig={{configkeys: ["linktext"]}}
+                detailconfig={{ configkeys: ["linktext"] }}
               />
               <div className="public_private_select">
                 <label htmlFor="is_private">Private</label>
