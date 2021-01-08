@@ -29,6 +29,8 @@ export const UpdateProvider = (props) => {
 
   const createUpdate = async (newUpdate) => {
     const response = await request(`${resourceURL}`, "POST", newUpdate)
+    const createdUpdate = response.json()
+    return createdUpdate
   }
 
   const updateUpdate = async (updateId, updatedUpdate) => {

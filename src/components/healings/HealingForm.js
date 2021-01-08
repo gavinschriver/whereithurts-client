@@ -291,7 +291,7 @@ const HealingForm = () => {
 
   if (isLoaded) {
     if (!editMode || idExists) return <BasicPage>{renderForm()}</BasicPage>;
-    else if (editMode || !idExists) return <FourOhFourPage />;
+    else if (editMode && !idExists) return <FourOhFourPage />;
   }
   return (
     <LoadingWrapper>

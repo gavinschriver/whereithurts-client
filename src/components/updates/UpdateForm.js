@@ -55,8 +55,8 @@ const UpdateForm = () => {
         await updateUpdate(updateId, formValues);
         history.push(`/updates/${updateId}`);
       } else {
-        await createUpdate(formValues);
-        history.push("/updates");
+        const newUpdate = await createUpdate(formValues);
+        history.push(`/updates/${newUpdate.id}`);
       }
     } else setShowAlert(true);
   };
