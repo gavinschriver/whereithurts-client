@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { buildQueryString, deselectItemById } from "../../utils/helpers";
+import FourOhFourPage from "../auth/404Page";
 import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import BasicPage from "../layouts/BasicPage";
 import FormPageLayout from "../layouts/FormPageLayout";
@@ -8,6 +9,7 @@ import TreatmentControlGroup from "../treatments/TreatmentControlGroup";
 import { TreatmentContext } from "../treatments/TreatmentProvider";
 import TreatmentToggleGroup from "../treatments/TreatmentToggleGroup";
 import Alert from "../ui/Alert";
+import Loader from "../ui/Loader";
 import Pagination from "../ui/Pagination";
 import PainLevelSelectBar from "../ui/PainLevelSelectBar";
 import SearchBar from "../ui/SearchBar";
@@ -94,7 +96,23 @@ const HurtForm = () => {
     if (editMode && hurtId) {
       getInitialValues();
     }
+    setIsLoaded(true);
   }, []);
+
+  const getInitialValues = async () => {
+    const hurt = await getHurtById(hurtId);
+    if ("id" in hurt) {
+      setBasicFormValues({
+        name: hurt.name,
+        notes: hurt.notes,
+        pain_level: hurt.pain_level,
+        bodypart_id: hurt.bodypart.id,
+        first_update_id: hurt.first_update_id,
+      });
+      setCheckBoxValue(hurt.is_active);
+      setSelectedTreatments(hurt.treatments);
+    } else setIdExists(false);
+  };
 
   //validation
   const [showAlert, setShowAlert] = useState(false);
@@ -110,19 +128,6 @@ const HurtForm = () => {
   };
 
   const alert = <Alert onClose={() => setShowAlert(false)} />;
-
-  const getInitialValues = async () => {
-    const hurt = await getHurtById(hurtId);
-    setBasicFormValues({
-      name: hurt.name,
-      notes: hurt.notes,
-      pain_level: hurt.pain_level,
-      bodypart_id: hurt.bodypart.id,
-      first_update_id: hurt.first_update_id,
-    });
-    setCheckBoxValue(hurt.is_active);
-    setSelectedTreatments(hurt.treatments);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -147,8 +152,11 @@ const HurtForm = () => {
     } else setShowAlert(true);
   };
 
-  return (
-    <BasicPage>
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [idExists, setIdExists] = useState(true);
+
+  const renderForm = () => {
+    return (
       <div className="basicwrapper">
         <FormPageLayout
           resource="Hurt"
@@ -226,18 +234,6 @@ const HurtForm = () => {
                   }
                 />
               </TreatmentControlGroup>
-              {/* 
-              
-              THIS NO GOOD RIGHT NOW. need to implement Pagination 
-              first...
-              <SearchBar
-                label="Search all:"
-                name="treatment_search_terms"
-                value={treatmentSearchTerms}
-                onChange={handleChangeTreatmentSearchTerms}
-                onSearch={handleSubmitSearchTerms}
-                onClear={handleClearSearchTerms}
-              /> */}
             </TreatmentToggleGroup>
             <fieldset className="hurtstatustoggle">
               <label htmlFor="active">Active?</label>
@@ -252,8 +248,14 @@ const HurtForm = () => {
           </main>
         </FormPageLayout>
       </div>
-    </BasicPage>
-  );
+    );
+  };
+
+  if (isLoaded) {
+    if (!editMode || idExists) return <BasicPage>{renderForm()}</BasicPage>;
+    else if (editMode || !idExists) return <FourOhFourPage />;
+  }
+  return <Loader />;
 };
 
 export default HurtForm;

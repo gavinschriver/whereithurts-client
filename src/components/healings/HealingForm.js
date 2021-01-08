@@ -23,8 +23,10 @@ import { HealingContext } from "./HealingProvider";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import "./Healings.css";
 import ControlGroup from "../ui/ControlGroup";
-import SearchBar from "../ui/SearchBar";
 import Pagination from "../ui/Pagination";
+import Loader from "../ui/Loader";
+import FourOhFourPage from "../auth/404Page";
+import LoadingWrapper from "../ui/LoadingWrapper";
 
 const HealingForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
@@ -166,6 +168,8 @@ const HealingForm = () => {
   }, [timer.timeTotal]);
 
   // initial hooks to get hurts specific to this user, then get/load the healing if we're in editMode
+  const [idExists, setIdExists] = useState(true);
+
   const _getInitialValues = async () => {
     const healing = await getHealingById(healingId);
     if ("id" in healing) {
@@ -173,7 +177,7 @@ const HealingForm = () => {
       setSelectedTreatments(healing.treatments);
       setNotes(healing.notes);
       setTimer((timer) => ({ ...timer, timeTotal: healing.duration }));
-    }
+    } else setIdExists(false);
   };
 
   // initializer effect brings in only this patient's hurts (new OR edit); treatment filter useEffect brings in relevant treatments
@@ -189,115 +193,110 @@ const HealingForm = () => {
   //loading state/permissions/404s
   const [isLoaded, setIsLoaded] = useState(false);
 
-  return (
-    <BasicPage>
-      {isLoaded && (
-        <div className="basicwrapper">
-          <FormPageLayout
-            resource="Healing"
-            isEditMode={editMode}
-            onClick={handleSubmit}
-          >
-            <main className="healingform">
-              <TreatmentToggleGroup
-                collection={treatmentData.treatments}
-                showing={showAddTreatments}
-                selected={selectedTreatments}
-                setShowing={setShowAddTreatments}
-                onAdd={handleSelectTreatment}
-                onRemove={deselectTreatmentById}
-              >
-                <ControlGroup>
-                  <div className="treatments_collection_select">
-                    <label htmlFor="owner">Added By You</label>
-                    <input
-                      type="radio"
-                      id="owner"
-                      name="collection"
-                      value={1}
-                      checked={isOwner == 1}
-                      onChange={handleRadioButtonChange}
-                    />
-                    <label htmlFor="owner">From all users</label>
-                    <input
-                      type="radio"
-                      id="all"
-                      name="collection"
-                      value={0}
-                      checked={isOwner == 0}
-                      onChange={handleRadioButtonChange}
-                    />
-                  </div>
-                  <BodypartSelectBar
-                    label="Filter by Bodypart: "
-                    defaultoptiontext="No filter chosen"
-                    onChange={(e) => setBodypartId(e.target.value)}
-                    value={bodypartId}
+  const renderForm = () => {
+    return (
+      <div className="basicwrapper">
+        <FormPageLayout
+          resource="Healing"
+          isEditMode={editMode}
+          onClick={handleSubmit}
+        >
+          <main className="healingform">
+            <TreatmentToggleGroup
+              collection={treatmentData.treatments}
+              showing={showAddTreatments}
+              selected={selectedTreatments}
+              setShowing={setShowAddTreatments}
+              onAdd={handleSelectTreatment}
+              onRemove={deselectTreatmentById}
+            >
+              <ControlGroup>
+                <div className="treatments_collection_select">
+                  <label htmlFor="owner">Added By You</label>
+                  <input
+                    type="radio"
+                    id="owner"
+                    name="collection"
+                    value={1}
+                    checked={isOwner == 1}
+                    onChange={handleRadioButtonChange}
                   />
-                  <TreatmentTypeSelectBar
-                    label="Filter by Treatment Type: "
-                    defaultoptiontext="No filter chosen"
-                    onChange={(e) => setTreatmentTypeId(e.target.value)}
-                    value={treatmentTypeId}
+                  <label htmlFor="owner">From all users</label>
+                  <input
+                    type="radio"
+                    id="all"
+                    name="collection"
+                    value={0}
+                    checked={isOwner == 0}
+                    onChange={handleRadioButtonChange}
                   />
-                  {/*
-                  THISSSAA NO GOOD-A RIGHT NOW
-                  <SearchBar
-                    label="Search all treatments:"
-                    value={searchTerms}
-                    onChange={handleChangeSearchTerms}
-                    onSearch={handleSubmitSearchTerms}
-                    onClear={handleClearSearchTerms}
-                  /> */}
-                </ControlGroup>
-                <Pagination
-                  page={currentPage}
-                  totalCount={treatmentData.count}
-                  pageBack={() => setCurrentPage(currentPage - 1)}
-                  pageForward={() => setCurrentPage(currentPage + 1)}
-                />
-              </TreatmentToggleGroup>
-              <HurtToggleGroup
-                collection={hurts}
-                showing={showAddHurts}
-                selected={selectedHurts}
-                setShowing={setShowAddHurts}
-                onAdd={handleSelectHurt}
-                onRemove={deselectHurtById}
-                detailconfig={{ configkeys: ["date_added", "notes"] }}
-              />
-              <ShowHideSection
-                showing={showTimer}
-                setShowing={setShowTimer}
-                showhidetext="Time"
-              >
-                <TimerSelectBar onChange={handleTimerChange} />
-                <Timer timer={timer} setTimer={setTimer} />
-                <TextInput
-                  type="text"
-                  name="sessionTotal"
-                  label="Edit Time"
-                  onChange={handleSessionTotalChange}
-                  value={humanTime}
-                  extraLabel="mm:ss"
-                ></TextInput>
-              </ShowHideSection>
-              <div className="healingform__time">
-                <div className="row align-left">
-                  <h4>Currently logged: {humanTime}</h4>
                 </div>
-              </div>
-              <h3>Notes</h3>
-              <TextArea
-                name="notes"
-                onChange={handleNotesChange}
-                value={notes}
+                <BodypartSelectBar
+                  label="Filter by Bodypart: "
+                  defaultoptiontext="No filter chosen"
+                  onChange={(e) => setBodypartId(e.target.value)}
+                  value={bodypartId}
+                />
+                <TreatmentTypeSelectBar
+                  label="Filter by Treatment Type: "
+                  defaultoptiontext="No filter chosen"
+                  onChange={(e) => setTreatmentTypeId(e.target.value)}
+                  value={treatmentTypeId}
+                />
+              </ControlGroup>
+              <Pagination
+                page={currentPage}
+                totalCount={treatmentData.count}
+                pageBack={() => setCurrentPage(currentPage - 1)}
+                pageForward={() => setCurrentPage(currentPage + 1)}
               />
-            </main>
-          </FormPageLayout>
-        </div>
-      )}
-    </BasicPage>
+            </TreatmentToggleGroup>
+            <HurtToggleGroup
+              collection={hurts}
+              showing={showAddHurts}
+              selected={selectedHurts}
+              setShowing={setShowAddHurts}
+              onAdd={handleSelectHurt}
+              onRemove={deselectHurtById}
+              detailconfig={{ configkeys: ["date_added", "notes"] }}
+            />
+            <ShowHideSection
+              showing={showTimer}
+              setShowing={setShowTimer}
+              showhidetext="Time"
+            >
+              <TimerSelectBar onChange={handleTimerChange} />
+              <Timer timer={timer} setTimer={setTimer} />
+              <TextInput
+                type="text"
+                name="sessionTotal"
+                label="Edit Time"
+                onChange={handleSessionTotalChange}
+                value={humanTime}
+                extraLabel="mm:ss"
+              ></TextInput>
+            </ShowHideSection>
+            <div className="healingform__time">
+              <div className="row align-left">
+                <h4>Currently logged: {humanTime}</h4>
+              </div>
+            </div>
+            <h3>Notes</h3>
+            <TextArea name="notes" onChange={handleNotesChange} value={notes} />
+          </main>
+        </FormPageLayout>
+      </div>
+    );
+  };
+
+  if (isLoaded) {
+    if (!editMode || idExists) return <BasicPage>{renderForm()}</BasicPage>;
+    else if (editMode || !idExists) return <FourOhFourPage />;
+  }
+  return (
+    <LoadingWrapper>
+      <Loader />
+    </LoadingWrapper>
   );
 };
 
