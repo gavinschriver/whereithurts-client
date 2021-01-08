@@ -12,6 +12,10 @@
     background-color: #bebebe;
   }
 
+  .timer__button__button {
+      display: flex;
+  }
+
 
 .showhidesection .timer .button {
     background-color: #969696;
@@ -42,4 +46,8 @@
 
 .formpage_layout .healingform .timer .row {
     justify-content: flex-end;
+}
+
+.button--timer {
+    display: flex;
 }
