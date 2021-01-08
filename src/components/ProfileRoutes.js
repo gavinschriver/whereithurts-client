@@ -6,7 +6,7 @@ import ProfileProviders from "./providers/ProfileProviders"
 const ProfileRoutes = () => {
     return (
         <ProfileProviders>
-            <Route path="/snapshot" render={() => <Snapshot/> } />
+            <Route exact path="/snapshot" render={() => <Snapshot/> } />
         </ProfileProviders>
     )
 }

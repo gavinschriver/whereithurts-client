@@ -90,7 +90,6 @@ const TreatmentList = () => {
     _getTreatmentsByQuerystring().then(() => {
       setListDataLoaded(true);
     });
-    console.log("usereffect1 ran");
   }, [filters, currentPage]);
 
   // IF we're in search mode, but user changes a filter, turn search mode OFF,
@@ -98,7 +97,6 @@ const TreatmentList = () => {
   useEffect(() => {
     if (isSearchMode) {
       handleClearSearchTerms();
-      console.log("useffect2 ran");
     }
   }, [filters]);
 
