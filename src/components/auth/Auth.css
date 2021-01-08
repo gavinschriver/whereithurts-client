@@ -50,3 +50,20 @@
     padding:.4rem 0 .4rem 0
 }
 
+
+
+/* LOGIN */
+
+.login .alert {
+  display: flex;
+  padding: 2px;
+  align-items: center;
+}
+
+.login .alert > * {
+  margin: .5rem;
+}
+
+.login .alert .button {
+  color: #969696
+}

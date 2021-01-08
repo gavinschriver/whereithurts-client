@@ -24,14 +24,10 @@ const Pagination = (props) => {
   const last_page = lastPage(totalCount);
   const [startNumber, endNumber] = currentlyViewingItems(page);
 
-  useEffect(() => {
-    console.log(`last page is ${last_page}`);
-  }, [last_page]);
-
   return (
     <div className="pagination">
       <div className="pationation__label">
-        Showing: {startNumber} - {endNumber > totalCount ? totalCount : endNumber} of {totalCount}
+        {totalCount > 0 ? `Showing: ${startNumber} - ${endNumber > totalCount ? totalCount : endNumber} of ${totalCount}` : `No results`}
       </div>
       <div className="pagination__controls">
         <div className="pagination__controls__backward">

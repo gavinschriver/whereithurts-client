@@ -5,6 +5,10 @@ import DetailPageLayout from "../layouts/DetailPageLayout";
 import BadgeField from "../ui/BadgeField";
 import HurtHistory from "./HurtHistory";
 import { HurtContext } from "./HurtProvider";
+import FourOhFourPage from "../auth/404Page";
+import Loader from "../ui/Loader";
+import LoadingWrapper from "../ui/LoadingWrapper";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
 
 const HurtDetail = () => {
   const history = useHistory();
@@ -15,7 +19,7 @@ const HurtDetail = () => {
 
   const [hurt, setHurt] = useState({
     name: "",
-    bodypart: {},
+    bodypart: { name: "" },
     pain_level: "",
     notes: "",
     treatments: [],
@@ -27,10 +31,12 @@ const HurtDetail = () => {
 
   const _sortHurtHistory = async (hurtId, queryString) => {
     const _hurt = await sortHurtHistory(hurtId, queryString);
-    setHurt(_hurt);
+    if ("id" in hurt) {
+      setHurt(_hurt);
+    }
   };
 
-  //initializer hooks
+  // initializer hooks
   const _getHurtById = async () => {
     const hurt = await getHurtById(hurtId);
     if ("id" in hurt) {
@@ -55,6 +61,14 @@ const HurtDetail = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
+  if (isLoaded && !hurt.id) {
+    return <FourOhFourPage />;
+  }
+
+  if (isLoaded && hurt.owner === false) {
+    return <UnauthorizedPage />
+  }
+
   return (
     <BasicPage>
       {isLoaded ? (
@@ -72,7 +86,13 @@ const HurtDetail = () => {
               <h3>Notes: </h3>
               <p>{hurt.notes}</p>
               <h3>Tagged Treatments:</h3>
-              <BadgeField selected={hurt.treatments} badgeText="name" detailconfig={{configkeys: ["bodypart", "treatmenttype", "notes", "links"]}} />
+              <BadgeField
+                selected={hurt.treatments}
+                badgeText="name"
+                detailconfig={{
+                  configkeys: ["bodypart", "treatmenttype", "notes", "links"],
+                }}
+              />
             </main>
           </DetailPageLayout>
           <HurtHistory
@@ -83,7 +103,9 @@ const HurtDetail = () => {
           />
         </div>
       ) : (
-        <div>LOADING</div>
+        <LoadingWrapper>
+          <Loader />
+        </LoadingWrapper>
       )}
     </BasicPage>
   );

@@ -10,6 +10,7 @@ import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import SortByBar from "../ui/SortByBar";
 import { buildQueryString } from "../../utils/helpers";
 import Loader from "../ui/Loader";
+import BadgeField from "../ui/BadgeField";
 
 const SORT_OPTIONS = [
   { id: 1, name: "Oldest", value: "added_on-asc" },
@@ -61,26 +62,50 @@ const HurtList = () => {
           {hurts.map((h) => {
             return (
               <div
-                className={h.is_active ? "listitem" : "listitem--inactive"}
+                className={
+                  h.is_active
+                    ? "row listitem"
+                    : " row listitem listitem--inactive"
+                }
                 key={h.id}
               >
-                <Button onClick={() => history.push(`hurts/${h.id}`)}>
+                <div className="col">
+                  <Button onClick={() => history.push(`hurts/${h.id}`)}>
+                    <div className="col">
+                      <h3 className="listitem__heading">{h.name}</h3>
+                      <img src={h.bodypart.hurt_image} />
+                      <h3>Bodypart: {h.bodypart.name}</h3>
+                    </div>
+                  </Button>
                   <div className="col">
-                    <h3>Name: {h.name}</h3>
-                    <h3>Bodypart: {h.bodypart.name}</h3>
-                  </div>
-                  <div className="col align-text-right">
                     <h3>Last update: {h.last_update}</h3>
                     <h3>Healings: {h.healing_count}</h3>
                   </div>
-                </Button>
+                </div>
+                <div className="col">
+                  <div className="listitem__subcollection">
+                    <h3 className="listitem__subcollection__heading">
+                      Tagged Treatments:
+                    </h3>
+                    {h.treatments.map((t, index) => {
+                      return (
+                        <span
+                          key={index}
+                          className="listitem__subcollection__item"
+                        >
+                          {t.name}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             );
           })}
         </div>
       );
     }
-    return <Loader/>
+    return <Loader />;
   };
 
   return (

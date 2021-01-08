@@ -6,3 +6,7 @@
     padding: none;
     margin: none;
 }
+
+.healinglist .listitem__subcollection__heading {
+    color: white;
+}

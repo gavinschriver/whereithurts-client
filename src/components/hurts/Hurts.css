@@ -27,3 +27,35 @@
     display: flex;
     justify-content: center;
 }
+
+.hurtlist .button {
+    background-color: white;
+}
+ 
+.hurtlist .listitem__subcollection__item {
+    color: white;
+    background-color: #18A0FB;
+}
+
+.hurtlist h3 {
+    color: black;
+}
+
+.hurtlist img {
+    max-width: 100px;
+}
+
+.hurtlist .listitem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.hurtlist .listitem__heading {
+    font-weight: 700;
+}
+
+.hurtlist .listitem__header .button {
+    display: flex;
+    flex-direction: column;
+}

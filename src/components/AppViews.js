@@ -1,5 +1,6 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
+import FourOhFourPage from "./auth/404Page";
 import HealingRoutes from "./HealingRoutes";
 import HomePage from "./homepage/Homepage";
 import HurtRoutes from "./HurtRoutes";
@@ -12,17 +13,35 @@ const AppViews = () => {
   return (
     <>
       <NavBar />
-      
-      <Route exact path="/">
-        <HomePage />
-      </Route>
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
 
-      <TreatmentRoutes />
-      <HealingRoutes />
-      <HurtRoutes />
-      <UpdateRoutes />
-      <ProfileRoutes/>
+        <Route path="/healings">
+          <HealingRoutes />
+        </Route>
 
+        <Route path="/treatments">
+          <TreatmentRoutes />
+        </Route>
+
+        <Route path="/hurts">
+          <HurtRoutes />
+        </Route>
+
+        <Route path="/updates">
+          <UpdateRoutes />
+        </Route>
+
+        <Route path="/snapshot">
+          <ProfileRoutes />
+        </Route>
+
+        <Route path="/">
+          <FourOhFourPage />
+        </Route>
+      </Switch>
     </>
   );
 };

@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import bell from "../../assets/sounds/ship_bell.wav";
 import beeper from "../../assets/sounds/beeper.wav";
 import "./Timer.css";
+import {MdPause, MdPlayArrow, MdReplay}  from 'react-icons/md'
 
 const Timer = ({ timer, setTimer }) => {
   const { isActive, timeTotal, timerVal, remaining } = timer;
@@ -86,12 +87,12 @@ const Timer = ({ timer, setTimer }) => {
               className={isActive ? "active" : "inactive"}
               onClick={toggle}
             >
-              {isActive ? "Pause" : "Start"}
+              {isActive ? <MdPause size="2rem"/>: <MdPlayArrow size="2rem"/>}
             </Button>
           </div>
           <div className="timer__controls__resetbutton">
             <Button disabled={timerVal == 0 ? true : false} onClick={reset}>
-              Reset
+              <MdReplay size="2rem"/>
             </Button>
           </div>
         </div>

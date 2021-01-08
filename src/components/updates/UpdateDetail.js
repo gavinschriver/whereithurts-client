@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
+import FourOhFourPage from "../auth/404Page";
 import BasicPage from "../layouts/BasicPage";
 import DetailPageLayout from "../layouts/DetailPageLayout";
+import LoadingWrapper from "../ui/LoadingWrapper";
+import Loader from "../ui/Loader"
 import { UpdateContext } from "./UpdateProvider";
-import "./Updates.css"
+import "./Updates.css";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
 
 const UpdateDetail = () => {
   const history = useHistory();
@@ -38,6 +42,14 @@ const UpdateDetail = () => {
   };
   const [isLoaded, setIsLoaded] = useState(false);
 
+  if (isLoaded && !update.id) {
+    return <FourOhFourPage />;
+  }
+
+  if (isLoaded && update.owner === false) {
+    return <UnauthorizedPage />
+  }
+
   return (
     <BasicPage>
       {isLoaded ? (
@@ -49,7 +61,8 @@ const UpdateDetail = () => {
           >
             <main className="updatedetail">
               <h2 className="name updatedetail__name">
-                Update for: <Link to={`/hurts/${update.hurt.id}`}>{update.hurt.name}</Link>
+                Update for:{" "}
+                <Link to={`/hurts/${update.hurt.id}`}>{update.hurt.name}</Link>
               </h2>
               <h3 className="date updatedetail__date">
                 Date: {update.date_added}
@@ -68,7 +81,9 @@ const UpdateDetail = () => {
           </DetailPageLayout>
         </div>
       ) : (
-        <div>LOADING</div>
+        <LoadingWrapper>
+          <Loader/>
+        </LoadingWrapper>
       )}
     </BasicPage>
   );

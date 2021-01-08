@@ -403,3 +403,13 @@ textarea {
   animation: loading 1.3s infinite linear;
   margin: auto;
 }
+
+.loadingwrapper {
+  margin: 2rem;
+}
+
+.loadingwrapper__text {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}

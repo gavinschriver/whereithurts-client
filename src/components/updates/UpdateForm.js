@@ -8,6 +8,8 @@ import PainLevelSelectBar from "../ui/PainLevelSelectBar";
 import TextArea from "../ui/TextArea";
 import Alert from "../ui/Alert";
 import FourOhFourPage from "../auth/404Page";
+import Loader from "../ui/Loader";
+import LoadingWrapper from "../ui/LoadingWrapper";
 
 const UpdateForm = () => {
   const [formValues, setFormValues] = useState({ notes: "" });
@@ -55,8 +57,8 @@ const UpdateForm = () => {
         await updateUpdate(updateId, formValues);
         history.push(`/updates/${updateId}`);
       } else {
-        await createUpdate(formValues);
-        history.push("/updates");
+        const newUpdate = await createUpdate(formValues);
+        history.push(`/updates/${newUpdate.id}`);
       }
     } else setShowAlert(true);
   };
@@ -75,6 +77,7 @@ const UpdateForm = () => {
 
   // loading state
   const [isLoaded, setIsLoaded] = useState(false);
+  const [idExists, setIdExists] = useState(true);
 
   const renderContent = () => {
     // if we're either in "New" mode, OR edit mode and id has been established
@@ -113,9 +116,15 @@ const UpdateForm = () => {
 
   };
 
+  if (isLoaded) {
+    if (!isEditMode || idExists) return <BasicPage>{renderContent()}</BasicPage>
+  } else if (isEditMode && !idExists) return <FourOhFourPage />
+
   return (
-    <BasicPage>{isLoaded ? renderContent() : <div>Loading...</div>}</BasicPage>
-  );
+    <LoadingWrapper>
+      <Loader/>
+    </LoadingWrapper>
+  )
 };
 
 export default UpdateForm;

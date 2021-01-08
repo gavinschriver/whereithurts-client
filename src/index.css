@@ -55,6 +55,10 @@ img {
   font-size: x-small;
 }
 
+button {
+  font-family: 'Rubik';
+}
+
 button:active {
   box-shadow: none;
 }
