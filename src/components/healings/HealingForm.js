@@ -27,6 +27,7 @@ import Pagination from "../ui/Pagination";
 import Loader from "../ui/Loader";
 import FourOhFourPage from "../auth/404Page";
 import LoadingWrapper from "../ui/LoadingWrapper";
+import UnauthorizedPage from "../auth/UnauthorizedPage";
 
 const HealingForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
@@ -173,6 +174,7 @@ const HealingForm = () => {
   const _getInitialValues = async () => {
     const healing = await getHealingById(healingId);
     if ("id" in healing) {
+      setOwner(healing.owner);
       setSelectedHurts(healing.hurts);
       setSelectedTreatments(healing.treatments);
       setNotes(healing.notes);
@@ -192,6 +194,7 @@ const HealingForm = () => {
 
   //loading state/permissions/404s
   const [isLoaded, setIsLoaded] = useState(false);
+  const [owner, setOwner] = useState(true);
 
   const renderForm = () => {
     return (
@@ -290,9 +293,18 @@ const HealingForm = () => {
   };
 
   if (isLoaded) {
-    if (!editMode || idExists) return <BasicPage>{renderForm()}</BasicPage>;
+    // in "new mode" OR id DOES exist for editing?
+    if (!editMode || idExists) {
+      // if "new mode" OR 'owner' is true
+      if (!editMode || owner === true) {
+        return <BasicPage>{renderForm()}</BasicPage>;
+      } else return <UnauthorizedPage />;
+    }
+
+    // in "edit" mode BUT no id was found?
     else if (editMode && !idExists) return <FourOhFourPage />;
   }
+
   return (
     <LoadingWrapper>
       <Loader />
