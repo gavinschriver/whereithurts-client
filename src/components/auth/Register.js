@@ -64,7 +64,7 @@ const Register = (props) => {
       password: formValues.password,
     }
 
-    const res = await fetch(`http://localhost:8000/register`, {
+    const res = await fetch(`https://gavinschriver.pythonanywhere.com/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
