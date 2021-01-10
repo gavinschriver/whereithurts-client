@@ -142,6 +142,7 @@ const HealingForm = () => {
     remaining: 0,
     isActive: false,
     timeTotal: 0,
+    isMuted: true
   });
 
   // change to timer SelectBar
