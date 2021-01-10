@@ -11,7 +11,7 @@ import UpdateRoutes from "./UpdateRoutes";
 
 const AppViews = () => {
   return (
-    <>
+    <main>
       <NavBar />
       <Switch>
         <Route exact path="/">
@@ -42,7 +42,7 @@ const AppViews = () => {
           <FourOhFourPage />
         </Route>
       </Switch>
-    </>
+    </main>
   );
 };
 

@@ -12,9 +12,18 @@
   flex-wrap: wrap;
 }
 
+
 .align-right {
   justify-content: flex-end;
 }
+
+@media screen and (max-width: 700px) {
+  .align-right{
+    justify-content: flex-start;
+  }  
+}
+
+
 
 .align-left {
   justify-content: flex-start;
@@ -170,6 +179,17 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@media screen and (max-width: 700px) {
+  .listpage__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
 .listitem .button,
 .listitem--inactive .button {
   align-items: flex-start;

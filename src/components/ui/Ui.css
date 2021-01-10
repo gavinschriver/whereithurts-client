@@ -3,9 +3,33 @@
 fieldset {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   border: none;
-  margin: .5em 0; 
+  margin: 0.5em 0;
 }
+
+@media screen and (max-width: 700px) {
+  fieldset {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* SELECT */
+
+select {
+  text-align-last: right;
+  border: 0px transparent;
+  background-color: white;
+}
+
+@media screen and (max-width: 700px) {
+  select {
+    text-align-last: left;
+  }
+}
+
+/* STATE INPUT CLASSES */
 
 .required {
   border: 2px solid #ff0f0f;
@@ -16,16 +40,6 @@ fieldset {
   border: 2px solid #18a0fb;
   border-radius: 4px;
 }
-
-select {
-  text-align-last: right;
-  border: 0px transparent;
-  background-color: white;
-}
-/* 
-option {
-  direction: rtl;
-} */
 
 /* BUTTON */
 
@@ -284,22 +298,31 @@ textarea {
 .searchbar {
   display: flex;
   justify-content: space-between;
-  padding: .4rem;
+  padding: 0.4rem;
   align-items: center;
   margin: 0.5rem 0;
 }
 
 .searchbar__control {
   display: flex;
+  flex-wrap: wrap;
 }
+
+@media screen and (max-width: 700px) {
+  .searchbar {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 
 /* CONTROL GROUPS */
 
 .controlgroup {
   background-color: white;
-  padding: .4rem;
-  margin: .5rem 0;
-  border: 1px solid #bebebe
+  padding: 0.4rem;
+  margin: 0.5rem 0;
+  border: 1px solid #bebebe;
 }
 
 /* TREATMENT CONTROLGROUP */
@@ -308,7 +331,6 @@ textarea {
   font-size: 1rem;
   margin: 0.5rem 0;
 }
-
 
 .controlgroup,
 .controlgroup > * {
@@ -325,7 +347,7 @@ textarea {
   background-color: #fff;
   z-index: 1000;
   opacity: 1;
-  transition: all .2s ease-in-out .2s;
+  transition: all 0.2s ease-in-out 0.2s;
 }
 
 .overlay {
@@ -350,7 +372,6 @@ textarea {
   opacity: 0;
   transform: translate(-50%, -50%);
 }
-
 
 /* BADGE DETAIL */
 
@@ -378,7 +399,6 @@ textarea {
   box-shadow: none;
 }
 
-
 /* PAGINATION  */
 .pagination {
   display: flex;
@@ -386,9 +406,7 @@ textarea {
 }
 .pagination__controls {
   display: flex;
-
 }
-
 
 /* LOADER  */
 
