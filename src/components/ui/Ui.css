@@ -297,6 +297,7 @@ textarea {
 
 .searchbar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 0.4rem;
   align-items: center;
@@ -308,12 +309,16 @@ textarea {
   flex-wrap: wrap;
 }
 
-@media screen and (max-width: 700px) {
+.searchbar__buttons {
+  display: flex;
+}
+
+/* @media screen and (max-width: 700px) {
   .searchbar {
     display: flex;
     flex-direction: column;
   }
-}
+} */
 
 
 /* CONTROL GROUPS */

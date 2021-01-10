@@ -78,7 +78,7 @@ const HurtDetail = () => {
             onDelete={() => handleDeleteHurt(hurtId)}
             isOwner={hurt.owner}
           >
-            <main className="hurtdetail">
+            <main className="detail hurtdetail">
               <h2>Hurt: {hurt.name}</h2>
               <h3>Bodypart: {hurt.bodypart.name}</h3>
               <img src={hurt.bodypart.hurt_image} />

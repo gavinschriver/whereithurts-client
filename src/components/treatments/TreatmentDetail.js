@@ -100,7 +100,7 @@ const TreatmentDetail = () => {
             onDelete={() => handleDeleteTreatment(treatment.id)}
             isOwner={treatment.owner}
           >
-            <main className="treatmentdetail">
+            <main className="detail treatmentdetail">
               <div className="treatmentdetail__header header--detail">
                 <div className="row">
                   <h3 className="treatmentdetail__owner">
