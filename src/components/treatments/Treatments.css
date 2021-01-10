@@ -33,6 +33,9 @@
     display: flex;
 }
 
+.treatments_collection_select {
+    display: flex;
+}
 
 
 .header--treatment .button {

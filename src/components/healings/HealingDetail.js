@@ -59,7 +59,7 @@ const HealingDetail = () => {
           onDelete={() => handleDeleteHealing(healing.id)}
           isOwner={true}
         >
-          <main className="healingdetail">
+          <main className="detail healingdetail">
             <div className="healing">
               <h1>Healing on {healing.date_added}</h1>
               <h3>

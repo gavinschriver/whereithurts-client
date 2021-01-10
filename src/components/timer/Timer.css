@@ -6,6 +6,7 @@
 .timer__controls {
     display:flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 .button:disabled {
@@ -40,12 +41,20 @@
     margin-bottom: 2rem;
 }
 
+.timer__controls {
+    display:flex;
+}
+
 .timer__remaining {
     color: #969696
 }
 
 .formpage_layout .healingform .timer .row {
     justify-content: flex-end;
+}
+
+.formpage_layout .healingform .timer .timer__controls .row {
+    justify-content: center;
 }
 
 .button--timer {

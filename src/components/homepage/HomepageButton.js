@@ -6,10 +6,11 @@ import { MdAdd } from "react-icons/md";
 const HomepageButton = (props) => {
   const { text, path } = props;
   return (
-    <div className="button--homepage">
+    <div className="homepagebutton">
       <Button>
-        <Link to={path}>{text}</Link>
-        <MdAdd size="2em" color="white" />
+          <Link to={path}>
+            {text} <MdAdd size="2em" color="white" />
+          </Link>
       </Button>
     </div>
   );

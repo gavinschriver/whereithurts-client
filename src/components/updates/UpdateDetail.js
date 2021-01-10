@@ -59,7 +59,7 @@ const UpdateDetail = () => {
             onDelete={() => handleDeleteUpdate(updateId)}
             isOwner={true}
           >
-            <main className="updatedetail">
+            <main className="detail updatedetail">
               <h2 className="name updatedetail__name">
                 Update for:{" "}
                 <Link to={`/hurts/${update.hurt.id}`}>{update.hurt.name}</Link>

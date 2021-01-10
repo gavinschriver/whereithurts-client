@@ -2,27 +2,24 @@
   width: 100%;
 }
 
-.button--homepage {
-  color: white;
-  margin: 0.5rem 0 0.5rem 0;
+.homepage .button {
+  width: 100%
+}
+
+ .homepagebutton {
+  margin: 0.5rem 0;
   display: flex;
   align-items: center;
-}
-
-.button--homepage .button {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 1.2rem;
-}
-
+} 
 
 .homepage .button a {
   display: flex;
+  justify-content: space-between;
   color: white;
   text-decoration: none;
   align-items: center;
   font-size: larger;
+  flex: 1;
 }
 
 .homepage {

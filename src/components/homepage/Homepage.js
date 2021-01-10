@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import BasicPage from "../layouts/BasicPage";
 import { PatientContext } from "../patients/PatientProvider";
-import Button from "../ui/Button";
 import "./Homepage.css";
 import RecentActivity from "./RecentActivity";
 import HomepageButton from "./HomepageButton";
@@ -17,9 +15,12 @@ const ADDBUTTON_DATA = [
 
 const HomePage = () => {
   const { patient, getPatientById } = useContext(PatientContext);
+  const [activityLoaded, setActivityLoaded] = useState(false);
 
   useEffect(() => {
-    _getPatientById();
+    _getPatientById().then(() => {
+      setActivityLoaded(true);
+    });
   }, []);
 
   const _getPatientById = async () => {
@@ -48,7 +49,11 @@ const HomePage = () => {
               </div>
             </div>
             <div className="col">
-              <RecentActivity activities={patient.recent_activity} />
+              {activityLoaded ? (
+                <RecentActivity activities={patient.recent_activity} />
+              ) : (
+                <Loader />
+              )}
             </div>
           </div>
         </div>
