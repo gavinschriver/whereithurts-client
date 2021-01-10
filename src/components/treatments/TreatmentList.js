@@ -24,7 +24,7 @@ const TreatmentList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [filters, setFilters] = useState({ owner: 0, page: currentPage });
+  const [filters, setFilters] = useState({ owner: 1, page: currentPage });
   const [searchTerms, setSearchTerms] = useState({
     search_terms: "",
   });
