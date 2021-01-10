@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { convertSecondsToTimeString } from "../../utils/helpers";
 import Button from "../ui/Button";
-import bell from "../../assets/sounds/ship_bell.wav";
 import beeper from "../../assets/sounds/beeper.wav";
 import "./Timer.css";
 import {MdPause, MdPlayArrow, MdReplay}  from 'react-icons/md'
@@ -10,7 +9,6 @@ const Timer = ({ timer, setTimer }) => {
   const { isActive, timeTotal, timerVal, remaining } = timer;
 
   //add chime for timer
-  const chime = new Audio(bell);
   const beep = new Audio(beeper);
 
   const playsound = (sound) => {
