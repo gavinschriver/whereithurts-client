@@ -7,6 +7,7 @@ const BadgeField = ({
   badgeText,
   onAdd = () => {},
   onRemove,
+  missingText = '',
   ...props
 }) => {
   let badges;
@@ -14,7 +15,7 @@ const BadgeField = ({
   switch (props.direction) {
     case "add":
       //badges are addable
-      // make sure 
+      // make sure
       badges = collection
         .filter((i) => !selected.some((s) => s.id === i.id))
         .map((i) => {
@@ -53,7 +54,15 @@ const BadgeField = ({
         );
       });
   }
-  return <div className={`badgefield ${props.direction && `badgefield--${props.direction}`}` }>{badges}</div>;
+  return (
+    <div
+      className={`badgefield ${
+        props.direction && `badgefield--${props.direction}`
+      }`}
+    >
+      {badges.length ? badges : props.direction === "add" ? missingText : ''}
+    </div>
+  );
 };
 
 export default BadgeField;

@@ -23,17 +23,6 @@ const TreatmentControlGroup = ({
       <ControlGroup>
         <div className="treatments_collection_select">
           <fieldset className="treatments_collection_select__allusers">
-            <label htmlFor="owner">From all users</label>
-            <input
-              type="radio"
-              id="all"
-              name="owner"
-              value={0}
-              checked={isOwner == 0}
-              onChange={handleFilterChange}
-            />
-          </fieldset>
-          <fieldset className="treatments_collection_select__allusers">
             <label htmlFor="owner">Added By You</label>
             <input
               type="radio"
@@ -41,6 +30,17 @@ const TreatmentControlGroup = ({
               name="owner"
               value={1}
               checked={isOwner == 1}
+              onChange={handleFilterChange}
+            />
+          </fieldset>
+          <fieldset className="treatments_collection_select__allusers">
+            <label htmlFor="owner">From all users</label>
+            <input
+              type="radio"
+              id="all"
+              name="owner"
+              value={0}
+              checked={isOwner == 0}
               onChange={handleFilterChange}
             />
           </fieldset>
