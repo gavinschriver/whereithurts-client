@@ -99,6 +99,7 @@ const HurtForm = () => {
     treatmentFilters.treatmenttype_id,
   ]);
 
+  //handle pagination change by getting treatmentFilters including the most recently updated page
   useEffect(() => {
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
   }, [treatmentFilters.page]);
