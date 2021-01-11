@@ -46,9 +46,6 @@ const TreatmentList = () => {
     setSortValue({ order_by: order, direction: direction });
   };
 
-  useEffect(() => {
-    console.log(sortValue);
-  }, [sortValue]);
 
   // search
 
