@@ -111,6 +111,7 @@ const TreatmentList = () => {
     if (isSearchMode) {
       getTreatmentsBySearchTerms({
         ...searchTerms,
+        page: currentPage,
         order_by: sortValue.order_by,
         direction: sortValue.direction,
       });
