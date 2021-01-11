@@ -13,6 +13,9 @@ import HurtSelectBar from "../hurts/HurtSelectBar";
 import Treatment from "./Treatment";
 import Loader from "../ui/Loader";
 import Pagination from "../ui/Pagination";
+import SortByBar from "../ui/SortByBar";
+
+const SORT_OPTIONS = [{ id: 1, name: "Newest", value: "added_on-desc" }];
 
 const TreatmentList = () => {
   const [showControls, setShowControls] = useState(true);
@@ -33,20 +36,38 @@ const TreatmentList = () => {
     setFilters({ ...filters, [name]: parseInt(value) });
   };
 
+  //sort
+  const [sortValue, setSortValue] = useState({
+    order_by: "healings",
+    direction: "desc",
+  });
+  const handleSortValueChange = (e) => {
+    const [order, direction] = e.target.value.split("-");
+    setSortValue({ order_by: order, direction: direction });
+  };
+
+  useEffect(() => {
+    console.log(sortValue);
+  }, [sortValue]);
+
   // search
 
   const [isSearchMode, setIsSearchMode] = useState(false);
-
 
   const handleChangeSearchTerms = (e) => {
     setSearchTerms({ ...searchTerms, search_terms: e.target.value });
   };
 
   const handleSubmitSearchTerms = () => {
-    setCurrentPage(1)
+    setCurrentPage(1);
     setListDataLoaded(false);
     setIsSearchMode(true);
-    getTreatmentsBySearchTerms({ ...searchTerms, page: 1 }).then(() => {
+    getTreatmentsBySearchTerms({
+      ...searchTerms,
+      page: 1,
+      order_by: sortValue.order_by,
+      direction: sortValue.direction,
+    }).then(() => {
       setListDataLoaded(true);
     });
   };
@@ -57,7 +78,14 @@ const TreatmentList = () => {
   const handleClearSearchTerms = () => {
     setIsSearchMode(false);
     setSearchTerms({ search_terms: "", page: 1 });
-    getTreatmentsByQuerystring(buildQueryString({ ...filters, page: 1 }));
+    getTreatmentsByQuerystring(
+      buildQueryString({
+        ...filters,
+        page: 1,
+        order_by: sortValue.order_by,
+        direction: sortValue.direction,
+      })
+    );
     setCurrentPage(1);
   };
 
@@ -74,10 +102,20 @@ const TreatmentList = () => {
   // otherwise, we're in "filter mode", so check
   const _getTreatmentsByQuerystring = async () => {
     if (isSearchMode) {
-      await getTreatmentsBySearchTerms({ ...searchTerms, page: currentPage });
+      await getTreatmentsBySearchTerms({
+        ...searchTerms,
+        page: currentPage,
+        order_by: sortValue.order_by,
+        direction: sortValue.direction,
+      });
     } else
       await getTreatmentsByQuerystring(
-        buildQueryString({ ...filters, page: currentPage })
+        buildQueryString({
+          ...filters,
+          page: currentPage,
+          order_by: sortValue.order_by,
+          direction: sortValue.direction,
+        })
       );
   };
 
@@ -88,7 +126,7 @@ const TreatmentList = () => {
     _getTreatmentsByQuerystring().then(() => {
       setListDataLoaded(true);
     });
-  }, [filters, currentPage]);
+  }, [filters, currentPage, sortValue]);
 
   // IF we're in search mode, but user changes a filter, turn search mode OFF,
   // then invoke handleClearSearchTerms
@@ -149,6 +187,18 @@ const TreatmentList = () => {
                 onSearch={handleSubmitSearchTerms}
                 onClear={handleClearSearchTerms}
                 active={isSearchMode}
+              />
+              <SortByBar
+                collection={SORT_OPTIONS}
+                name="order_by"
+                optionid="id"
+                optionvalue="value"
+                optiontext="name"
+                optionkey="id"
+                defaultoptiontext="Most popular"
+                defaultoptionvalue="healings-desc"
+                onChange={handleSortValueChange}
+                value={`${sortValue.order_by}-${sortValue.direction}`}
               />
               <Pagination
                 page={currentPage}
