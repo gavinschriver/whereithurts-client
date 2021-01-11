@@ -63,6 +63,7 @@ const Login = (props) => {
               />
               <TextInput
                 name="password"
+                type="password"
                 value={formValues.password}
                 onChange={handleInputChange}
                 placeholder="Password"
