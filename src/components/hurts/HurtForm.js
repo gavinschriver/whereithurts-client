@@ -66,6 +66,7 @@ const HurtForm = () => {
     owner: 1,
     page: 1,
   });
+
   const [treatmentSearchTerms, setTreatmentSearchTerms] = useState("");
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -86,10 +87,21 @@ const HurtForm = () => {
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
   };
 
-  // query treatments by filters on filter change; this will also initialize by whatever the filters are first set to
+  // query treatments by filters on filter change (always set page back to 1); this will also initialize by whatever the filters are first set to
+  useEffect(() => {
+    setTreatmentFilters({ ...treatmentFilters, page: 1 });
+    getTreatmentsByQuerystring(
+      buildQueryString({ ...treatmentFilters, page: 1 })
+    );
+  }, [
+    treatmentFilters.owner,
+    treatmentFilters.bodypart_id,
+    treatmentFilters.treatmenttype_id,
+  ]);
+
   useEffect(() => {
     getTreatmentsByQuerystring(buildQueryString(treatmentFilters));
-  }, [treatmentFilters]);
+  }, [treatmentFilters.page]);
 
   //initializer effect to bring in relevant resource if in edit mode **
   useEffect(() => {
