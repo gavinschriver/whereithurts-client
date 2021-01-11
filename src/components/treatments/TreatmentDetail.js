@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import BasicPage from "../layouts/BasicPage";
 import FourOhFourPage from "../auth/404Page";
 import DetailPageLayout from "../layouts/DetailPageLayout";
@@ -67,7 +67,6 @@ const TreatmentDetail = () => {
     const itemId = parseInt(e.target.parentNode.id.split("-")[4]);
     const req_body = { hurt_id: itemId };
     untagHurtFromTreatment(treatmentId, req_body);
-    _getHurtsByPatientId();
     _getTreatmentById();
   };
 
@@ -147,6 +146,7 @@ const TreatmentDetail = () => {
                     direction="add"
                     onAdd={handleAddHurt}
                     detailconfig={{ configkeys: ["date_added", "notes"] }}
+                    missingText={<span>Nothing here, <Link to="/hurts/new">add more Hurts</Link> to get started</span>}
                   />
                 </ShowHideSection>
                 <BadgeField
