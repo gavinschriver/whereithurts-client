@@ -46,10 +46,6 @@ const TreatmentList = () => {
     setSortValue({ order_by: order, direction: direction });
   };
 
-  useEffect(() => {
-    console.log(sortValue);
-  }, [sortValue]);
-
   // search
 
   const [isSearchMode, setIsSearchMode] = useState(false);
@@ -97,19 +93,29 @@ const TreatmentList = () => {
 
   const history = useHistory();
 
-  // call our async function
-  // if searchMode is a thing, this is only happening if we're paginating
-  // otherwise, we're in "filter mode", so check
+  // call our initial async function with a page of 1
   const _getTreatmentsByQuerystring = async () => {
+    setCurrentPage(1)
+    await getTreatmentsByQuerystring(
+      buildQueryString({
+        ...filters,
+        page: 1,
+        order_by: sortValue.order_by,
+        direction: sortValue.direction,
+      })
+    );
+  };
+
+  // handle pagination for either mode
+  useEffect(() => {
     if (isSearchMode) {
-      await getTreatmentsBySearchTerms({
+      getTreatmentsBySearchTerms({
         ...searchTerms,
-        page: currentPage,
         order_by: sortValue.order_by,
         direction: sortValue.direction,
       });
-    } else
-      await getTreatmentsByQuerystring(
+    } else {
+      getTreatmentsByQuerystring(
         buildQueryString({
           ...filters,
           page: currentPage,
@@ -117,16 +123,17 @@ const TreatmentList = () => {
           direction: sortValue.direction,
         })
       );
-  };
+    }
+  }, [currentPage]);
 
-  //when page first loads, the filters change, OR the current page changes, set listDataLoaded to false, complete our
-  //call to get _getTreatments, and set list data loaded to true when that resolves
+  //when page first loads, the filters change, OR the sortValue, set listDataLoaded to false, complete our
+  //call to get _getTreatments where page is 1, and set list data loaded to true when that resolves
   useEffect(() => {
     setListDataLoaded(false);
     _getTreatmentsByQuerystring().then(() => {
       setListDataLoaded(true);
     });
-  }, [filters, currentPage, sortValue]);
+  }, [filters, sortValue]);
 
   // IF we're in search mode, but user changes a filter, turn search mode OFF,
   // then invoke handleClearSearchTerms

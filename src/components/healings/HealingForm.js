@@ -66,14 +66,24 @@ const HealingForm = () => {
     getTreatmentsByQuerystring(buildQueryString(filters));
   }, [filters]);
 
+  //when any filter changes, make sure we reset the page to 1
   useEffect(() => {
     setFilters({
       bodypart_id: parseInt(bodypartId),
       treatmenttype_id: parseInt(treatmentTypeId),
       owner: parseInt(isOwner),
+      page: 1,
+    });
+    setCurrentPage(1);
+  }, [bodypartId, treatmentTypeId, isOwner]);
+
+  // when the currentPage changes, setFilters to their existing values, but update the 'page' value
+  useEffect(() => {
+    setFilters({
+      ...filters,
       page: currentPage,
     });
-  }, [bodypartId, treatmentTypeId, isOwner, currentPage]);
+  }, [currentPage]);
 
   const handleRadioButtonChange = (e) => {
     setIsOwner(e.target.value);
@@ -142,7 +152,7 @@ const HealingForm = () => {
     remaining: 0,
     isActive: false,
     timeTotal: 0,
-    isMuted: true
+    isMuted: true,
   });
 
   // change to timer SelectBar
