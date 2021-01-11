@@ -26,6 +26,6 @@ export const request = async (location, method = 'GET', body) => {
     return await fetch(location, options);
 };
   
-const localServer = false;
+const localServer = true;
 
 export const BASE_URL = localServer ? `http://localhost:8000/` : `https://gavinschriver.pythonanywhere.com/`

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { BASE_URL } from "../../utils/request";
 import AuthPage from "../layouts/AuthPage";
 import Alert from "../ui/Alert";
 import Button from "../ui/Button";
@@ -22,7 +23,7 @@ const Login = (props) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await fetch(`https://gavinschriver.pythonanywhere.com/login`, {
+    const res = await fetch(`${BASE_URL}login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
