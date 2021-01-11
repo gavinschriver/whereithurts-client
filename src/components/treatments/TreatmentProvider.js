@@ -6,7 +6,7 @@ const resourceURL = `${BASE_URL}treatments`;
 export const TreatmentContext = createContext();
 
 export const TreatmentProvider = (props) => {
-  const [treatmentData, setTreatmentData] = useState({treatments: []});
+  const [treatmentData, setTreatmentData] = useState({ treatments: [] });
 
   const getTreatments = async () => {
     const response = await request(`${resourceURL}`);
@@ -27,13 +27,15 @@ export const TreatmentProvider = (props) => {
   };
 
   /**
-   * 
+   *
    * @param {object} searchTerms kv pairs of search_terms: <string>
    * and page: <int> (default of 1)
    */
   const getTreatmentsBySearchTerms = async (searchTerms) => {
     if (searchTerms.search_terms.trim() !== "") {
-      const response = await request(`${resourceURL}?q=${searchTerms.search_terms}&page=${searchTerms.page}`);
+      const response = await request(
+        `${resourceURL}?q=${searchTerms.search_terms}&page=${searchTerms.page}&order_by=${searchTerms.order_by}&direction=${searchTerms.direction}`
+      );
       const treatmentData = await response.json();
       setTreatmentData(treatmentData);
     }
@@ -76,8 +78,8 @@ export const TreatmentProvider = (props) => {
       `${resourceURL}/${treatmentId}/tag_hurt`,
       "DELETE",
       requestBody
-    )
-  }
+    );
+  };
 
   return (
     <TreatmentContext.Provider
@@ -92,7 +94,7 @@ export const TreatmentProvider = (props) => {
         updateTreatment,
         deleteTreatment,
         tagTreatmentWithHurt,
-        untagHurtFromTreatment
+        untagHurtFromTreatment,
       }}
     >
       {props.children}

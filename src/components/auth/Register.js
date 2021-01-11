@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { BASE_URL } from "../../utils/request";
 import AuthPage from "../layouts/AuthPage";
 import Button from "../ui/Button";
 import { TextInput } from "../ui/TextInput";
@@ -64,7 +65,7 @@ const Register = (props) => {
       password: formValues.password,
     }
 
-    const res = await fetch(`https://gavinschriver.pythonanywhere.com/register`, {
+    const res = await fetch(`${BASE_URL}register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

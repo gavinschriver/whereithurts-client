@@ -32,6 +32,7 @@ const Treatment = ({ treatment }) => {
                 src={treatment.treatmenttype.image}
               />
             </div>
+            <span>Used in {treatment.healing_count} healings</span>
           </Button>
         </div>
 
