@@ -44,7 +44,8 @@ const Snapshot = () => {
             <BadgeField
               selected={snapshot.recent_treatments}
               badgeText="name"
-              detailconfig={{configkeys: ["name", "notes"]}}
+              detailconfig={{ configkeys: ["name", "notes"] }}
+              resourceName="treatments"
             />
             <div className="snapshot__hurts">
               <h4>Hurts Worked On:</h4>

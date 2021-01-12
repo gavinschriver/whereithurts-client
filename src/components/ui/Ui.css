@@ -320,7 +320,6 @@ textarea {
   }
 } */
 
-
 /* CONTROL GROUPS */
 
 .controlgroup {
@@ -389,6 +388,7 @@ textarea {
 .badgedetail__item {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .badgedetail__closebutton {
@@ -398,10 +398,20 @@ textarea {
 
 .badgedetail__item h3 {
   margin: 0.25rem 0;
+  font-size: small;
 }
 
 .badgedetail .button {
   box-shadow: none;
+}
+
+.badgedetail__item__content {
+  display: flex;
+}
+
+.badgedetail__item__bodypart .badgedetail__item__info,
+.badgedetail__item__treatmenttype .badgedetail__item__info {
+  margin-left: 0.5rem;
 }
 
 /* PAGINATION  */

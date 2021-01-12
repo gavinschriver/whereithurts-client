@@ -8,7 +8,6 @@ import DetailPageLayout from "../layouts/DetailPageLayout";
 import BadgeField from "../ui/BadgeField";
 import { HealingContext } from "./HealingProvider";
 
-
 const HealingDetail = () => {
   //Router Hooks
   const history = useHistory();
@@ -39,7 +38,7 @@ const HealingDetail = () => {
       setHealing(healing);
     }
     setIsLoaded(true);
-  }
+  };
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -48,7 +47,7 @@ const HealingDetail = () => {
   }
 
   if (isLoaded && healing.owner === false) {
-    return <UnauthorizedPage/>
+    return <UnauthorizedPage />;
   }
 
   return (
@@ -63,7 +62,9 @@ const HealingDetail = () => {
             <div className="healing">
               <h1>Healing on {healing.date_added}</h1>
               <h3>
-                Time Spent: {healing.duration && `${secondsToRoundedMinutes(healing.duration)} minutes`}
+                Time Spent:{" "}
+                {healing.duration &&
+                  `${secondsToRoundedMinutes(healing.duration)} minutes`}
               </h3>
               <div className="healing__notes">
                 <h3>Notes:</h3>
@@ -71,10 +72,26 @@ const HealingDetail = () => {
               </div>
               <div className="healing__treatments">
                 <h3>Tagged Treatments:</h3>
-                <BadgeField selected={healing.treatments} badgeText="name" detailconfig={{configkeys: ["notes", "links"]}} />
+                <BadgeField
+                  selected={healing.treatments}
+                  badgeText="name"
+                  detailconfig={{
+                    configkeys: [
+                      "name",
+                      "bodypart",
+                      "treatmenttype",
+                      "notes",
+                      "links",
+                    ],
+                  }}
+                />
               </div>
               <h3>Tagged Hurts:</h3>
-              <BadgeField selected={healing.hurts} badgeText="name" detailconfig={{configkeys: ["date_added", "notes"]}} />
+              <BadgeField
+                selected={healing.hurts}
+                badgeText="name"
+                detailconfig={{ configkeys: ["date_added", "notes"] }}
+              />
             </div>
           </main>
         </DetailPageLayout>
