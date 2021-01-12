@@ -78,6 +78,7 @@ const HealingDetail = () => {
                   detailconfig={{
                     configkeys: [
                       "name",
+                      "added_by",
                       "bodypart",
                       "treatmenttype",
                       "notes",
@@ -86,7 +87,7 @@ const HealingDetail = () => {
                   }}
                 />
               </div>
-              <h3>Tagged Hurts:</h3>
+              <h3>Your Tagged Hurts:</h3>
               <BadgeField
                 selected={healing.hurts}
                 badgeText="name"

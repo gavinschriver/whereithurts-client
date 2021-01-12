@@ -126,7 +126,9 @@ const BadgeDetail = ({
           if (configkey == "added_by")
             return (
               <div key={index}>
-                <h4>Added by {item.added_by.username}</h4>
+                {item.added_by.username && (
+                  <h4>Added by {item.added_by.username}</h4>
+                )}
               </div>
             );
 
