@@ -37,11 +37,12 @@ const BadgeDetail = ({
               ? "Notes: "
               : configkey === "date_added"
               ? "Date Added: "
+              : configkey === "latest_pain_level"
+              ? "Current pain level: "
               : "";
 
           //make sure a property actually exists on the item with that name before trying to access it
           if (item[configkey])
-            
             if (configkey === "name") {
               // item's 'name' if it exists will be treated like a section title; also, if a resourceName
               // has been passed in, the name will be a link to that item's detail page
