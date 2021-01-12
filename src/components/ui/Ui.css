@@ -204,6 +204,7 @@ textarea {
   max-width: 20px;
 }
 
+
 .detailpage_layout .badgefield .button {
   box-shadow: none;
   color: white;
@@ -320,7 +321,6 @@ textarea {
   }
 } */
 
-
 /* CONTROL GROUPS */
 
 .controlgroup {
@@ -389,6 +389,7 @@ textarea {
 .badgedetail__item {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .badgedetail__closebutton {
@@ -398,10 +399,26 @@ textarea {
 
 .badgedetail__item h3 {
   margin: 0.25rem 0;
+  font-size: small;
 }
 
 .badgedetail .button {
   box-shadow: none;
+}
+
+.badgedetail__item__content {
+  display: flex;
+  align-items: center;
+  margin: .4rem 0;
+}
+
+.badgedetail__item__bodypart .badgedetail__item__info,
+.badgedetail__item__treatmenttype .badgedetail__item__info {
+  margin-left: 0.5rem;
+}
+
+.badgedetail .badgedetail__item__image img {
+  max-width: 50px;
 }
 
 /* PAGINATION  */

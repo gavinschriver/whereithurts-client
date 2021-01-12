@@ -145,12 +145,12 @@ const TreatmentDetail = () => {
                     badgeText="name"
                     direction="add"
                     onAdd={handleAddHurt}
-                    detailconfig={{ configkeys: ["date_added", "notes"] }}
+                    detailconfig={{ configkeys: ["name","date_added", "notes"] }}
                     missingText={<span>Nothing here, <Link to="/hurts/new">add more Hurts</Link> to get started</span>}
                   />
                 </ShowHideSection>
                 <BadgeField
-                  detailconfig={{ configkeys: ["date_added", "notes"] }}
+                  detailconfig={{ configkeys: ["name","date_added", "notes"] }}
                   selected={selectedHurts}
                   badgeText="name"
                   direction="remove"

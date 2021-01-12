@@ -90,7 +90,7 @@ const HurtDetail = () => {
                 selected={hurt.treatments}
                 badgeText="name"
                 detailconfig={{
-                  configkeys: ["bodypart", "treatmenttype", "notes", "links"],
+                  configkeys: ["name","bodypart", "treatmenttype", "notes", "links"],
                 }}
               />
             </main>
