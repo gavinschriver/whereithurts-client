@@ -23,6 +23,13 @@
     color: white;
 }
 
+.showhidesection .timer .alert .button {
+    background-color:transparent;
+    display: flex;
+    align-items: center;
+    color: black
+}
+
 .showhidesection .timer .button:disabled {
     background-color: #bebebe;
     color: white;
@@ -59,4 +66,21 @@
 
 .button--timer {
     display: flex;
+}
+
+.timer__alert .alert__content, .timer_alert .alert__content {
+    display: flex;
+    align-items: center;
+}
+
+.timer__alert .alert__closebutton {
+    align-items: center;
+}
+
+.timer__alert .alert__closebutton .button {
+    font-weight: 700;
+}
+
+.timer__alert .alert__closebutton .button:hover {
+    color:#969696;
 }
