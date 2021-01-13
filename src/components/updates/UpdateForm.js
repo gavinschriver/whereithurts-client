@@ -28,17 +28,19 @@ const UpdateForm = () => {
     if (isEditMode && updateId) {
       getInitialFormValues();
     }
-    setIsLoaded(true)
+    setIsLoaded(true);
   }, []);
 
   const getInitialFormValues = async () => {
     const update = await getUpdateById(updateId);
-    setFormValues({
-      hurt_id: update.hurt && update.hurt.id,
-      notes: update.notes,
-      pain_level: update.pain_level,
-      id: update.id,
-    });
+    if ("id" in update) {
+      setFormValues({
+        hurt_id: update.hurt && update.hurt.id,
+        notes: update.notes,
+        pain_level: update.pain_level,
+        id: update.id,
+      });
+    } else setIdExists(false);
   };
 
   const handleChange = (e) => {
@@ -67,7 +69,8 @@ const UpdateForm = () => {
 
   const validation = () => {
     const hurtId = parseInt(formValues.hurt_id);
-    if (hurtId >= 1) {
+    const painLevel = parseInt(formValues.pain_level);
+    if (hurtId >= 1 && painLevel >= 1) {
       return true;
     } else return false;
   };
@@ -112,19 +115,18 @@ const UpdateForm = () => {
           </FormPageLayout>
         </div>
       );
-
-
   };
 
   if (isLoaded) {
-    if (!isEditMode || idExists) return <BasicPage>{renderContent()}</BasicPage>
-  } else if (isEditMode && !idExists) return <FourOhFourPage />
+    if (!isEditMode || idExists)
+      return <BasicPage>{renderContent()}</BasicPage>;
+  } else if (isEditMode && !idExists) return <FourOhFourPage />;
 
   return (
     <LoadingWrapper>
-      <Loader/>
+      <Loader />
     </LoadingWrapper>
-  )
+  );
 };
 
 export default UpdateForm;

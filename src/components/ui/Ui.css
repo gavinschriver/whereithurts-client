@@ -55,6 +55,7 @@ select {
 
 .button:disabled {
   background-color: #bebebe;
+  cursor: auto;
 }
 
 .button:disabled:hover {
@@ -204,7 +205,6 @@ textarea {
   max-width: 20px;
 }
 
-
 .detailpage_layout .badgefield .button {
   box-shadow: none;
   color: white;
@@ -229,22 +229,26 @@ textarea {
 .toggle--badge--button--left {
   border-radius: 2rem 0 0 2rem !important;
   color: black;
+  margin-right: 0;
 }
 
 .toggle--badge--button--right {
   border-radius: 0 2rem 2rem 0 !important;
+  margin-left: 0;
 }
 
 .showhidesection .toggle--badge--button--left {
   border-color: black;
   border-width: 1px 0 1px 1px;
   border-style: solid;
+  margin-right: 0;
 }
 
 .showhidesection .toggle--badge--button--right {
   border-color: black;
   border-width: 1px 1px 1px 0px;
   border-style: solid;
+  margin-left: 0;
 }
 
 /* ALERT */
@@ -352,7 +356,15 @@ textarea {
   background-color: #fff;
   z-index: 1000;
   opacity: 1;
-  transition: all 0.2s ease-in-out 0.2s;
+  transition: all 0.15s ease-in-out 0.2s;
+}
+
+@media screen and (max-width: 700px) {
+  .modal {
+    max-height: calc(100vh - 210px);
+    overflow-y: scroll;
+    width: 100%;
+  }
 }
 
 .overlay {
@@ -362,7 +374,7 @@ textarea {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  transition: all 0.4s ease-in-out;
+  transition: all 0.2s ease-in-out;
   z-index: 1000;
   opacity: 1;
 }
@@ -409,7 +421,7 @@ textarea {
 .badgedetail__item__content {
   display: flex;
   align-items: center;
-  margin: .4rem 0;
+  margin: 0.4rem 0;
 }
 
 .badgedetail__item__bodypart .badgedetail__item__info,
@@ -428,6 +440,10 @@ textarea {
 }
 .pagination__controls {
   display: flex;
+}
+
+.pagination__controls button:disabled {
+  background-color: white;
 }
 
 /* LOADER  */

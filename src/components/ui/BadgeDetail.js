@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { toMMDDYYYY } from "../../utils/helpers";
 import Button from "./Button";
 
 /**
@@ -35,7 +36,7 @@ const BadgeDetail = ({
               ? "Name: "
               : configkey === "notes"
               ? "Notes: "
-              : configkey === "date_added"
+              : configkey === "added_on"
               ? "Date Added: "
               : configkey === "latest_pain_level"
               ? "Current pain level: "
@@ -132,11 +133,15 @@ const BadgeDetail = ({
               </div>
             );
 
-          //default (configkey value is a string)
+          //default (configkey value is a string; make sure to convert timestamp if its 'added_on')
           return (
             <div key={index} className="badgedetail__item">
               <h3 className="badgedetail__item__title">{title}</h3>
-              <div className="badgedetail__item__info">{item[configkey]}</div>
+              <div className="badgedetail__item__info">
+                {configkey === "added_on"
+                  ? toMMDDYYYY(item.added_on)
+                  : item[configkey]}
+              </div>
             </div>
           );
         })}

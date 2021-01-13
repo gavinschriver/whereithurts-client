@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { buildQueryString, secondsToRoundedMinutes } from "../../utils/helpers";
+import { buildQueryString, secondsToRoundedMinutes, toMMDDYYYY } from "../../utils/helpers";
 import BasicPage from "../layouts/BasicPage";
 import ListPageLayout from "../layouts/ListPage";
 import Button from "../ui/Button";
@@ -74,7 +74,7 @@ const HealingList = () => {
               <div className="listitem" key={h.id}>
                 <Button onClick={() => history.push(`/healings/${h.id}`)}>
                   <div className="col">
-                    <h3>Date: {h.date_added}</h3>
+                    <h3>Date: {toMMDDYYYY(h.added_on) }</h3>
 
                     <h3>
                       Time spent: {secondsToRoundedMinutes(h.duration)} minutes

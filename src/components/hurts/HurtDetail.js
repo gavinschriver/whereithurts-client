@@ -9,6 +9,7 @@ import FourOhFourPage from "../auth/404Page";
 import Loader from "../ui/Loader";
 import LoadingWrapper from "../ui/LoadingWrapper";
 import UnauthorizedPage from "../auth/UnauthorizedPage";
+import { toMMDDYYYY } from "../../utils/helpers";
 
 const HurtDetail = () => {
   const history = useHistory();
@@ -82,6 +83,7 @@ const HurtDetail = () => {
               <h2>Hurt: {hurt.name}</h2>
               <h3>Bodypart: {hurt.bodypart.name}</h3>
               <img src={hurt.bodypart.hurt_image} />
+              <h3>Added on {toMMDDYYYY(hurt.added_on)}</h3>
               <h3>Starting Pain Level: {hurt.pain_level}</h3>
               <h3>Notes: </h3>
               <p>{hurt.notes}</p>
