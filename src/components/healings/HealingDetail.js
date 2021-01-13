@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { secondsToRoundedMinutes } from "../../utils/helpers";
+import { secondsToRoundedMinutes, toMMDDYYYY } from "../../utils/helpers";
 import FourOhFourPage from "../auth/404Page";
 import UnauthorizedPage from "../auth/UnauthorizedPage";
 import BasicPage from "../layouts/BasicPage";
@@ -60,7 +60,7 @@ const HealingDetail = () => {
         >
           <main className="detail healingdetail">
             <div className="healing">
-              <h1>Healing on {healing.date_added}</h1>
+              <h1>Healing on {healing.added_on && toMMDDYYYY(healing.added_on)}</h1>
               <h3>
                 Time Spent:{" "}
                 {healing.duration &&
@@ -91,7 +91,15 @@ const HealingDetail = () => {
               <BadgeField
                 selected={healing.hurts}
                 badgeText="name"
-                detailconfig={{ configkeys: ["name", "bodypart", "added_on", "latest_pain_level", "notes"] }}
+                detailconfig={{
+                  configkeys: [
+                    "name",
+                    "bodypart",
+                    "added_on",
+                    "latest_pain_level",
+                    "notes",
+                  ],
+                }}
               />
             </div>
           </main>
