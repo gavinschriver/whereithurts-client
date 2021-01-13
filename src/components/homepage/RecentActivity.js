@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { toMMDDYYYY } from "../../utils/helpers";
 
 const resourceConfig = {
   Hurt: "hurts",
@@ -29,7 +30,8 @@ const RecentActivity = ({ activities }) => {
                   </h4>
                 </Link>
                 <h4 className="activity__date">
-                  added on {activity.date_added}
+                  added on{" "}
+                  {toMMDDYYYY(activity.added_on)}
                 </h4>
               </div>
             </div>

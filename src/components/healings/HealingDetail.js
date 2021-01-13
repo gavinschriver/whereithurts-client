@@ -91,7 +91,7 @@ const HealingDetail = () => {
               <BadgeField
                 selected={healing.hurts}
                 badgeText="name"
-                detailconfig={{ configkeys: ["name", "bodypart", "date_added", "latest_pain_level", "notes"] }}
+                detailconfig={{ configkeys: ["name", "bodypart", "added_on", "latest_pain_level", "notes"] }}
               />
             </div>
           </main>

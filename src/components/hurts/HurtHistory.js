@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { toMMDDYYYY } from "../../utils/helpers";
 import Button from "../ui/Button";
 import SortHurtHistory from "./SortHurtHistory";
 
@@ -31,7 +32,7 @@ const HurtHistory = (props) => {
             >
               <div className="col">
                 <div className="history__heaing">
-                  {i.history_type}: {i.date_added}
+                  {i.history_type}: {toMMDDYYYY(i.added_on)}
                 </div>
               </div>
               <div className="col">

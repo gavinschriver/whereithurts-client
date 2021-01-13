@@ -272,7 +272,7 @@ const HealingForm = () => {
               setShowing={setShowAddHurts}
               onAdd={handleSelectHurt}
               onRemove={deselectHurtById}
-              detailconfig={{ configkeys: ["name", "bodypart", "date_added", "notes"] }}
+              detailconfig={{ configkeys: ["name", "bodypart", "added_on", "notes"] }}
             />
             <ShowHideSection
               showing={showTimer}

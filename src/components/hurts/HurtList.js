@@ -8,7 +8,7 @@ import ShowHideControls from "../ui/ShowHideControls";
 import ControlGroup from "../ui/ControlGroup";
 import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import SortByBar from "../ui/SortByBar";
-import { buildQueryString } from "../../utils/helpers";
+import { buildQueryString, toMMDDYYYY } from "../../utils/helpers";
 import Loader from "../ui/Loader";
 import BadgeField from "../ui/BadgeField";
 
@@ -78,7 +78,7 @@ const HurtList = () => {
                     </div>
                   </Button>
                   <div className="col">
-                    <h3>Last update: {h.last_update}</h3>
+                    <h3>Last update: {toMMDDYYYY(h.last_update)}</h3>
                     <h3>Healings: {h.healing_count}</h3>
                   </div>
                 </div>
