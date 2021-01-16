@@ -21,7 +21,7 @@ const Healing = ({ healing }) => {
               <span className="listitem__subcollection__heading">
                 Tagged Hurts:
               </span>
-              {healing.hurts.map((h, index) => {
+              {healing.hurts?.map((h, index) => {
                 return (
                   <span key={index} className="listitem__subcollection__item">
                     {h.name}

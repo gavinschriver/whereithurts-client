@@ -9,6 +9,7 @@ import {
   formatToMSSTimeString,
   convertTimeStringToSeconds,
   buildQueryString,
+  availableOnPage,
 } from "../../utils/helpers";
 import { HurtContext } from "../hurts/HurtProvider";
 import HurtToggleGroup from "../hurts/HurtToggleGroup";
@@ -268,13 +269,10 @@ const HealingForm = () => {
               <Pagination
                 page={currentPage}
                 totalCount={treatmentData.count}
-                availableOnPage={
-                  treatmentData.treatments
-                    .map((i) => i.id)
-                    .filter(
-                      (i) => !selectedTreatments.map((st) => st.id).includes(i)
-                    ).length
-                }
+                availableOnPage={availableOnPage(
+                  treatmentData.treatments,
+                  selectedTreatments
+                )}
                 pageBack={() => setCurrentPage(currentPage - 1)}
                 pageForward={() => setCurrentPage(currentPage + 1)}
               />

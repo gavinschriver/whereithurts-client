@@ -28,11 +28,13 @@ const Pagination = (props) => {
     <div className="pagination">
       <div className="pationation__label">
         {totalCount > 0
-          ? `Page displaying: ${startNumber} - ${
+          ? `Showing ${startNumber} - ${
               endNumber > totalCount ? totalCount : endNumber
             } of ${totalCount}`
           : `No results`}
-        <div>Available on this page: {availableOnPage}</div>
+        {availableOnPage && (
+          <div>Available on this page: {availableOnPage}</div>
+        )}
       </div>
       <div className="pagination__controls">
         <div className="pagination__controls__backward">
