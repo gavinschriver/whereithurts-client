@@ -56,7 +56,7 @@ const Snapshot = () => {
                       <Button onClick={() => history.push(`/hurts/${h.id}`)}>
                         <div className="row space-between">
                           <div className="col">
-                            <h3>Name: {h.name}</h3>
+                            <h3>{h.name}</h3>
                           </div>
                           <div className="col">
                             <h3>Current Pain Level: {h.latest_pain_level}</h3>

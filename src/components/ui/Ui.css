@@ -183,7 +183,7 @@ textarea {
 
 .showhidecontrols .button {
   color: #969696;
-  background-color: white;
+  background-color: transparent;
   box-shadow: none;
   font-size: inherit;
 }

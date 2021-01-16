@@ -28,6 +28,7 @@ import Loader from "../ui/Loader";
 import FourOhFourPage from "../auth/404Page";
 import LoadingWrapper from "../ui/LoadingWrapper";
 import UnauthorizedPage from "../auth/UnauthorizedPage";
+import HurtSelectBar from "../hurts/HurtSelectBar";
 
 const HealingForm = () => {
   //access History, Location and Param objects; establish if we're in editMode or not
@@ -42,9 +43,10 @@ const HealingForm = () => {
   const [bodypartId, setBodypartId] = useState(0);
   const [treatmentTypeId, setTreatmentTypeId] = useState(0);
   const [isOwner, setIsOwner] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [hurtId, setHurtId] = useState("");
   const [filters, setFilters] = useState({ owner: 1, page: 1 });
 
+  const [currentPage, setCurrentPage] = useState(1);
   // TREATMENT SEARCH TERMS CURRENTLY NOT OEPRATIONAL IN THIS FORM
   // const [searchTerms, setSearchTerms] = useState("");
 
@@ -72,10 +74,11 @@ const HealingForm = () => {
       bodypart_id: parseInt(bodypartId),
       treatmenttype_id: parseInt(treatmentTypeId),
       owner: parseInt(isOwner),
+      hurt_id: parseInt(hurtId),
       page: 1,
     });
     setCurrentPage(1);
-  }, [bodypartId, treatmentTypeId, isOwner]);
+  }, [bodypartId, treatmentTypeId, isOwner, hurtId]);
 
   // when the currentPage changes, setFilters to their existing values, but update the 'page' value
   useEffect(() => {
@@ -109,11 +112,9 @@ const HealingForm = () => {
   };
 
   //treatments
-  const {
-    treatmentData,
-    getTreatmentsByQuerystring,
-    getTreatmentsBySearchTerms,
-  } = useContext(TreatmentContext);
+  const { treatmentData, getTreatmentsByQuerystring } = useContext(
+    TreatmentContext
+  );
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [showAddTreatments, setShowAddTreatments] = useState(false);
   const handleSelectTreatment = (item) => {
@@ -257,10 +258,23 @@ const HealingForm = () => {
                   onChange={(e) => setTreatmentTypeId(e.target.value)}
                   value={treatmentTypeId}
                 />
+                <HurtSelectBar
+                  label="Filter By Hurt: "
+                  defaultoptiontext="No Hurt chosen"
+                  onChange={(e) => setHurtId(e.target.value)}
+                  value={hurtId}
+                />
               </ControlGroup>
               <Pagination
                 page={currentPage}
                 totalCount={treatmentData.count}
+                availableOnPage={
+                  treatmentData.treatments
+                    .map((i) => i.id)
+                    .filter(
+                      (i) => !selectedTreatments.map((st) => st.id).includes(i)
+                    ).length
+                }
                 pageBack={() => setCurrentPage(currentPage - 1)}
                 pageForward={() => setCurrentPage(currentPage + 1)}
               />
@@ -272,7 +286,9 @@ const HealingForm = () => {
               setShowing={setShowAddHurts}
               onAdd={handleSelectHurt}
               onRemove={deselectHurtById}
-              detailconfig={{ configkeys: ["name", "bodypart", "added_on", "notes"] }}
+              detailconfig={{
+                configkeys: ["name", "bodypart", "added_on", "notes"],
+              }}
             />
             <ShowHideSection
               showing={showTimer}

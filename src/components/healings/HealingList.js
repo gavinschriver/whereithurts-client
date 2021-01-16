@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { buildQueryString, secondsToRoundedMinutes, toMMDDYYYY } from "../../utils/helpers";
+import {
+  buildQueryString,
+  secondsToRoundedMinutes,
+  toMMDDYYYY,
+} from "../../utils/helpers";
 import BasicPage from "../layouts/BasicPage";
 import ListPageLayout from "../layouts/ListPage";
-import Button from "../ui/Button";
 import HurtSelectBar from "../hurts/HurtSelectBar";
 import ShowHideControls from "../ui/ShowHideControls";
 import { HealingContext } from "./HealingProvider";
 import HealingSortBar from "./HealingSortBar";
 import Loader from "../ui/Loader";
 import Pagination from "../ui/Pagination";
+import Healing from "./Healing";
 
 const HealingList = () => {
   const current_user_id = parseInt(localStorage.getItem("patient_id"));
@@ -69,33 +73,8 @@ const HealingList = () => {
             Total Healing Time:{" "}
             {secondsToRoundedMinutes(healingData.total_healing_time)} minutes
           </div>
-          {healingData.healings.map((h) => {
-            return (
-              <div className="listitem" key={h.id}>
-                <Button onClick={() => history.push(`/healings/${h.id}`)}>
-                  <div className="col">
-                    <h3>Date: {toMMDDYYYY(h.added_on) }</h3>
-
-                    <h3>
-                      Time spent: {secondsToRoundedMinutes(h.duration)} minutes
-                    </h3>
-                  </div>
-                  <div className="listitem__subcollection">
-                      <span className="listitem__subcollection__heading">Treatments Used:</span>
-                    {h.treatments.map((t) => {
-                      return (
-                        <span
-                          key={t.id}
-                          className="listitem__subcollection__item" 
-                        >
-                          {t.name}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </Button>
-              </div>
-            );
+          {healingData.healings.map((h, index) => {
+            return <Healing healing={h} key={index} />;
           })}
         </div>
       );
@@ -124,7 +103,6 @@ const HealingList = () => {
                 label="Filter by Hurt:"
                 defaultoptiontext="All"
                 name="hurt_id"
-                // onChange={(e) => setHurtId(e.target.value)}
                 onChange={handleFilterChange}
               />
               <HealingSortBar

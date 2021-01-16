@@ -95,7 +95,7 @@ const TreatmentList = () => {
 
   // call our initial async function with a page of 1
   const _getTreatmentsByQuerystring = async () => {
-    setCurrentPage(1)
+    setCurrentPage(1);
     await getTreatmentsByQuerystring(
       buildQueryString({
         ...filters,
@@ -108,12 +108,15 @@ const TreatmentList = () => {
 
   // handle pagination for either mode
   useEffect(() => {
+    setListDataLoaded(false);
     if (isSearchMode) {
       getTreatmentsBySearchTerms({
         ...searchTerms,
         page: currentPage,
         order_by: sortValue.order_by,
         direction: sortValue.direction,
+      }).then(() => {
+        setListDataLoaded(true);
       });
     } else {
       getTreatmentsByQuerystring(
@@ -123,7 +126,9 @@ const TreatmentList = () => {
           order_by: sortValue.order_by,
           direction: sortValue.direction,
         })
-      );
+      ).then(() => {
+        setListDataLoaded(true);
+      });
     }
   }, [currentPage]);
 
@@ -208,12 +213,12 @@ const TreatmentList = () => {
                 onChange={handleSortValueChange}
                 value={`${sortValue.order_by}-${sortValue.direction}`}
               />
-              <Pagination
-                page={currentPage}
-                totalCount={treatmentData.count}
-                pageBack={() => setCurrentPage(currentPage - 1)}
-                pageForward={() => setCurrentPage(currentPage + 1)}
-              />
+                <Pagination
+                  page={currentPage}
+                  totalCount={treatmentData.count}
+                  pageBack={() => setCurrentPage(currentPage - 1)}
+                  pageForward={() => setCurrentPage(currentPage + 1)}
+                />
             </ShowHideControls>
           </div>
           {listData()}
