@@ -32,7 +32,7 @@ const Pagination = (props) => {
               endNumber > totalCount ? totalCount : endNumber
             } of ${totalCount}`
           : `No results`}
-        {availableOnPage && (
+        {availableOnPage >= 0 && (
           <div>Available on this page: {availableOnPage}</div>
         )}
       </div>
