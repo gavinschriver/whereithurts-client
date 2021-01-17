@@ -19,7 +19,7 @@ const lastPage = (totalCount, itemsPerPage = 10) => {
 };
 
 const Pagination = (props) => {
-  const { page, totalCount, pageForward, pageBack } = props;
+  const { page, totalCount, pageForward, pageBack, availableOnPage } = props;
 
   const last_page = lastPage(totalCount);
   const [startNumber, endNumber] = currentlyViewingItems(page);
@@ -27,7 +27,14 @@ const Pagination = (props) => {
   return (
     <div className="pagination">
       <div className="pationation__label">
-        {totalCount > 0 ? `Showing: ${startNumber} - ${endNumber > totalCount ? totalCount : endNumber} of ${totalCount}` : `No results`}
+        {totalCount > 0
+          ? `Showing ${startNumber} - ${
+              endNumber > totalCount ? totalCount : endNumber
+            } of ${totalCount}`
+          : `No results`}
+        {availableOnPage && (
+          <div>Available on this page: {availableOnPage}</div>
+        )}
       </div>
       <div className="pagination__controls">
         <div className="pagination__controls__backward">
@@ -40,7 +47,7 @@ const Pagination = (props) => {
             disabled={page === last_page || last_page === 0}
             onClick={pageForward}
           >
-            {(page !== last_page && last_page !== 0) && (
+            {page !== last_page && last_page !== 0 && (
               <MdNavigateNext size="2em" />
             )}
           </Button>

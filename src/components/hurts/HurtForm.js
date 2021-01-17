@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { buildQueryString, deselectItemById } from "../../utils/helpers";
+import { availableOnPage, buildQueryString, deselectItemById } from "../../utils/helpers";
 import FourOhFourPage from "../auth/404Page";
 import BodypartSelectBar from "../bodypart/BodypartSelectBar";
 import BasicPage from "../layouts/BasicPage";
@@ -233,6 +233,10 @@ const HurtForm = () => {
                 <Pagination
                   page={treatmentFilters.page}
                   totalCount={treatmentData.count}
+                  availableOnPage={availableOnPage(
+                    treatmentData.treatments,
+                    selectedTreatments
+                  )}
                   pageBack={() =>
                     setTreatmentFilters({
                       ...treatmentFilters,

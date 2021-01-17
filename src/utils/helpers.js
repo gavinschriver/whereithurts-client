@@ -85,7 +85,7 @@ export const buildQueryString = (filters) => {
   const filtersArray = Object.entries(filters);
   let querystring = "?";
   filtersArray.forEach((filter) => {
-    if (filter[1] !== 0) {
+    if (filter[1] !== 0 && !isNaN(filter[1])) {
       querystring += `${filter[0]}=${filter[1]}&`;
     }
   });
@@ -101,4 +101,14 @@ export const buildQueryString = (filters) => {
  */
 export const toMMDDYYYY = (UTCString) => {
   return new Date(UTCString).toLocaleDateString("en-US");
+};
+
+/**
+ *@param {array} collection array of objects with ids
+ *@param {array} selected array of objects with ids 
+ */
+export const availableOnPage = (collection, selected) => {
+  return collection
+    .map((i) => i.id)
+    .filter((i) => !selected.map((s) => s.id).includes(i)).length;
 };

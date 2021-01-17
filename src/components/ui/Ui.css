@@ -183,7 +183,7 @@ textarea {
 
 .showhidecontrols .button {
   color: #969696;
-  background-color: white;
+  background-color: transparent;
   box-shadow: none;
   font-size: inherit;
 }
@@ -339,6 +339,13 @@ textarea {
 .treatments_collection_select {
   font-size: 1rem;
   margin: 0.5rem 0;
+  
+}
+
+.treatments_collection_select fieldset{
+  justify-content: flex-start;
+  margin-left:0px;
+  padding: 0px;
 }
 
 .controlgroup,
