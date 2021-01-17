@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# [WhereItHurts] (https://whereithurts.herokuapp.com)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## All about it
 
-## Available Scripts
+WhereItHurts is designed to let anyone who suffers from chronic pains and injuries - specifically those brought on by sports or similar demanding physical activies -  keep a detailed record of "where it hurts", what treatments are working, and how much time they're spending on those treatments. 
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+* Log a "Healing" session with as many Treatments (added by you or other users) as you got done or plan to do. Keep track of the Hurts you're working on by tagging them in a Healing session, so you know exactly what ailments you're addresing. Record time either via a countdown timer (my preferred method - set it between 3 - 5 minutes for each Treatment), or manually enter/edit time if you need to record a session after the fact. Finally, add any Notes you want to remember about a Healing session. Everything about a Healing is totally optional and editable.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* Create a "Hurt" to keep track of your pains and add detailed Notes, a Pain Level, and a Bodypart. Then, track your progress by adding Updates for a particular Hurt and see if things have improved. Every Hurt has a History that you can easily reference to see what Healings and Updates have been associated with it over time.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Add your own Treatments to the Treatment Library - add notes, helpful links and other data, and optionally set your Treatment to "public" so other users can find and try it. Browse treatments by bodypart, type of treatment (e.g. Mobility, Strength etc), popularity or general search term. Found something you think could work for you? Just tag it with one of your Hurts so you can easily look it up in a Healing session!
 
-### `npm test`
+* Check out your Snapshot for a record of what you've been up to for the last week - see your total Healing Time, what Hurts you worked on with their current pain level, and the Treatments you got into.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* [Sign up here to try it out!](https://whereithurts.herokuapp.com)
 
-### `npm run build`
+## Technologies used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This application was built using the [React](https://github.com/) JavaScript library, and was bootstrapped with [create-react-app](https://github.com/facebook/create-react-app). Additional packages used for the production site are: 
+* [react-router-dom](https://reactrouter.com/) - Used to implement client-side routing.
+* [react-icons](https://react-icons.github.io/react-icons/) - Used to easily include icons for use throughout the site.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+All styling was done with vanilla CSS.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The server uses Django REST Framework with a SQLite database. [Check out the server repo here](https://github.com/gavinschriver/whereithurts-server)
 
-### `npm run eject`
+This project is also deeply indebted to the coding, approaches and other work of one [Jacob Ekert](https://github.com/skratz17) (including some of the verbiage of this very readme), a brilliant classmate of mine and wonderful soul who somehow tolerated my incesscant pestering for 6 months. Thanks for always being cool about me ripping you off-*AHEM*- applying your ideas.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Planning Resources
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Below are links to the ERD for this project, as well as the Figma mockups I made and used as a guideline for how the UI should be implemented.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* [ERD](https://dbdiagram.io/d/5fc4548c3a78976d7b7dd7b5)
+* [Figma Wireframe](https://www.figma.com/file/IGYpsjtMStd3sSf5uK8NdD/ShowMeWhereItHurts?node-id=0%3A1)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Author 
+Gavin Schriver - [Github](https://github.com/gavinschriver), [LinkedIn](https://www.linkedin.com/in/gavinschriver/)
