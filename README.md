@@ -1,4 +1,4 @@
-# [WhereItHurts] (https://whereithurts.herokuapp.com)
+# [WhereItHurts](https://whereithurts.herokuapp.com)
 
 ## All about it
 
