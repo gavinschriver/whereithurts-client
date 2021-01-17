@@ -44,7 +44,7 @@ const HealingForm = () => {
   const [bodypartId, setBodypartId] = useState(0);
   const [treatmentTypeId, setTreatmentTypeId] = useState(0);
   const [isOwner, setIsOwner] = useState(1);
-  const [hurtId, setHurtId] = useState("");
+  const [hurtId, setHurtId] = useState(0);
   const [filters, setFilters] = useState({ owner: 1, page: 1 });
 
   const [currentPage, setCurrentPage] = useState(1);
