@@ -14,7 +14,7 @@ WhereItHurts is designed to let anyone who suffers from chronic pains and injuri
 
 * Check out your Snapshot for a record of what you've been up to for the last week - see your total Healing Time, what Hurts you worked on with their current pain level, and the Treatments you got into.
 
-* [Sign up here to try it out!](https://whereithurts.herokuapp.com)
+* [Sign up here to try it out!](https://whereithurts.herokuapp.com) - or you can just log in as 'user' with the same pw to poke around.
 
 ## Technologies used
 
