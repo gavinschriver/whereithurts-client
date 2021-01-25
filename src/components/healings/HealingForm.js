@@ -105,6 +105,7 @@ const HealingForm = () => {
       treatment_ids: selectedTreatments.map((t) => t.id),
       hurt_ids: selectedHurts.map((h) => h.id),
       notes: notes,
+      intensity: parseInt(intensity)
     };
     if (editMode) {
       await updateHealing(healingId, newHealing);
@@ -144,6 +145,12 @@ const HealingForm = () => {
   const handleNotesChange = (e) => {
     const { value } = e.target;
     setNotes(value);
+  };
+
+  //intensity; in database, scale is 0 - 100
+  const [intensity, setIntensity] = useState(50);
+  const handleIntensityChange = (e) => {
+    setIntensity(e.target.value);
   };
 
   //timer
@@ -191,6 +198,7 @@ const HealingForm = () => {
       setSelectedHurts(healing.hurts);
       setSelectedTreatments(healing.treatments);
       setNotes(healing.notes);
+      setIntensity(healing.intensity);
       setTimer((timer) => ({ ...timer, timeTotal: healing.duration }));
     } else setIdExists(false);
   };
@@ -309,6 +317,12 @@ const HealingForm = () => {
                 <h4>Currently logged: {humanTime}</h4>
               </div>
             </div>
+            <h3>Intensity Level</h3>
+            <input
+              type="range"
+              value={intensity}
+              onChange={handleIntensityChange}
+            />
             <h3>Notes</h3>
             <TextArea name="notes" onChange={handleNotesChange} value={notes} />
           </main>
