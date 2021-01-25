@@ -60,18 +60,23 @@ const HealingDetail = () => {
         >
           <main className="detail healingdetail">
             <div className="healing">
-              <h1>Healing on {healing.added_on && toMMDDYYYY(healing.added_on)}</h1>
+              <h1>
+                Healing on {healing.added_on && toMMDDYYYY(healing.added_on)}
+              </h1>
               <h3>
                 Time Spent:{" "}
                 {healing.duration &&
                   `${secondsToRoundedMinutes(healing.duration)} minutes`}
               </h3>
+              <div className="healing__intensityScore">
+                <h3>Intensity: {healing.intensity_score / 10}</h3>
+              </div>
               <div className="healing__notes">
-                <h3>Notes:</h3>
+                <h3>Notes</h3>
                 <p>{healing.notes}</p>
               </div>
               <div className="healing__treatments">
-                <h3>Tagged Treatments:</h3>
+                <h3>Tagged Treatments</h3>
                 <BadgeField
                   selected={healing.treatments}
                   badgeText="name"
@@ -87,7 +92,7 @@ const HealingDetail = () => {
                   }}
                 />
               </div>
-              <h3>Your Tagged Hurts:</h3>
+              <h3>Your Tagged Hurts</h3>
               <BadgeField
                 selected={healing.hurts}
                 badgeText="name"
