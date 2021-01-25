@@ -148,7 +148,7 @@ const HealingForm = () => {
   };
 
   //intensity; in database, scale is 0 - 100
-  const [intensity, setIntensity] = useState(50);
+  const [intensity, setIntensity] = useState(0);
   const handleIntensityChange = (e) => {
     setIntensity(e.target.value);
   };

@@ -168,8 +168,7 @@ textarea {
   align-items: center;
 }
 
-.basicpage .showhidesection .button,
-.basicpage .showhidesection .badge {
+.basicpage .showhidesection .button {
   background-color: white;
   color: black;
   width: auto;
@@ -178,6 +177,14 @@ textarea {
   font-size: 1rem;
   display: flex;
   justify-content: space-between;
+}
+
+.basicpage .showhidesection .showhidesection__header .button {
+  background-color: white;
+}
+
+.basicpage .showhidesection .showhidesection__header .button:hover {
+  background-color:rgba(249,250,251);
 }
 
 .showhidesection img {
